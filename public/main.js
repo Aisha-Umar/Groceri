@@ -68,7 +68,7 @@ function renderStoredItems(items) {
 }
 
 //get item list on load
-fetch("/api/getList")
+fetch("http://localhost:3000/api/getList")
   .then((res) => res.json())
   .then((data) => {
     console.log("items from backend:", data);
@@ -95,4 +95,7 @@ function deleteItem(e) {
       .catch((err) => console.error("Error:", err));
   }
 }
+
+
+
 
