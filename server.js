@@ -2,11 +2,15 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const routes = require('./routes')
+const path = require("path")
 
 app.use(express.json())
 app.use(express.static('public'))
 app.use(cors())
 app.use('/api', routes)
+
+app.set('view engine','ejs')
+app.set('views', path.join(__dirname, 'views'))
 
 const uri = process.env.MONGO_URI
 const PORT = process.env.PORT || 3000

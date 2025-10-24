@@ -13,11 +13,15 @@
         <button id="submitBtn">submit</button>
     </form>
 <ul class="groceryList">
-   
+   <% storedItems.forEach(item => { %>
+    <li>
+        <span><%= item %></span>
+        <button>delete</button>
+        <button>edit</button>
+     </li>
+   <% }) %>
 </ul>
 
-<!-- <button id="testBtn">test fetch</button>
-<ul class="output"></ul> -->
 <script src="main.js"></script>
 </body>
 </html>

@@ -4,7 +4,8 @@ const Grocery = require("../models/Grocery");
 exports.getList = async (req, res) => {
   try {
     const storedItems = await Grocery.find();
-    res.json({ storedItems });
+    //res.json({ storedItems });
+    res.render('index', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -19,7 +20,8 @@ exports.addItem = async (req, res) => {
   try {
     await Grocery.create({ item: newItem });
     const storedItems = await Grocery.find();
-    res.json({ storedItems });
+    //res.json({ storedItems });
+    res.render('index', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -31,7 +33,8 @@ exports.editItem = async (req, res) => {
     const { itemBeingEdited, newItem } = req.body;
     await Grocery.findOneAndUpdate({ item: itemBeingEdited }, { item: newItem });
     const storedItems = await Grocery.find();
-    res.json({ storedItems });
+    //res.json({ storedItems });
+    res.render('index', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -43,7 +46,8 @@ exports.deleteItem = async (req, res) => {
     const { item } = req.body;
     await Grocery.deleteOne({ item });
     const storedItems = await Grocery.find();
-    res.json({ storedItems });
+    //res.json({ storedItems });
+    res.render('index', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
