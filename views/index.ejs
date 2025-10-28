@@ -14,15 +14,15 @@
     </form>
 <ul class="groceryList">
    <% storedItems.forEach(item => { %>
-    <li>
-        <span><%= item %></span>
-        <button>delete</button>
-        <button>edit</button>
+    <li draggable="true">
+        <span><%= item.item %></span>
+        <button type="button" class="delete">delete</button>
+        <button type="button" class="edit">edit</button>
      </li>
    <% }) %>
 </ul>
 
-<script src="main.js"></script>
+<script src="/main.js"></script>
 </body>
 </html>
 

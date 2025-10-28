@@ -1,4 +1,4 @@
-const Grocery = require("../models/Grocery");
+const Grocery = require("../models/item.js");
 
 // Get all items
 exports.getList = async (req, res) => {
@@ -31,6 +31,7 @@ exports.addItem = async (req, res) => {
 exports.editItem = async (req, res) => {
   try {
     const { itemBeingEdited, newItem } = req.body;
+    console.log(req.body)
     await Grocery.findOneAndUpdate({ item: itemBeingEdited }, { item: newItem });
     const storedItems = await Grocery.find();
     //res.json({ storedItems });
