@@ -9,5 +9,6 @@ router.get('/getList', controller.getList)
 router.post('/addItem', controller.addItem)
 router.delete('/deleteItem', controller.deleteItem)
 router.put('/editItem', controller.editItem)
+router.post('/saveOrder', controller.saveOrder)
 
 module.exports = router

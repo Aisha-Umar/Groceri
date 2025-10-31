@@ -44,7 +44,7 @@ form.addEventListener("submit", async (e) => {
 list.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete")) {
     const item = e.target.parentElement.querySelector("span").textContent;
-    if (!confirm("Delete this item?")) return;
+   // if (!confirm("Delete this item?")) return;
     try {
       const res = await fetch("/api/deleteItem", {
         method: "DELETE",
@@ -83,6 +83,17 @@ list.addEventListener("drop", () => {
   draggedItem = null;
 });
 
+list.addEventListener("dragend", (e) => {
+  if (e.target.tagName === "LI") {
+    const orderedList = Array.from(list.querySelectorAll("li")).map((li, index) => ({
+      id: li.dataset.id,
+      order:Number(index),
+    }));
+    console.log(orderedList)
+    orderList(orderedList);
+  }
+});
+
 function getDragAfterElement(container, y) {
   const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
 
@@ -101,19 +112,22 @@ function getDragAfterElement(container, y) {
 }
 
 //update ordered dragged list
-let orderedList = Array.from(document.querySelectorAll('ul li'))
-orderList(orderedList)
+
 async function orderList(orderedList){
 try{
+  console.log('Sending order:', orderedList)
   const res = await fetch('/api/saveOrder',{
   method:'POST',
-  header:{"Content-Type":"application/json"},
+  headers:{"Content-Type":"application/json"},
   body: JSON.stringify({orderedList}),
 })
 if(!res.ok) throw new Error('Update failed')
-  location.reload
+ console.log("Order saved!")
+ location.reload()
 }catch(err){
   console.error('Error:',err)
 }
 }
+
+
 

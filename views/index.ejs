@@ -14,7 +14,7 @@
     </form>
 <ul class="groceryList">
    <% storedItems.forEach(item => { %>
-    <li draggable="true">
+    <li draggable="true" data-id="<%= item._id %>">
         <span><%= item.item %></span>
         <button type="button" class="delete">delete</button>
         <button type="button" class="edit">edit</button>
