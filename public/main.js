@@ -117,13 +117,13 @@ async function orderList(orderedList){
 try{
   console.log('Sending order:', orderedList)
   const res = await fetch('/api/saveOrder',{
-  method:'POST',
+  method:'PUT',
   headers:{"Content-Type":"application/json"},
   body: JSON.stringify({orderedList}),
 })
 if(!res.ok) throw new Error('Update failed')
  console.log("Order saved!")
- location.reload()
+ //location.reload()
 }catch(err){
   console.error('Error:',err)
 }

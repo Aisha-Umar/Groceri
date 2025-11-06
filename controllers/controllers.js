@@ -48,6 +48,7 @@ exports.deleteItem = async (req, res) => {
     const { item } = req.body;
     await Grocery.deleteOne({ item });
     const storedItems = await Grocery.find();
+    console.log('Item deleted')
     //res.json({ storedItems });
     res.render('index', {storedItems})
   } catch (err) {
@@ -55,17 +56,20 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.saveOrder = async (req,res) => {
+console.log('Controller triggered!')
+exports.saveOrder = async (req, res) => {
   try{
     const {orderedList} = req.body
+    console.log("Received orderedList:", orderedList)
     for(const{id, order} of orderedList){
-     const result = await Grocery.updateOne({_id:mongoose.Types.ObjectId(id)}, {$set:{order}}/*,{upsert:true}*/)
+      console.log("Looping:", id, order)
+     const result = await Grocery.updateOne({_id:id},{order})
       console.log(`Updating ${id} → order ${order}:`, result)
     }
       const storedItems = await Grocery.find().sort({order:1})
-      console.log(storedItems)
-      res.status(200).json({ message: "Order updated"})
-     // res.render('index', {storedItems})
+      console.log(`This is the order after sorting by order ${storedItems}`)
+     // res.status(200).json({ message: "Order updated"})
+      res.render('index', {storedItems})
   } catch(err){
     res.status(500).json({ message: err.message})
   }
