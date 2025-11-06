@@ -6,24 +6,37 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body>
+    <header class="header">
+        <img src="/images/homestocklogo.png" alt="Homestock Logo" class="logo">
+        <h1>Homestock</h1>
+    </header>
+
     <h3>Grocery List</h3>
     <h5>Add Your Items</h5>
-    <form action="post">
-        <input type="text" class="inputItem" id="itemInput" name="item">
-        <button id="submitBtn">submit</button>
-    </form>
-<ul class="groceryList">
-   <% storedItems.forEach(item => { %>
-    <li draggable="true" data-id="<%= item._id %>">
-        <span><%= item.item %></span>
-        <button type="button" class="delete">delete</button>
-        <button type="button" class="edit">edit</button>
-     </li>
-   <% }) %>
-</ul>
+   <form id="add-item-form" class="add-form" autocomplete="off" aria-label="Add grocery item">
+    <input type="text" class="inputItem" id="itemInput" name="item" placeholder="Add item (e.g. Milk)" required>
+    <button type="submit" id="submitBtn" class="btn btn-primary">Add</button>
+</form>
 
-<script src="/main.js"></script>
+    <div class="container">
+        <ul class="groceryList">
+            <% storedItems.forEach(item=> { %>
+                <li draggable="true" data-id="<%= item._id %>">
+                    <span>
+                        <%= item.item %>
+                    </span>
+                    <div class="item-buttons">
+                        <button class="btn btn-edit">Edit</button>
+                        <button class="btn btn-delete">Delete</button>
+                    </div>
+                </li>
+                <% }) %>
+        </ul>
+    </div>
+
+    <script src="/main.js"></script>
 </body>
 </html>
 

@@ -1,125 +1,523 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Nunito", sans-serif;
-}
-
 body {
-  background-color: #F5F5F5; /* Light gray */
-  color: #333333;
+  font-family: Arial, sans-serif;
+  background-color: #F5F5F5;
+  margin: 0;
+  padding-top: 80px; /* space for fixed header */
+}
+
+/* 🧭 Fixed, responsive header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  min-height: 100vh;
+  gap: 10px;
+  padding: 15px 30px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
-/* Headings */
-h3 {
-  font-size: 2rem;
-  color: #2E8B57; /* Primary green */
-  margin-bottom: 5px;
+.logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
 }
 
-h5 {
-  font-weight: 500;
-  color: #666;
-  margin-bottom: 20px;
+h1 {
+  font-size: 1.5rem;
+  color: #2E8B57;
+  margin: 0;
+  white-space: nowrap;
 }
 
-/* Form */
-form {
+/* 📦 Responsive container */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+/* 🪄 Drag-and-drop list */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background-color: #E8F5E9;
+  border: 1px solid #C8E6C9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: grab;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+li:hover {
+  background-color: #D8F0D8;
+}
+
+li.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+}
+
+
+
+/* Form container */
+.add-form {
   display: flex;
   gap: 10px;
-  margin-bottom: 25px;
-  width: 100%;
-  max-width: 450px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
-input[type="text"] {
-  flex: 1;
-  padding: 10px 14px;
-  border: 1px solid #ccc;
+/* Input styling */
+.inputItem {
+  flex: 1 1 220px; /* grow, shrink, base width */
+  padding: 10px 12px;
   border-radius: 8px;
+  border: 1px solid #C8E6C9;
   font-size: 1rem;
-  background-color: #fff;
-  color: #333333;
   outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input[type="text"]:focus {
+.inputItem:focus {
   border-color: #2E8B57;
-  box-shadow: 0 0 6px rgba(46, 139, 87, 0.3);
+  box-shadow: 0 0 0 4px rgba(46,139,87,0.08);
 }
 
-button {
-  background-color: #FF6F61; /* Accent salmon pink */
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
+/* Button styling */
+#submitBtn {
+  padding: 10px 16px;
   border-radius: 8px;
+  border: none;
+  background-color: #2E8B57;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.3s, transform 0.2s;
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
-button:hover {
-  background-color: #e85b52;
+#submitBtn:hover {
   transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(46,139,87,0.15);
 }
 
-/* Grocery List */
-.groceryList {
-  list-style: none;
-  width: 100%;
-  max-width: 450px;
+#submitBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(46,139,87,0.12);
 }
 
+/* Responsive for small screens */
+@media (max-width: 930px) {
+  .add-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #submitBtn {
+    width: 100%;
+  }
+}
+
+/* 🌐 Responsive adjustments */
+@media (max-width: 930px) {
+  .container {
+    max-width: 700px;
+    padding: 18px;
+  }
+
+  .header {
+    padding: 12px 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 10px 20px;
+    gap: 8px;
+  }
+
+  .logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  .container {
+    width: 95%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  li {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1100px;
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Buttons container inside list items */
+.item-buttons {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  float: right; /* align to right of list item */
+}
+
+/* Base button style */
+.btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s, opacity 0.1s;
+}
+
+/* Edit button - green theme */
+.btn-edit {
+  background-color: #2E8B57;
+  color: white;
+}
+
+.btn-edit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(46,139,87,0.2);
+}
+
+.btn-edit:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(46,139,87,0.15);
+}
+
+/* Delete button - red accent */
+.btn-delete {
+  background-color: #FF6F61; /* salmon accent from your theme */
+  color: white;
+}
+
+.btn-delete:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(255,111,97,0.2);
+}
+
+.btn-delete:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(255,111,97,0.15);
+}
+
+/* Responsive for small screens */
+@media (max-width: 420px) {
+  .item-buttons {
+    float: none;
+    margin-top: 6px;
+    justify-content: flex-end;
+  }
+  .btn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Headings above the form */
+h2, h3 {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2E8B57;
+}
+
+/* Form container */
+.add-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 18px;
+}
+
+/* Input field */
+.inputItem {
+  flex: 1 1 180px; /* allows shrinking on mobile */
+  padding: 8px 10px; /* reduced height for mobile */
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #C8E6C9;
+  outline: none;
+}
+
+.inputItem:focus {
+  border-color: #2E8B57;
+  box-shadow: 0 0 0 4px rgba(46,139,87,0.08);
+}
+
+/* Submit button */
+#submitBtn {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #2E8B57;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#submitBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(46,139,87,0.15);
+}
+
+#submitBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(46,139,87,0.12);
+}
+
+/* Grocery list items */
 .groceryList li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
-  padding: 12px 15px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
-  cursor: grab;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  background-color: #E8F5E9;
+  border: 1px solid #C8E6C9;
+  border-radius: 8px;
+  flex-wrap: nowrap;
 }
 
-.groceryList li:hover {
-  border-color: #2E8B57;
-}
-
-/* Dragging effect */
-.groceryList li.dragging {
-  transform: scale(1.03);
-  box-shadow: 0 8px 16px rgba(46, 139, 87, 0.2);
-  opacity: 0.9;
-  cursor: grabbing;
-}
-
+/* Item text */
 .groceryList li span {
   flex: 1;
-  color: #333333;
 }
 
-/* List buttons */
-.groceryList button {
-  background: none;
-  color: #FF6F61;
+/* Buttons inside list items */
+.item-buttons {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* Edit button */
+.btn-edit {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  background-color: #2E8B57;
+  color: white;
   border: none;
   cursor: pointer;
-  margin-left: 10px;
-  font-size: 0.9rem;
-  transition: color 0.2s;
 }
 
-.groceryList button:hover {
-  color: #e85b52;
+.btn-edit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(46,139,87,0.2);
+}
+
+.btn-edit:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(46,139,87,0.15);
+}
+
+/* Delete button */
+.btn-delete {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  background-color: #FF6F61;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(255,111,97,0.2);
+}
+
+.btn-delete:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(255,111,97,0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 420px) {
+  /* Stack form elements */
+  .add-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  #submitBtn {
+    width: 100%;
+  }
+
+  /* Stack list items for mobile */
+  .groceryList li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 6px 10px;
+  }
+
+  .item-buttons {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .btn-edit, .btn-delete {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 420px) {
+  h2, h3,
+  .add-form {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .add-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* Style for the "Add your items" heading */
+h5 {
+  font-size: 1rem;           /* appropriate size for small section */
+  font-weight: 600;           /* make it stand out */
+  color: #2E8B57;             /* Homestock green theme */
+  margin-left: 20px;          /* horizontal spacing from page edge */
+  margin-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 430px) {
+  h5{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 0.95rem;
+  }
+}
+/* Default: desktop layout */
+.groceryList li {
+  display: flex;
+  justify-content: space-between; /* text left, buttons right */
+  align-items: center;            /* vertical centering */
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  background-color: #E8F5E9;
+  border: 1px solid #C8E6C9;
+  border-radius: 8px;
+  flex-wrap: nowrap;              /* prevent wrapping */
+}
+
+/* Text span inside li */
+.groceryList li span {
+  flex: 1;                        /* take available space */
+}
+
+/* Buttons container */
+.item-buttons {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;            /* vertical centering */
+}
+
+/* Edit button */
+.btn-edit {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  background-color: #2E8B57;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Delete button */
+.btn-delete {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  background-color: #FF6F61;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Mobile layout: stack items */
+@media (max-width: 480px) {
+  .groceryList li {
+    display: flex !important;
+    flex-direction: row !important; /* keep row first */
+    flex-wrap: wrap !important;     /* allow wrapping */
+    align-items: center !important; /* center text + buttons */
+    padding: 6px 8px;
+  }
+
+  .groceryList li span {
+    flex: 1 1 60%;                  /* allow text to shrink if needed */
+    margin-bottom: 4px;             /* small spacing below text if wrapped */
+  }
+
+  .item-buttons {
+    flex: 1 1 35%;                  /* buttons take rest of space */
+    justify-content: flex-end;
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .btn-edit, .btn-delete {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
 }
 

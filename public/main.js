@@ -4,6 +4,19 @@ const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
 let itemBeingEdited = null;
 
+
+// groceryList.addEventListener('dragstart', (e) => {
+//   if (e.target && e.target.tagName === 'LI') {
+//     e.target.classList.add('dragging');
+//   }
+// });
+
+// groceryList.addEventListener('dragend', (e) => {
+//   if (e.target && e.target.tagName === 'LI') {
+//     e.target.classList.remove('dragging');
+//   }
+// });
+
 // Edit an item
 list.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit")) {
