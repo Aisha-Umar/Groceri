@@ -521,3 +521,57 @@ h5 {
   }
 }
 
+.inputItem {
+  all: unset;                     /* clears all inherited or browser styles */
+  box-sizing: border-box;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  line-height: 1.2;
+  padding: 6px 10px;
+  color: #333;
+}
+
+#submitBtn {
+  /* all: unset; */
+  box-sizing: border-box;
+  background-color: #2E8B57;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+  width: auto;              /* not full width by default */
+  min-width: 80px;
+}
+
+#submitBtn:hover {
+  background-color: #256b45;
+}
+
+/* Compact form layout */
+.add-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+/* Responsive (for 980px and below) */
+@media (max-width: 980px) {
+  .inputItem {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+
+  #submitBtn {
+    font-size: 0.9rem;
+    padding: 4px 10px;
+  }
+}
