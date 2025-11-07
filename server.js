@@ -3,8 +3,9 @@ const cors = require('cors')
 const app = express()
 const routes = require('./routes')
 const path = require("path")
-const mongoose = require('mongoose')
 require('dotenv').config()
+const mongoose = require('mongoose')
+
 
 app.use(express.json())
 app.use(express.static('public'))
@@ -20,6 +21,7 @@ const PORT = process.env.PORT || 3000
 
 async function run() {
   try {
+    console.log("🔍 MONGO_URI:", uri);
     await mongoose.connect(uri);
     console.log("✅ Connected to MongoDB (GroceriDB) with Mongoose!");
   } catch (err) {
