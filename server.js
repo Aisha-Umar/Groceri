@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000
 
 async function run() {
   try {
-    console.log("🔍 MONGO_URI:", uri);
+    //console.log("🔍 MONGO_URI:", uri);
     await mongoose.connect(uri);
     console.log("✅ Connected to MongoDB (GroceriDB) with Mongoose!");
   } catch (err) {
