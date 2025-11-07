@@ -575,3 +575,54 @@ h5 {
     padding: 4px 10px;
   }
 }
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.hero-content {
+  flex: 1;
+  padding-left: 40px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  color: #2E8B57;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.hero-content .btn {
+  padding: 12px 24px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-content {
+    padding-left: 0;
+    margin-top: 30px;
+  }
+}
