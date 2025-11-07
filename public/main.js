@@ -1,4 +1,3 @@
-console.log("JS file loaded")
 const input = document.querySelector(".inputItem");
 const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
@@ -18,13 +17,24 @@ let itemBeingEdited = null;
 // });
 
 // Edit an item
+// list.addEventListener("click", (e) => {
+  //if (e.target.classList.contains("btn-edit")) {
+//     if(e.target.closest('.btn-edit')){  
+//   itemBeingEdited = e.target.parentElement.querySelector("span").textContent;
+//     input.value = itemBeingEdited;
+//     input.focus();
+//   }
+// });
+
 list.addEventListener("click", (e) => {
-  if (e.target.classList.contains("edit")) {
-    itemBeingEdited = e.target.parentElement.querySelector("span").textContent;
+  if (e.target.closest(".btn-edit")) {
+    const li = e.target.closest("li");
+    itemBeingEdited = li.querySelector("span").textContent;
+    console.log(itemBeingEdited)
     input.value = itemBeingEdited;
     input.focus();
   }
-});
+})
 
 // Form submit (add or edit)
 form.addEventListener("submit", async (e) => {
@@ -55,9 +65,13 @@ form.addEventListener("submit", async (e) => {
 
 // Delete item
 list.addEventListener("click", async (e) => {
-  if (e.target.classList.contains("delete")) {
-    const item = e.target.parentElement.querySelector("span").textContent;
-   // if (!confirm("Delete this item?")) return;
+ // if (e.target.classList.contains("btn-delete")) {
+    // if (e.target.closest(".btn-delete")) {
+    // const item = e.target.parentElement.querySelector("span").textContent;
+   if (e.target.closest(".btn-delete")) {
+    const li = e.target.closest("li");
+    const item = li.querySelector("span").textContent;
+    // if (!confirm("Delete this item?")) return;
     try {
       const res = await fetch("/api/deleteItem", {
         method: "DELETE",
