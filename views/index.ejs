@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <!-- <link rel="stylesheet" href="styles2.css"> -->
+     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 
@@ -14,34 +16,34 @@
     </header>
 
 <section class="hero">
-  <div class="hero-image">
-    <img src="/images/hero-image.png" alt="grocery bag">
-  </div>
-  <!-- <div class="hero-content">
-    <h1>Keep track, stay stocked.</h1>
-    <p>Add, organize, and share your grocery list with your family — never forget an item again.</p>
-    <a href="/signup" class="btn btn-primary">Get Started</a>
-  </div> -->
+    <div class="hero-content">
+        <h1>Keep track, stay stocked.</h1>
+        <p>Add, organize, and share your grocery list with your family — never forget an item again.</p>
+        <a href="/signup" class="btn btn-primary">Get Started</a>
+    </div>
+    <div class="hero-image">
+        <img src="/images/hero-image2.png" alt="grocery bag">
+    </div>
 </section>
 
-    <h3>Grocery List</h3>
+    <h3>Manage Your Shopping List</h3>
     <h5>Add Your Items</h5>
    <form id="add-item-form" class="add-form" autocomplete="off" aria-label="Add grocery item">
     <input type="text" class="inputItem" id="itemInput" name="item" placeholder="Add item (e.g. Milk)" required>
     <button type="submit" id="submitBtn" class="btn btn-primary">Add</button>
 </form>
 
-    <div class="container">
+    <div class="grocery-list">
         <ul class="groceryList">
             <% storedItems.forEach(item=> { %>
                 <li draggable="true" data-id="<%= item._id %>">
                     <span>
                         <%= item.item %>
                     </span>
-                    <div class="item-buttons">
+                    <!-- <div class="item-buttons">
                         <button class="btn btn-edit">Edit</button>
                         <button class="btn btn-delete">Delete</button>
-                    </div>
+                    </div> -->
                 </li>
                 <% }) %>
         </ul>

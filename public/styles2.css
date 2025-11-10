@@ -1,4 +1,6 @@
-/* --- RESET CSS --- */
+/* styles.css */
+
+/* --- Reset CSS --- */
 *,
 *::before,
 *::after {
@@ -7,48 +9,56 @@
   padding: 0;
 }
 
-/* --- BODY --- */
+/* ... rest of your styles here ... */
 body {
   font-family: 'Inter', Arial, sans-serif;
   background-color: #E8F5E9;
   color: #1F3B2D;
-  margin: 0;
-  padding-top: 80px;
 }
 
-/* --- INPUTS & BUTTONS DEFAULT --- */
+/* Make inputs consistent and smaller */
 input,
 textarea,
 select,
 button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  box-sizing: border-box;
+  -webkit-appearance: none; /* removes native styling on iOS/Safari */
+  -moz-appearance: none;    /* removes native styling on Firefox */
+  appearance: none;          /* general reset */
+  box-sizing: border-box; /* ensures padding doesn’t increase height unexpectedly */
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.2;
+  font-size: 16px;       /* adjust as needed */
+  line-height: 1.2;      /* tighter line height */
 }
 
 input[type="text"],
 input[type="number"],
 textarea {
-  height: 36px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  height: 36px;           /* compact height */
+  padding: 6px 10px;      /* inner spacing */
+  border: 1px solid #ccc; /* border style */
+  border-radius: 8px;     /* rounded corners */
 }
 
-input, textarea, select {
-  height: auto;
-  padding: 0.3rem;
-  line-height: 1;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Optional: responsive tweaks for very small screens */
+@media (max-width: 480px) {
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 14px;
+  }
 }
 
-/* --- HEADER --- */
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #E8F5E9; /* light mint green */
+  margin: 0;
+  padding-top: 80px;
+  color: #1F3B2D;
+}
+
+/* 🧭 Header */
 .header {
   position: fixed;
   top: 0;
@@ -74,7 +84,7 @@ h1 {
   margin: 0;
 }
 
-/* --- HERO SECTION --- */
+/* 🦸‍♀️ Hero Section */
 .hero {
   display: flex;
   align-items: center;
@@ -127,7 +137,7 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* --- CONTAINER --- */
+/* 🧺 Container */
 .container {
   width: 90%;
   max-width: 1000px;
@@ -138,7 +148,7 @@ h1 {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-/* --- LIST STYLES --- */
+/* 📝 Default List Styles (keep for other lists) */
 ul {
   list-style: none;
   padding: 0;
@@ -159,7 +169,7 @@ li:hover {
   background-color: #E1F3E3;
 }
 
-/* --- ITEM BUTTONS --- */
+/* Buttons inside list */
 .item-buttons {
   display: flex;
   gap: 6px;
@@ -193,19 +203,21 @@ li:hover {
   background-color: #e35d35;
 }
 
-/* --- FORMS --- */
+/* 🧾 Form */
 .add-form {
   display: flex;
-  width: 450px;
-  max-width: 100%;
+  width:450px;
+  max-width:100%;
   gap: 10px;
   flex-wrap: wrap;
   align-items: center;
-  margin: 0 auto;
+  /* margin: 20px; */
+  margin:0 auto;
 }
 
 .inputItem {
-  width: 100%;
+  /* flex: 0 1 220px;  */
+  width:100%;
   max-width: 375px;
   padding: 10px;
   border-radius: 8px;
@@ -236,14 +248,14 @@ li:hover {
   transform: translateY(-1px);
 }
 
-/* --- HEADINGS --- */
+/* Headings */
 h2, h3, h5 {
   color: #256C4E;
   margin-left: 20px;
   text-align: center;
 }
 
-/* --- GROCERY LIST --- */
+/* --- Grocery List Container --- */
 .grocery-list {
   background-color: #ffffff;
   border-radius: 16px;
@@ -254,6 +266,7 @@ h2, h3, h5 {
   margin: 2rem auto;
 }
 
+/* --- Heading --- */
 .grocery-list h2 {
   color: #14532d;
   font-size: 1.5rem;
@@ -261,6 +274,7 @@ h2, h3, h5 {
   margin-bottom: 1rem;
 }
 
+/* --- Scoped List Styles --- */
 .grocery-list ul {
   list-style: none;
   padding: 0;
@@ -276,25 +290,28 @@ h2, h3, h5 {
   padding: 0.4rem 1rem;
   margin-bottom: 0.3rem;
   transition: background-color 0.2s ease, transform 0.2s ease;
-  border: none;
+  border: none; /* remove old green border */
 }
 
 .grocery-list li:hover {
   background-color: #E1F3E3;
 }
 
+/* --- Text --- */
 .grocery-list li span {
   color: #14532d;
   font-size: 1.3rem;
   font-weight: 500;
 }
 
+/* --- Check Icon --- */
 .grocery-list .check-icon {
   color: #2e8b57;
   margin-right: 0.75rem;
   font-size: 1.2rem;
 }
 
+/* --- Trash Icon --- */
 .grocery-list .delete-icon {
   color: #ff6f3c;
   cursor: pointer;
@@ -305,12 +322,13 @@ h2, h3, h5 {
   transform: scale(1.1);
 }
 
+/* --- Highlight when dragging --- */
 .grocery-list li.dragging {
   background-color: #fff7cc;
   transform: scale(1.02);
 }
 
-/* --- MEDIA QUERIES --- */
+/* 📱 Responsive */
 @media (max-width: 900px) {
   .hero {
     text-align: center;
@@ -324,7 +342,7 @@ h2, h3, h5 {
 
   .grocery-list {
     padding: 20px;
-    margin: 30px auto;
+    margin:30px auto;
   }
 }
 
@@ -341,34 +359,49 @@ h2, h3, h5 {
     padding: 10px 20px;
     font-size: 0.95rem;
   }
+
 }
 
-@media (max-width: 480px) {
-  .inputItem,
+@media (max-width: 400px) {
+  .add-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .inputItem {
+    width: 100%;
+  }
+
   #submitBtn {
-    box-sizing: border-box;
-    height: 34px;
-    padding: 4px 10px;
-    font-size: 0.875rem;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  li {
+    font-size: 0.9rem;
+    padding: 10px;
   }
 }
 
+/* 📱 Fix for small screens touching the edges */
 @media (max-width: 450px) {
   body {
     overflow-x: hidden;
-    padding: 0 10px;
+    padding: 0 10px; /* small breathing space on both sides */
+    box-sizing: border-box;
   }
 
-  .container,
-  .grocery-list {
+  .container, 
+  .grocery-list{
     width: 100%;
     max-width: 375px;
     padding: 20px;
+    box-sizing: border-box;
     margin: 30px auto;
   }
 
   .hero {
-    flex-direction: column-reverse;
+    flex-direction: column-reverse; /* image on top, text below */
     text-align: center;
     padding: 40px 10px;
   }
@@ -402,10 +435,31 @@ h2, h3, h5 {
     flex-direction: column;
     align-items: center;
     width: 375px;
-  }
+}
 
   .inputItem,
   #submitBtn {
     width: 100%;
   }
 }
+
+
+@media (max-width: 480px) {
+  .inputItem, #submitBtn {
+    box-sizing: border-box;
+    height: 34px;     /* slightly smaller */
+    padding: 4px 10px;  /* smaller padding */
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+input, textarea, select {
+  box-sizing: border-box;
+  height: auto; /* so it adapts to content */
+  padding: 0.3rem; /* adjust this */
+  line-height: 1;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
