@@ -1,5 +1,14 @@
 const Grocery = require("../models/item.js");
 
+//Get landing page
+exports.getLanding = async(req, res) => {
+  try{
+    await res.render('landing')
+  } catch(err){
+    res.status(500).json({ message: err.message})
+  }
+}
+
 // Get all items
 exports.getList = async (req, res) => {
   try {
@@ -70,6 +79,22 @@ exports.saveOrder = async (req, res) => {
       console.log(`This is the order after sorting by order ${storedItems}`)
      // res.status(200).json({ message: "Order updated"})
       res.render('index', {storedItems})
+  } catch(err){
+    res.status(500).json({ message: err.message})
+  }
+}
+
+exports.getSignUp = async(req,res) => {
+  try{
+    await res.render('signup')
+  } catch(err){
+    res.status(500).json({ message: err.message})
+  }
+}
+
+exports.getLogin = async(req,res) => {
+  try{
+    await res.render('login')
   } catch(err){
     res.status(500).json({ message: err.message})
   }

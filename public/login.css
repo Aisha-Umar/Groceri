@@ -1,0 +1,102 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #E8F5E9; /* light mint green */
+  color: #1F3B2D;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  padding: 1rem;
+  text-align: center;
+  background: transparent;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* MAIN CONTAINER */
+.container {
+  margin-top: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.hero-img {
+  width: 75%;
+  max-width: 260px;
+  margin: 1rem auto 1.5rem;
+  display: block;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #375f4b;
+}
+
+/* BUTTON GROUP */
+.btn-group {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* BUTTON BASE */
+.btn {
+  display: block;
+  padding: 0.9rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* SIGN IN BUTTON */
+.btn-signin {
+  background-color: #4CAF50; /* green */
+}
+
+.btn-signin:hover {
+  background-color: #43A047;
+}
+
+/* CREATE ACCOUNT BUTTON */
+.btn-create {
+  background-color: #FFB74D; /* soft orange */
+  color: #4A2C00;
+}
+
+.btn-create:hover {
+  background-color: #FFA726;
+}
+
+/* Larger Screens */
+@media (min-width: 700px) {
+  .container {
+    max-width: 420px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  }
+
+  .hero-img {
+    width: 65%;
+  }
+}

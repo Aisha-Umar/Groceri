@@ -1,0 +1,160 @@
+/* style.css */
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+body {
+  background-color: #E8F5E9;
+  color: #1F3B2D;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 80px;
+  text-align: center;
+  gap: 20px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+}
+
+.btn-secondary:hover {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+/* Illustration */
+.hero-illustration img {
+  max-width: 80%;
+  height: auto;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media(min-width: 768px) {
+  .hero {
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: left;
+  }
+  .hero-content {
+    max-width: 50%;
+  }
+  .hero-illustration img {
+    max-width: 400px;
+  }
+}
+
+/* Animate Hero Illustration */
+.hero-illustration img {
+  max-width: 80%;
+  height: auto;
+  margin-top: 20px;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: floatUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animate Buttons */
+.btn, .btn-secondary {
+  transform: translateY(10px);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.btn {
+  animation-delay: 0.6s;
+}
+
+.btn-secondary {
+  animation-delay: 0.8s;
+}
+
+@keyframes fadeInUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Optional: Slight hover scale for buttons */
+.btn, .btn-secondary {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover, .btn-secondary:hover {
+  transform: scale(1.05);
+}

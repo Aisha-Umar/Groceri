@@ -3,8 +3,9 @@ const router = express.Router()
 const controller = require('../controllers/controllers')
 
 // Page route
-router.get('/', controller.getList)
-
+router.get('/', controller.getLanding)
+router.get('/', controller.getSignUp)
+router.get('/', controller.getLogin)
 router.get('/getList', controller.getList)
 router.post('/addItem', controller.addItem)
 router.delete('/deleteItem', controller.deleteItem)
