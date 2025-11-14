@@ -11,6 +11,8 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(cors())
 app.use('/', routes)
+app.use('/login', routes)
+app.use('signup', routes)
 app.use('/api', routes)
 
 app.set('view engine','ejs')
