@@ -18,7 +18,7 @@ const grocerySchema = new mongoose.Schema({
   quantity: Number,
   store: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Store",
+    ref: 'Store',
   },
 });
 const Grocery = mongoose.model('Grocery', grocerySchema)
