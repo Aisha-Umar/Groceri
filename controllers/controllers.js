@@ -99,3 +99,12 @@ exports.getLogin = async(req,res) => {
     res.status(500).json({ message: err.message})
   }
 }
+
+exports.signup = async(req,res) => {
+  try{
+    await User.create({username:req.body.name, email:req.body.email, password:req.body.password })
+    return res.redirect('/login')
+  }catch(err){
+    return res.status(500).json({message:'Try Again'})
+  }
+}
