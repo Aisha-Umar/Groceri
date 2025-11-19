@@ -1,4 +1,5 @@
-const Grocery = require("../models/item.js");
+const Grocery = require("../models/item.js")
+const User = require("../models/user.js")
 
 //Get landing page
 exports.getLanding = async(req, res) => {
