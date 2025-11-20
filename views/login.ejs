@@ -27,6 +27,12 @@
       </form>
       <p>Don't have an account? <a href="/signup">Sign Up</a></p>
     </div>
-  </main>
+    <% if(success_msg.length > 0){ %>
+      <div class="alert alert-success"><%= success_msg %></div>
+    <% } %>
+    <% if(error_msg.length > 0){ %>
+      <div class="alert alert-success"><%= error_msg %></div>
+    <% } %>
+    </main>
 </body>
 </html>

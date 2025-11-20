@@ -9,6 +9,9 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
 
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
 app.use(session({
   secret:'keyboard cat',
   resave: false,
@@ -16,6 +19,7 @@ app.use(session({
 }))
 
 app.use(flash())
+
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash("success_msg")
     res.locals.error_msg = req.flash("error_msg")
@@ -28,18 +32,12 @@ app.use(passport.session())
 app.set('view engine','ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
 app.use(express.static('public'))
 app.use(cors())
-
-app.use('/', require('./routes/auth'))
 app.use('/', routes)
 app.use('/login', routes)
 app.use('/signup', routes)
 app.use('/api', routes)
-
-
 
 const uri = process.env.MONGO_URI
 const PORT = process.env.PORT || 3000

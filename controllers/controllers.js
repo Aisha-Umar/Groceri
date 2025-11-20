@@ -4,19 +4,19 @@ const User = require("../models/user.js")
 //Get landing page
 exports.getLanding = async(req, res) => {
   try{
-    await res.render('landing')
+    await res.render('/')
   } catch(err){
     res.status(500).json({ message: err.message})
   }
 }
 
 // Get all items
-exports.getList = async (req, res) => {
+exports.getDashboard = async (req, res) => {
   try {
     //const storedItems = await Grocery.find();
     const storedItems = await Grocery.find().sort({ order: 1 }); // ascending order
     //res.json({ storedItems });
-    res.render('index', {storedItems})
+    res.render('dashboard', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -32,7 +32,7 @@ exports.addItem = async (req, res) => {
     await Grocery.create({ item: newItem });
     const storedItems = await Grocery.find();
     //res.json({ storedItems });
-    res.render('index', {storedItems})
+    res.render('dashboard', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -46,7 +46,7 @@ exports.editItem = async (req, res) => {
     await Grocery.findOneAndUpdate({ item: itemBeingEdited }, { item: newItem });
     const storedItems = await Grocery.find();
     //res.json({ storedItems });
-    res.render('index', {storedItems})
+    res.render('dashboard', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -60,7 +60,7 @@ exports.deleteItem = async (req, res) => {
     const storedItems = await Grocery.find();
     console.log('Item deleted')
     //res.json({ storedItems });
-    res.render('index', {storedItems})
+    res.render('dashboard', {storedItems})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -79,7 +79,7 @@ exports.saveOrder = async (req, res) => {
       const storedItems = await Grocery.find().sort({order:1})
       console.log(`This is the order after sorting by order ${storedItems}`)
      // res.status(200).json({ message: "Order updated"})
-      res.render('index', {storedItems})
+      res.render('dashboard', {storedItems})
   } catch(err){
     res.status(500).json({ message: err.message})
   }
@@ -110,5 +110,28 @@ exports.signup = async(req,res) => {
     console.error(err)
     req.flash("error_msg", "Something went wrong. Try Again")
     return res.redirect('/signup')
+  }
+}
+
+exports.login = async(req,res) => {
+  //compare name and password with the db
+  const {email,password} = req.body
+  try{
+    const user = await User.findOne({email})
+    if(!user){
+      req.flash("error_msg","User not found.")
+      return res.redirect('/login')
+    }
+    if(user.password !== password){
+      req.flash("error_msg", "Password doesn't match.")
+      return res.redirect('/login')
+    }
+    req.flash("success_msg", "Welcome!")
+    return res.redirect('/dashboard')
+  }
+  catch(err){
+    console.error(err)
+    req.flash("error_msg", "Something went wrong, try again")
+    return res.redirect('/login')
   }
 }
