@@ -3,53 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <!-- <link rel="stylesheet" href="styles2.css"> -->
-     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
-</head>
-
+    <title>HOMESTOCK</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
 <body>
-    <header class="header">
-        <img src="/images/logo.png" alt="Homestock Logo" class="logo">
-        <h1>Homestock</h1>
-    </header>
+    <div class="mobile-mockup">
+        <!-- <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Navigation</h2>
+            </div>
+            <ul class="sidebar-links">
+                <li><a href="#"><i class="fas fa-box"></i> My Pantry Stock</a></li>
+                <li><a href="#"><i class="fas fa-magic"></i> AI Recipe Suggestions</a></li>
+                <li><a href="#"><i class="fas fa-list-alt"></i> My Grocery Lists</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <p>&copy; HOMESTOCK 2025</p>
+            </div>
+        </nav> -->
+        <div class="screen-container">
+            <header class="header">
+                <div class="logo-user">
+                    <button id="menu-toggle" class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="logo">
+                        <i class="fas fa-home"></i> 
+                        <h1>HOMESTOCK</h1>
+                    </div>
+                    <div class="avatar-placeholder"></div>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search items..." value="">
+                </div>
+            </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Keep track, stay stocked.</h1>
-        <p>Add, organize, and share your grocery list with your family — never forget an item again.</p>
-        <a href="/signup" class="btn btn-primary">Get Started</a>
-    </div>
-    <div class="hero-image">
-        <img src="/images/hero-image2.png" alt="grocery bag">
-    </div>
-</section>
+            <main class="content">
+                <div class="no-items-message">
+                    <p>No matching items.</p>
+                    <p>Add it to your grocery list?</p>
+                    <button class="add-item-button large-button">Add Item</button>
+                </div>
+<div class="controls-bar">
+                    <div class="select-all">
+                        <input type="checkbox" id="select-all-checkbox">
+                        <label for="select-all-checkbox">Select All</label>
+                    </div>
 
-    <h3>Manage Your Shopping List</h3>
-    <h5>Add Your Items</h5>
-   <form id="add-item-form" class="add-form" autocomplete="off" aria-label="Add grocery item">
-    <input type="text" class="inputItem" id="itemInput" name="item" placeholder="Add item (e.g. Milk)" required>
-    <button type="submit" id="submitBtn" class="btn btn-primary">Add</button>
-</form>
-
-    <div class="grocery-list">
-        <ul class="groceryList">
-            <% storedItems.forEach(item=> { %>
-                <li draggable="true" data-id="<%= item._id %>">
-                    <span>
-                        <%= item.item %>
-                    </span>
-                    <!-- <div class="item-buttons">
-                        <button class="btn btn-edit">Edit</button>
-                        <button class="btn btn-delete">Delete</button>
-                    </div> -->
-                </li>
-                <% }) %>
+                    <div class="store-filter">
+                        <label for="store-select">Store:</label>
+                        <select id="store-select">
+                            <option value="all" selected>All Stores</option>
+                            <option value="walmart">Walmart</option>
+                            <option value="costco">Costco</option>
+                            <option value="shoprite">ShopRite</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="store-group">
+        <h3 class="store-header">🛒 Walmart</h3>
+        <ul class="item-list">
+            <li class="list-item" data-store="walmart">
+                <input type="checkbox" id="item5">
+                <label for="item5" class="item-details">
+                    <span class="emoji">🍞</span> Whole Wheat Bread
+                </label>
+                <!-- <span class="item-info">1</span> -->
+                <i class="fas fa-pencil-alt edit-icon"></i>
+            </li>
+            <li class="list-item" data-store="walmart">
+                <input type="checkbox" id="item6">
+                <label for="item6" class="item-details">
+                    <span class="emoji">🐔</span> Chicken Breast
+                </label>
+                <!-- <span class="item-info category">Meat</span> -->
+                <i class="fas fa-pencil-alt edit-icon"></i>
+            </li>
+            <li class="list-item" data-store="walmart">
+                <input type="checkbox" id="item7">
+                <label for="item7" class="item-details">
+                    <span class="emoji">🧼</span> Dish Soap
+                </label>
+                <!-- <span class="item-info category">Household</span> -->
+                <i class="fas fa-pencil-alt edit-icon"></i>
+            </li>
         </ul>
     </div>
-
-    <script src="/main.js"></script>
+    
+    <div class="store-group">
+        <h3 class="store-header">📦 Costco</h3>
+        <ul class="item-list">
+            <li class="list-item" data-store="costco">
+                <input type="checkbox" id="item1">
+                <label for="item1" class="item-details">
+                    <span class="emoji">🍎</span> Bananas
+                </label>
+                <!-- <span class="item-info">4</span> -->
+                <i class="fas fa-pencil-alt edit-icon"></i>
+            </li>
+            <li class="list-item" data-store="costco">
+                <input type="checkbox" id="item4">
+                <label for="item4" class="item-details">
+                    <span class="emoji">🧀</span> Cheese
+                </label>
+                <!-- <span class="item-info category">Dairy</span> -->
+                <i class="fas fa-pencil-alt edit-icon"></i>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="store-group">
+        <h3 class="store-header">🏠 Unassigned</h3>
+        <ul class="item-list">
+            <li class="list-item" data-store="unassigned">
+                <input type="checkbox" id="item2">
+                <label for="item2" class="item-details">
+                    <span class="emoji">🥕</span> Carrots
+                </label>
+                <!-- <span class="item-info category">Produce</span> -->
+                <i class="fas fa-pencil-alt edit-icon"></i>
+            </li>
+        </ul>
+    </div>
+            </main>
+        </div>
+         <footer class="footer-nav">
+                <div class="nav-item add-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add Item</span>
+                </div>
+                <div class="nav-item move-to-pantry">
+                    <i class="fas fa-box-open"></i>
+                    <span>Move to Pantry</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Delete Selected</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </footer>
+    </div>
 </body>
 </html>
+
 

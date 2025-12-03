@@ -1,0 +1,491 @@
+/* General Styling & Reset */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8a0a0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Color Variables */
+/* Color Variables - Precise Colors from Mockup */
+:root {
+    /* Primary brand color, used for the logo, checkmark border, and bold accents */
+    --primary-green: #3DAB85;       
+    
+    /* Very light green background color for the screen container */
+    --light-green: #E8F5E9;         
+    
+    /* Green color for the main 'Add Item' button */
+    --button-green: #71C89F;        
+    
+    /* Dark text color, used for list items and main headings */
+    --text-dark: #333333;          
+    
+    /* Lighter text color, used for search placeholder, categories, and footer icons */
+    --text-light: #707070;          
+    
+    /* White background for item list and footer/search bar */
+    --mockup-bg: #FFFFFF;
+    
+    /* Border color for separating list items */
+    --border-color: #EEEEEE;
+    
+    /* Shadow for mockup frame */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Specific component adjustments for color application: */
+
+.logo {
+    color: var(--primary-green);
+}
+
+.screen-container, .header, .content {
+    background-color: var(--light-green);
+}
+
+.search-bar i, .search-bar input::placeholder, .search-bar input {
+    color: var(--text-light); /* Apply light text color to search elements */
+}
+
+.large-button {
+    background-color: var(--button-green);
+    /* The text on the button is pure white */
+    color: #FFFFFF; 
+}
+
+/* Checkbox specific color match */
+.list-item input[type="checkbox"] {
+    border: 2px solid var(--primary-green);
+}
+
+.list-item input[type="checkbox"]:checked {
+    background-color: var(--primary-green);
+}
+
+/* List Item text */
+.item-details, .item-info {
+    color: var(--text-dark);
+}
+
+.item-info.category, .edit-icon {
+    color: var(--text-light);
+}
+
+/* Footer icons/text */
+.nav-item {
+    color: var(--text-light);
+}
+
+.nav-item.add-item i {
+    color: var(--primary-green);
+}
+
+.nav-item.add-item span {
+    /* The "Add Item" text is darker than the surrounding footer text */
+    color: var(--text-dark); 
+}
+
+/* Mobile Mockup Container */
+.mobile-mockup {
+    width: 100%;
+    max-width: 375px; /* Typical mobile width */
+    height: 812px; /* Typical mobile height */
+    background-color: var(--mockup-bg);
+    border-radius: 40px;
+    box-shadow: 0 0 20px var(--shadow-color), 0 0 0 10px #e0e0e0;
+    overflow: hidden;
+    position: relative;
+}
+
+.screen-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 0 15px; /* Side padding for the content */
+    background-color: var(--light-green); /* Light green background for the entire screen */
+}
+
+/* --- Header Section --- */
+.header {
+    padding: 20px 0 10px 0;
+    background-color: var(--light-green);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: var(--primary-green);
+}
+
+.logo h1 {
+    font-size: 24px;
+    margin: 0 0 0 8px;
+    font-weight: bold;
+}
+
+.logo i {
+    font-size: 28px;
+}
+
+.avatar-placeholder {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    /* Simulating the illustrated user image */
+    background: #FFD700 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><circle cx="250" cy="250" r="250" fill="%23FFE0B2"/><circle cx="250" cy="180" r="80" fill="%23FFECB3"/><path d="M150 450 Q250 350 350 450 Z" fill="%23FFE0B2"/><path d="M180 280 C200 300 300 300 320 280 C320 330 280 370 250 370 C220 370 180 330 180 280 Z" fill="%23FF8A65"/></svg>') no-repeat center center / cover;
+    border: 2px solid var(--primary-green);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--mockup-bg);
+    border-radius: 25px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar i {
+    color: var(--text-light);
+    margin-right: 10px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 16px;
+    background: transparent;
+}
+
+/* --- Main Content --- */
+.content {
+    flex-grow: 1;
+    background-color: var(--light-green); /* Ensure light green extends here */
+    padding-bottom: 80px; /* Space for the fixed footer */
+}
+
+.no-items-message {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--text-dark);
+}
+
+.no-items-message p {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.no-items-message p:first-child {
+    font-weight: bold;
+}
+
+.large-button {
+    background-color: var(--button-green);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 30px;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+}
+
+.large-button:hover {
+    background-color: var(--primary-green);
+}
+
+/* --- Item List --- */
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+    background-color: var(--mockup-bg);
+    border-radius: 20px;
+    overflow: hidden; /* To contain border-bottom of the last element */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 22px;
+    width: 22px;
+    background-color: #fff;
+    border: 2px solid var(--primary-green);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.list-item input[type="checkbox"]:checked {
+    background-color: var(--primary-green);
+}
+
+.list-item input[type="checkbox"]:checked::after {
+    content: '\2713'; /* Checkmark */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.item-details {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--text-dark);
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.emoji {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.item-info {
+    font-size: 16px;
+    color: var(--text-dark);
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
+.item-info.category {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: normal;
+}
+
+.edit-icon {
+    color: var(--text-light);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* --- Footer Navigation --- */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 375px;
+    background-color: var(--mockup-bg);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.nav-item.add-item i {
+    color: var(--primary-green);
+    font-size: 28px;
+}
+
+.nav-item.add-item span {
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+/* Specific styling for the plus button on the bottom left */
+.nav-item.add-item {
+    position: relative;
+    top: -5px; /* Visual adjustment to lift the icon slightly */
+}
+
+/* To match the mockup's unique Add Item button */
+.nav-item.add-item i {
+    background-color: var(--mockup-bg);
+    border-radius: 50%;
+    /* Simulating the rounded button on the mockup */
+    padding: 5px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* General Styling & Reset - (No Change) */
+/* ... (existing styles for body, :root, etc.) ... */
+
+/* Mobile Mockup Container - Base style for large viewports (e.g., desktop preview) */
+.mobile-mockup {
+    width: 100%;
+    max-width: 420px; /* Setting base max-width to 420px for the desktop view of the mockup */
+    height: 812px; 
+    background-color: var(--mockup-bg);
+    border-radius: 40px;
+    box-shadow: 0 0 20px var(--shadow-color), 0 0 0 10px #e0e0e0;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Screen container and content - (No change, these are flexible) */
+/* ... (existing styles for .screen-container, .header, .content, .item-list, etc.) ... */
+
+/* Footer Navigation - Base style for large viewports */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px; /* Setting base max-width to 420px for the desktop view of the mockup */
+    background-color: var(--mockup-bg);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 📱 Media Query for Mobile/Small Screens (Max-Width 420px) */
+/* This ensures the screen takes up the full width of the mobile viewport */
+@media (max-width: 420px) {
+    body {
+        padding: 0; /* Remove body padding so the mockup fills the screen */
+    }
+
+    .mobile-mockup {
+        /* On a small screen, remove the phone frame effect (shadow, radius) */
+        /* and make the UI take up the full screen height and width */
+        max-width: 100%; 
+        height: 100vh; /* Use full viewport height */
+        border-radius: 0;
+        box-shadow: none;
+        overflow: auto; /* Allow scrolling if content overflows */
+    }
+
+    .footer-nav {
+        /* Ensure the fixed footer spans the entire width of the mobile viewport */
+        max-width: 100%; 
+        border-radius: 0; /* Remove corner radius for full-width footer */
+    }
+}
+
+
+/* Color Variables - Precise Colors from Mockup */
+:root {
+    /* Primary brand color, used for the logo, checkmark border, and bold accents */
+    --primary-green: #3DAB85;       
+    
+    /* Very light green background color for the screen container */
+    --light-green: #E8F5E9;         
+    
+    /* Green color for the main 'Add Item' button */
+    --button-green: #71C89F;        
+    
+    /* Dark text color, used for list items and main headings */
+    --text-dark: #333333;          
+    
+    /* Lighter text color, used for search placeholder, categories, and footer icons */
+    --text-light: #707070;          
+    
+    /* White background for item list and footer/search bar */
+    --mockup-bg: #FFFFFF;
+    
+    /* Border color for separating list items */
+    --border-color: #EEEEEE;
+    
+    /* Shadow for mockup frame */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Specific component adjustments for color application: */
+
+.logo {
+    color: var(--primary-green);
+}
+
+.screen-container, .header, .content {
+    background-color: var(--light-green);
+}
+
+.search-bar i, .search-bar input::placeholder, .search-bar input {
+    color: var(--text-light); /* Apply light text color to search elements */
+}
+
+.large-button {
+    background-color: var(--button-green);
+    /* The text on the button is pure white */
+    color: #FFFFFF; 
+}
+
+/* Checkbox specific color match */
+.list-item input[type="checkbox"] {
+    border: 2px solid var(--primary-green);
+}
+
+.list-item input[type="checkbox"]:checked {
+    background-color: var(--primary-green);
+}
+
+/* List Item text */
+.item-details, .item-info {
+    color: var(--text-dark);
+}
+
+.item-info.category, .edit-icon {
+    color: var(--text-light);
+}
+
+/* Footer icons/text */
+.nav-item {
+    color: var(--text-light);
+}
+
+.nav-item.add-item i {
+    color: var(--primary-green);
+}
+
+.nav-item.add-item span {
+    /* The "Add Item" text is darker than the surrounding footer text */
+    color: var(--text-dark); 
+}

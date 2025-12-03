@@ -4,7 +4,7 @@ const User = require("../models/user.js")
 //Get landing page
 exports.getLanding = async(req, res) => {
   try{
-    await res.render('/')
+    await res.render('landing')
   } catch(err){
     res.status(500).json({ message: err.message})
   }
@@ -14,10 +14,11 @@ exports.getLanding = async(req, res) => {
 exports.getDashboard = async (req, res) => {
   try {
     //const storedItems = await Grocery.find();
-    const storedItems = await Grocery.find().sort({ order: 1 }); // ascending order
+    // const storedItems = await Grocery.find().sort({ order: 1 }); // ascending order
     //res.json({ storedItems });
-    res.render('dashboard', {storedItems})
-  } catch (err) {
+    // res.render('dashboard', {storedItems})
+  await res.render('dashboard'); // don't include .ejs
+} catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
