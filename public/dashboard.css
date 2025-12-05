@@ -1,7 +1,7 @@
 /* General Styling & Reset */
 body {
     font-family: 'Nunito', Arial, sans-serif; /* Applied Font Fix */
-    background-color: #f0f0f0;
+    background-color: #E4F5E8 !important;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -31,6 +31,7 @@ body {
     max-width: 375px; 
     height: 812px; 
     background-color: var(--mockup-bg);
+    background-color: var(--light-green) !important;
     border-radius: 40px;
     box-shadow: 0 0 20px var(--shadow-color), 0 0 0 10px #e0e0e0;
     overflow: hidden;
@@ -233,8 +234,8 @@ body {
     justify-content: space-around;
     padding: 10px 0;
     border-top: 1px solid var(--border-color);
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+    /* border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px; */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -737,7 +738,8 @@ body {
 /* --- App Wrapper (Handles Sidebar visibility on Desktop) --- */
 .mobile-mockup {
     /* Set a wider max width for a desktop view of the app */
-    max-width: 900px; 
+    /* max-width: 900px;  */
+    max-width: none;
     height: 100vh;
     border-radius: 0;
     box-shadow: none; 
@@ -747,7 +749,7 @@ body {
     
     /* NEW: Desktop Layout - Sidebar and Content side-by-side */
     display: flex; 
-    width: 100%;
+    /* width: 100%; */
 }
 
 /* --- Sidebar (Default: Visible on Desktop) --- */
@@ -778,10 +780,10 @@ body {
 .screen-container {
     height: 100%;
     flex-grow: 1; /* Takes up the rest of the 700px width */
-    max-width: 700px; /* Optional: cap the width of the main content column */
+    max-width: 1000px; /* Optional: cap the width of the main content column */
     display: flex;
     flex-direction: column;
-    padding: 0 15px 0 15px;
+    padding: 0;
     background-color: var(--light-green); 
 }
 
@@ -811,6 +813,19 @@ body {
     /* Content area adjustment */
     .screen-container {
         max-width: none; /* Let the content flex freely */
+        padding: 0 15px 0 15px;
+    }
+
+    /* Apply scrollbar clearance padding to all major top-level children */
+    .header,
+    .controls-bar,
+    .store-group {
+        padding-right: 25px; 
+        padding-left: 0; 
+    }
+
+    .footer-nav{
+        max-width:100%;
     }
 }
 
@@ -843,9 +858,19 @@ body {
     /* --- Content Area Mobile State --- */
     .screen-container {
         width: 100%; /* Full width */
-        padding: 0 15px; 
+        padding:0; 
     }
     
+    /* Apply horizontal padding directly to the inner elements where needed */
+    .header,
+    .controls-bar,
+    .store-group,
+    .sidebar-header,
+    .sidebar-footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
     /* Restore the menu toggle */
     .menu-toggle {
         display: block;
@@ -856,4 +881,321 @@ body {
     .footer-nav {
         max-width: 100%;
     }
+}
+
+.content{
+    flex-grow:1;
+    background-color: var(--light-green);
+    overflow-y:auto;
+    padding-bottom: 0;
+}
+
+.store-group:last-of-type{
+    padding-bottom: 150px;
+}
+
+/* 1. Mobile-First Base Styles (Applies to ALL screens, but optimized for mobile) */
+/* This would include all the simple, stacking, full-width styles */
+.mobile-mockup {
+    /* ... small screen stacking styles ... */
+    display: block;
+    max-width: 100%;
+}
+.menu-toggle {
+    display: block;
+}
+.sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+}
+
+/* 1. Mobile-First Base Styles (Applies to ALL screens, but optimized for mobile) */
+/* This would include all the simple, stacking, full-width styles */
+.mobile-mockup {
+    /* ... small screen stacking styles ... */
+    display: block;
+    max-width: 100%;
+}
+.menu-toggle {
+    display: block;
+}
+.sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+}
+
+/* Base Styles for Desktop (Scrollbar Fix) */
+.screen-container {
+    height: 100%;
+    flex-grow: 1;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    /* REVISED: Keep NO horizontal padding here to be safe */
+    padding: 0; 
+    background-color: var(--light-green); 
+}
+
+/* 2. Apply Scrollbar Clearance to Scrolling Children */
+/* These elements are direct children of the scrolling .content area */
+.store-group {
+    /* Set left padding for content alignment (e.g., 15px) */
+    padding-left: 15px; 
+    /* INCREASED SAFE ZONE: Add generous right padding for scrollbar clearance */
+    padding-right: 40px; 
+    margin-bottom: 20px;
+}
+
+/* 3. Ensure Header/Controls Bar Match the Scrollable Width */
+/* These elements are outside .content but need to match its width/padding */
+.header,
+.controls-bar {
+    /* Match the 15px content alignment on the left */
+    padding-left: 15px; 
+    /* Match the 40px scrollbar clearance on the right */
+    padding-right: 40px; 
+}
+
+/* Base Styles (Desktop: >= 769px) */
+.screen-container {
+    height: 100%;
+    flex-grow: 1; 
+    
+    /* REVISED: Enforce the maximum width for readability */
+    max-width: 900px;
+    
+    /* FIX 1: Allow it to shrink if needed, but only down to zero */
+    flex-shrink: 1; 
+    
+    /* FIX 2: Crucial—allows the element to use flex-grow but respect max-width */
+    flex-basis: auto; 
+
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: var(--light-green);
+    margin:0 auto;
+}
+
+.mobile-mockup {
+    width: 100%;
+    max-width: none; /* MUST be max-width: none */
+    height: 100vh;
+    display: flex; 
+}
+
+@media (min-width:780px){
+.footer-nav{
+    width:100%;
+    max-width:900px;
+}
+}
+
+/* =================================================================== */
+/* SIDEBAR STYLES (Mobile/Hidden State) */
+/* =================================================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px; /* Width of the panel */
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 100; 
+    
+    /* Initial state: Hidden off-screen */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+/* State when sidebar is visible (toggled by JavaScript) */
+.sidebar.active {
+    transform: translateX(0);
+}
+
+/* --- Sidebar Header --- */
+.sidebar-header {
+    padding: 20px 20px 10px;
+}
+
+.sidebar-header h2 {
+    font-size: 20px;
+    color: var(--primary-green);
+    margin: 0;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color); /* Separator line */
+    padding-bottom: 10px;
+}
+
+/* --- Sidebar Links --- */
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    flex-grow: 1; 
+}
+
+.sidebar-links li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--text-dark);
+    transition: background-color 0.2s;
+    font-weight: 400; /* Regular weight for links */
+}
+
+.sidebar-links li a:hover {
+    background-color: var(--border-color);
+}
+
+.sidebar-links i {
+    margin-right: 15px; /* Increased space for better separation */
+    color: var(--primary-green);
+    font-size: 18px;
+}
+
+/* --- Sidebar Footer --- */
+.sidebar-footer {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+/* =================================================================== */
+/* RESPONSIVE OVERRIDE (Hides menu toggle and makes sidebar permanent) */
+/* =================================================================== */
+
+@media (min-width: 901px) {
+    /* Hide the menu toggle button when the sidebar is permanent */
+    .menu-toggle {
+        display: none;
+    }
+    /* Override fixed position for permanent display */
+    .sidebar {
+        position: relative;
+        transform: translateX(0);
+        width: 200px; /* Adjust width for desktop spacing */
+        box-shadow: none;
+    }
+}
+
+/* =================================================================== */
+/* 4. MOBILE OVERRIDES (Max-width 420px) - Toggle Sidebar */
+/* =================================================================== */
+
+@media (max-width: 420px) {
+    /* ... (other mobile styles retained) ... */
+    
+    /* --- SIDEBAR MOBILE STATE FIX --- */
+    .sidebar {
+        /* ENSURE it is fixed on mobile to slide over content */
+        position: fixed; 
+        
+        /* ENSURE it is hidden by default */
+        transform: translateX(-100%); 
+        
+        /* Re-apply the transition for smooth sliding */
+        transition: transform 0.3s ease-in-out;
+        
+        /* Ensure it's above all content */
+        z-index: 100;
+        
+        /* Ensure the desktop 'width' doesn't apply */
+        width: 280px;
+    }
+    
+    /* Ensure the active state is visible when JS runs */
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Restore the menu toggle visibility on mobile */
+    .menu-toggle {
+        display: block;
+        /* ... other menu-toggle styles ... */
+    }
+    
+    /* ... (rest of mobile styles retained) ... */
+}
+
+@media (max-width: 420px) {
+    /* --- SIDEBAR MOBILE STATE FIX (FORCED HIDE) --- */
+    .sidebar {
+        /* Force fixed position over any relative/static definition */
+        position: fixed !important; 
+        
+        /* Force hidden state over any desktop transform: translateX(0) */
+        transform: translateX(-100%) !important; 
+        
+        /* Ensure it sits on top of all content */
+        z-index: 1000 !important; 
+        
+        width: 280px;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    /* Ensure the active state is stronger than the hidden state when toggled */
+    .sidebar.active {
+        transform: translateX(0) !important;
+    }
+    
+    /* --- Other Mobile Overrides Retained --- */
+    .mobile-mockup, 
+    .footer-nav {
+        max-width: 100%; 
+    }
+    .mobile-mockup {
+        display: block;
+    }
+    .menu-toggle {
+        display: flex;
+        order: -1;
+        position: relative;
+        z-index: 20;
+    }
+    .header, .controls-bar, .store-group {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .screen-container {
+        padding: 0;
+    }
+}
+
+@media (min-width: 901px) {
+    /* ... other desktop styles ... */
+
+    /* ENSURE the layout is set correctly */
+    .mobile-mockup {
+        display: flex; /* Sidebar and Content side-by-side */
+    }
+    
+    /* Sidebar must be a flex item */
+    .sidebar {
+        position: relative; 
+        flex-shrink: 0; /* Prevents sidebar from collapsing */
+        width: 200px;
+        transform: translateX(0);
+    }
+    
+    /* Screen container must take the rest of the space */
+    .screen-container {
+        flex-grow: 1; 
+        max-width: 900px;
+        flex-basis: auto; 
+        margin: 0 auto;
+        /* Ensure content scrolls vertically */
+        overflow-y: hidden; /* Or auto, but definitely not hidden on the container */
+    }
+
+    /* ... scrollbar and footer fixes ... */
 }

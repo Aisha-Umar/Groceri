@@ -26,6 +26,12 @@ let itemBeingEdited = null;
 //   }
 // });
 
+document.getElementById('menu-toggle').onclick = function() {
+  console.log('menu toggle clicked')
+    // Toggles the 'active' class on the sidebar element
+    document.getElementById('sidebar').classList.toggle('active');
+};
+
 list.addEventListener("click", (e) => {
   if (e.target.closest(".btn-edit")) {
     const li = e.target.closest("li");
