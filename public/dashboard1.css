@@ -1,25 +1,30 @@
-/* =================================================================== */
-/* 1. COLOR VARIABLES AND GLOBAL RESET */
-/* =================================================================== */
 
+/* =================================================================== */
+/* 1. ROOT VARIABLES */
+/* =================================================================== */
 :root {
-    --primary-green: #3DAB85;       
-    --light-green: #E8F5E9;         
-    --button-green: #71C89F;        
-    --sidebar-bg: #FFFFFF;          
-    --text-dark: #333333;          
-    --text-light: #707070;          
-    --mockup-bg: #FFFFFF;          
-    --border-color: #EEEEEE;        
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --action-delete-red: #E74C3C;   
-    --action-notify-blue: #3498DB; 
-    --action-logout-orange: #F39C12;
+    --primary-green: #3DAB85;        /* Logo, checkmark border, bold accents */
+    --light-green: #E8F5E9;          /* Very light background green */
+    --button-green: #71C89F;         /* Main 'Add Item' button */
+    --text-dark: #333333;            /* Dark text */
+    --text-light: #707070;           /* Light text for categories/search/footer */
+    --border-color: #EEEEEE;         /* Border for lists */
+    --mockup-bg: #FFFFFF;            /* White background for mockup */
+    --shadow-color: rgba(0,0,0,0.1); /* Shadow for mockup */
+    --sidebar-bg: #FFFFFF;           /* Sidebar background */
+
+    /* Footer action colors */
+    --action-delete-red: #E74C3C;    
+    --action-notify-blue: #3498DB;   
+    --action-logout-orange: #F39C12; 
 }
 
+/* =================================================================== */
+/* 2. GLOBAL RESET / BASE STYLES */
+/* =================================================================== */
 body {
     font-family: 'Nunito', Arial, sans-serif;
-    background-color: var(--light-green); 
+    background-color: var(--light-green);
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -31,181 +36,466 @@ body {
 }
 
 /* =================================================================== */
-/* 2. BASE/MOBILE-FIRST STYLES (Applies to ALL screens <= 420px) */
+/* 3. MOBILE MOCKUP / APP WRAPPER */
 /* =================================================================== */
-
-/* --- APP WRAPPER (Mobile Stacking) --- */
 .mobile-mockup {
     width: 100%;
-    max-width: 100%; 
+    max-width: 100%;
     height: 100vh;
+    display: block;
+    position: relative;
     background-color: var(--mockup-bg);
     overflow: hidden;
-    position: relative;
-    display: block; /* Stacks content and sidebar */
 }
 
-/* --- MENU TOGGLE (Visible by default) --- */
+.screen-container {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    background-color: var(--light-green);
+}
+
+/* =================================================================== */
+/* 4. HEADER / LOGO / SEARCH BAR */
+/* =================================================================== */
+.header {
+    padding: 20px 0 10px 0;
+    background-color: var(--light-green);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: var(--primary-green);
+}
+
+.logo h1 {
+    font-size: 24px;
+    margin-left: 8px;
+    font-weight: 700;
+}
+
+.logo i {
+    font-size: 28px;
+}
+
+.avatar-placeholder {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #ff7e67;
+    border: 2px solid var(--primary-green);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--mockup-bg);
+    border-radius: 25px;
+    padding: 12px 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 0;
+}
+
+.search-bar i {
+    color: var(--text-light);
+    margin-right: 10px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 16px;
+    background: transparent;
+    color: var(--text-light);
+}
+
+/* Menu Toggle */
 .menu-toggle {
-    background: none; border: none; cursor: pointer;
+    background: none;
+    border: none;
+    cursor: pointer;
     color: var(--primary-green);
     font-size: 28px;
     padding: 5px 10px 5px 0;
-    margin-right: 15px; 
-    display: flex; /* Ensures it is visible on mobile */
+    margin-right: 15px;
+    display: flex;
     align-items: center;
-    order: -1; 
+    justify-content: center;
+    transition: color 0.2s ease-in-out;
+    order: -1;
 }
 
-/* --- SIDEBAR (Initial Mobile/Hidden State FIX) --- */
+.menu-toggle:hover,
+.menu-toggle:focus {
+    color: var(--text-dark);
+    outline: none;
+}
+
+/* =================================================================== */
+/* 5. CONTENT AREA / ITEM LISTS */
+/* =================================================================== */
+.content {
+    flex-grow: 1;
+    background-color: var(--light-green);
+    overflow-y: auto;
+    padding-bottom: 0;
+}
+
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-top: 5px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.store-group:last-of-type {
+    padding-bottom: 150px;
+}
+
+.store-group {
+    padding-left: 15px;
+    padding-right: 40px;
+    margin-bottom: 20px;
+}
+
+.select-all {
+    display: flex;
+    align-items: center;
+}
+
+.select-all input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid var(--primary-green);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.select-all input[type="checkbox"]:checked {
+    background-color: var(--primary-green);
+}
+
+.select-all input[type="checkbox"]:checked::after {
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.select-all label {
+    font-size: 15px;
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.store-filter {
+    display: flex;
+    align-items: center;
+}
+
+.store-filter label {
+    font-size: 14px;
+    color: var(--text-dark);
+    margin-right: 5px;
+}
+
+.store-filter select {
+    background-color: var(--mockup-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 6px 15px;
+    font-size: 14px;
+    color: var(--text-dark);
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23707070'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 30px;
+}
+
+.store-filter select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+}
+
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--mockup-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 22px;
+    width: 22px;
+    background-color: #fff;
+    border: 2px solid var(--primary-green);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 15px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.list-item input[type="checkbox"]:checked {
+    background-color: var(--primary-green);
+}
+
+.item-details {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: var(--text-dark);
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.emoji {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.item-info {
+    font-size: 16px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin: 0 15px 0 10px;
+}
+
+.item-info.category {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+.edit-icon {
+    color: var(--text-light);
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.no-items-message {
+    text-align: center;
+    padding: 10px 0;
+    color: var(--text-dark);
+}
+
+.no-items-message p {
+    margin: 3px 0;
+    font-size: 16px;
+    line-height: 1.3;
+}
+
+.no-items-message p:first-child {
+    font-weight: 700;
+}
+
+.large-button {
+    background-color: var(--button-green);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 25px;
+    font-size: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-weight: 700;
+}
+
+/* =================================================================== */
+/* 6. FOOTER NAVIGATION */
+/* =================================================================== */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--mockup-bg);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+    flex-basis: 18%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 5px 2px;
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.nav-item.add-item i {
+    color: var(--primary-green);
+    font-size: 28px;
+    background-color: var(--mockup-bg);
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-item.add-item span {
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.nav-item.move-to-pantry i {
+    color: var(--primary-green);
+    font-size: 20px;
+}
+
+.nav-item.move-to-pantry span {
+    color: var(--text-dark);
+}
+
+.nav-item i.fa-trash-alt { color: var(--action-delete-red); }
+.nav-item:has(i.fa-trash-alt) span { color: var(--action-delete-red); }
+
+.nav-item i.fa-bell { color: var(--action-notify-blue); }
+.nav-item:has(i.fa-bell) span { color: var(--text-dark); }
+
+.nav-item i.fa-sign-out-alt { color: var(--action-logout-orange); }
+.nav-item:has(i.fa-sign-out-alt) span { color: var(--text-dark); }
+
+/* =================================================================== */
+/* 7. SIDEBAR */
+/* =================================================================== */
 .sidebar {
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     width: 280px;
     height: 100%;
     background-color: var(--sidebar-bg);
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 0 10px rgba(0,0,0,0.2);
     z-index: 100;
-    
-    /* FIX: Initial state: Hidden off-screen */
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
-    
     display: flex;
     flex-direction: column;
     padding: 20px 0;
 }
-.sidebar.active {
-    transform: translateX(0);
+
+.sidebar.active { transform: translateX(0); }
+
+.sidebar-header { padding: 20px 20px 10px; }
+.sidebar-header h2 {
+    font-size: 20px;
+    color: var(--primary-green);
+    margin: 0;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
 }
-/* Sidebar interior styles retained */
-.sidebar-header, .sidebar-links li a { padding: 15px 20px; }
 
-
-/* --- SCREEN CONTAINER (Full width on mobile, inner padding) --- */
-.screen-container {
-    height: 100%;
-    width: 100%; 
+.sidebar-links { list-style: none; padding: 0; margin: 10px 0; flex-grow: 1; }
+.sidebar-links li a {
     display: flex;
-    flex-direction: column;
-    padding: 0; /* No container padding on mobile */
-    background-color: var(--light-green); 
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--text-dark);
+    transition: background-color 0.2s;
+    font-weight: 400;
 }
+.sidebar-links li a:hover { background-color: var(--border-color); }
+.sidebar-links i { margin-right: 15px; color: var(--primary-green); font-size: 18px; }
 
-/* --- HEADER & CONTROLS (Mobile Padding) --- */
-.header, .controls-bar, .store-group {
-    padding-left: 15px;
-    padding-right: 15px;
+.sidebar-footer {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-light);
 }
-.header { padding-top: 20px; padding-bottom: 10px; }
-.controls-bar { padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
-
-
-/* --- CONTENT & SCROLLING --- */
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-    background-color: var(--light-green);
-    padding-bottom: 0;
-}
-.store-group:last-of-type {
-    padding-bottom: 150px; /* Generous padding to clear fixed footer */
-}
-
-/* --- FOOTER NAVIGATION (Mobile/Fixed State) --- */
-.footer-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 100%; /* Ensures it fills the screen width */
-    /* Other footer styles retained */
-}
-
 
 /* =================================================================== */
-/* 3. TABLET OVERRIDES (421px to 900px) - Fixed Sidebar/Fixed Footer */
+/* 8. MEDIA QUERIES */
 /* =================================================================== */
 
-@media (min-width: 421px) and (max-width: 900px) {
-    
-    .mobile-mockup {
-        display: flex; /* Horizontal Layout */
-    }
-    
-    /* --- SIDEBAR (Permanent but narrower) --- */
-    .sidebar {
-        position: relative; 
-        transform: translateX(0); 
-        transition: none;
-        width: 160px; /* Narrower width */
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* --- SCROLLBAR CLEARANCE (Tablet) --- */
-    /* Add 25px right padding for scrollbar clearance */
-    .header, .controls-bar {
-        padding-right: 25px; 
-    }
-    .store-group {
-        padding-right: 25px;
-        padding-left: 15px;
-    }
-    
-    /* Hide the menu toggle */
-    .menu-toggle {
-        display: none;
-    }
+/* Mobile <=420px */
+@media (max-width: 420px) {
+    .mobile-mockup { max-width: 100%; display: block; border-radius:0; }
+    .sidebar { width: 280px; position: fixed; transform: translateX(-100%); transition: transform 0.3s ease-in-out; z-index:100; }
+    .sidebar.active { transform: translateX(0); }
+    .screen-container { width: 100%; padding: 0; }
+    .header, .controls-bar, .store-group, .sidebar-header, .sidebar-footer { padding-left: 15px; padding-right: 15px; }
+    .menu-toggle { display: block; order: -1; }
+    .footer-nav { max-width: 100%; }
 }
 
-
-/* =================================================================== */
-/* 4. DESKTOP OVERRIDES (min-width 901px) - Fluid Footer/Permanent Sidebar */
-/* =================================================================== */
-
-@media (min-width: 901px) {
-    
-    /* --- APP WRAPPER (Fluid Layout) --- */
-    .mobile-mockup {
-        max-width: none; 
-    }
-
-    /* --- SIDEBAR (Full permanent width) --- */
-    .sidebar {
-        width: 200px;
-        box-shadow: none;
-    }
-    
-    /* --- SCREEN CONTAINER (Content Max-Width Fix) --- */
-    .screen-container {
-        flex-grow: 1;
-        max-width: 900px; /* FIX: Enforce max-width for readability */
-        flex-basis: auto; 
-        margin: 0 auto; /* Center the container */
-    }
-
-    /* --- SCROLLBAR CLEARANCE (Desktop) --- */
-    .header, .controls-bar {
-        padding-left: 15px; 
-        padding-right: 40px; /* 40px clearance */
-    }
-    .store-group {
-        padding-left: 15px; 
-        padding-right: 40px; 
-    }
-
-    /* --- FOOTER (Fluid/Relative Position Fix) --- */
-    .footer-nav {
-        position: relative; /* FIX: Change to flow with content */
-        bottom: auto; 
-        max-width: none; 
-        margin-top: 20px;
-        padding-bottom: 0;
-    }
-    
-    /* FIX: Remove the large padding added to clear the fixed footer */
-    .store-group:last-of-type {
-        padding-bottom: 20px; 
-    }
+/* Tablet 421px-768px */
+@media (min-width: 421px) and (max-width: 768px) {
+    .mobile-mockup { max-width: 768px; display: flex; }
+    .sidebar { width: 160px; position: relative; }
+    .menu-toggle { display: none; }
+    .screen-container { max-width: none; padding:0 15px; }
+    .header, .controls-bar, .store-group { padding-left: 0; padding-right: 25px; }
+    .footer-nav { max-width: 100%; }
 }
 
+/* Desktop >=769px */
+@media (min-width: 769px) {
+    .mobile-mockup { max-width: none; display: flex; }
+    .screen-container { max-width: 900px; margin: 0 auto; }
+    .footer-nav { max-width: 900px; width: 100%; }
+    .menu-toggle { display: none; }
+    .sidebar { position: relative; transform: translateX(0); width: 200px; }
+}
