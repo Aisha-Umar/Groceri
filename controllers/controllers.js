@@ -86,53 +86,36 @@ exports.saveOrder = async (req, res) => {
   }
 }
 
-exports.getSignUp = async(req,res) => {
-  try{
-    await res.render('signup')
-  } catch(err){
-    res.status(500).json({ message: err.message})
-  }
-}
+// exports.getSignUp = async(req,res) => {
+//   try{
+//     await res.render('signup')
+//   } catch(err){
+//     res.status(500).json({ message: err.message})
+//   }
+// }
 
-exports.getLogin = async(req,res) => {
-  try{
-    await res.render('login')
-  } catch(err){
-    res.status(500).json({ message: err.message})
-  }
-}
 
-exports.signup = async(req,res) => {
-  try{
-    await User.create({username:req.body.name, email:req.body.email, password:req.body.password })
-    req.flash("success_msg", "Account created! You can now log in." )
-    return res.redirect('/login')
-  }catch(err){
-    console.error(err)
-    req.flash("error_msg", "Something went wrong. Try Again")
-    return res.redirect('/signup')
-  }
-}
 
-exports.login = async(req,res) => {
-  //compare name and password with the db
-  const {email,password} = req.body
-  try{
-    const user = await User.findOne({email})
-    if(!user){
-      req.flash("error_msg","User not found.")
-      return res.redirect('/login')
-    }
-    if(user.password !== password){
-      req.flash("error_msg", "Password doesn't match.")
-      return res.redirect('/login')
-    }
-    req.flash("success_msg", "Welcome!")
-    return res.redirect('/dashboard')
-  }
-  catch(err){
-    console.error(err)
-    req.flash("error_msg", "Something went wrong, try again")
-    return res.redirect('/login')
-  }
-}
+
+// exports.login = async(req,res) => {
+//   //compare name and password with the db
+//   const {email,password} = req.body
+//   try{
+//     const user = await User.findOne({email})
+//     if(!user){
+//       req.flash("error_msg","User not found.")
+//       return res.redirect('/login')
+//     }
+//     if(user.password !== password){
+//       req.flash("error_msg", "Password doesn't match.")
+//       return res.redirect('/login')
+//     }
+//     req.flash("success_msg", "Welcome!")
+//     return res.redirect('/dashboard')
+//   }
+//   catch(err){
+//     console.error(err)
+//     req.flash("error_msg", "Something went wrong, try again")
+//     return res.redirect('/login')
+//   }
+// }

@@ -24,3 +24,12 @@ exports.signup = async (req, res) => {
 };
 
 
+exports.getSignUp = async(req,res) => {
+  try{
+    await res.render('signup')
+  } catch(err){
+    res.status(500).json({ message: err.message})
+  }
+}
+
+

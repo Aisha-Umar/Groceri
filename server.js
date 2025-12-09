@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
+require("./config/passport")(passport)
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
