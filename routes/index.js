@@ -4,7 +4,6 @@ const controller = require('../controllers/controllers')
 
 // Page route
 router.get('/', controller.getLanding)
-router.get('/dashboard', controller.getDashboard)
 router.post('/addItem', controller.addItem)
 router.delete('/deleteItem', controller.deleteItem)
 router.put('/editItem', controller.editItem)
