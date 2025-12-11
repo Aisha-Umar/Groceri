@@ -1,8 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const routes = require('./routes')
-const authroutes = require('./routes/auth')
+const indexRoutes = require('./routes/index')
+const authRoutes = require('./routes/auth')
 const path = require("path")
 require('dotenv').config()
 const mongoose = require('mongoose')
@@ -18,8 +18,13 @@ app.use(express.json())
 app.use(session({
   secret:'keyboard cat',
   resave: false,
-  saveUninitialized:false
+  saveUninitialized:false,
+  cookie: { secure: false },
 }))
+
+//Passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Flash
 app.use(flash())
@@ -31,19 +36,19 @@ app.use((req, res, next) => {
     next()
 })
 
-//Passport middleware
-app.use(passport.initialize())
-app.use(passport.session())
+
 
 app.set('view engine','ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static('public'))
 app.use(cors())
-app.use('/', routes)
-app.use('/login', authroutes)
-app.use('/signup', authroutes)
-app.use('/api', routes)
+app.use('/', indexRoutes)
+app.use('/', authRoutes)
+// app.use('/login', authroutes)
+// app.use('/signup', authroutes)
+app.use('/api', indexRoutes)
+
 
 const uri = process.env.MONGO_URI
 const PORT = process.env.PORT || 3000

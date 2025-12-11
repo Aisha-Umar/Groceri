@@ -10,9 +10,5 @@ exports.login = (req, res, next) => {
 
 
 exports.getLogin = async(req,res) => {
-  try{
-    await res.render('login')
-  } catch(err){
-    res.status(500).json({ message: err.message})
-  }
+  res.render('login')
 }
