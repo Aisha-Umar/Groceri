@@ -7,7 +7,7 @@ const path = require("path")
 require('dotenv').config()
 const mongoose = require('mongoose')
 const session = require('express-session')
-const flash = require('connect-flash')
+const flash = require('express-flash')
 const passport = require('passport')
 require("./config/passport")(passport)
 
@@ -37,16 +37,14 @@ app.use((req, res, next) => {
 })
 
 
-
+app.use(cors())
+app.use(express.static('public'))
 app.set('view engine','ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.use(express.static('public'))
-app.use(cors())
+
 app.use('/', indexRoutes)
 app.use('/', authRoutes)
-// app.use('/login', authroutes)
-// app.use('/signup', authroutes)
 app.use('/api', indexRoutes)
 
 
