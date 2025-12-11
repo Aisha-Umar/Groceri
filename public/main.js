@@ -26,11 +26,25 @@ let itemBeingEdited = null;
 //   }
 // });
 
-document.getElementById('menu-toggle').onclick = function() {
-  console.log('menu toggle clicked')
-    // Toggles the 'active' class on the sidebar element
-    document.getElementById('sidebar').classList.toggle('active');
-};
+    const toggleBtn = document.getElementById('menu-toggle');       // Hamburger icon
+    const sidebar = document.getElementById('sidebar');             
+    const closeBtn = document.getElementById('close-sidebar');      // The new 'X' icon
+
+    // Single function to toggle the class
+    const toggleSidebar = () => {
+        sidebar.classList.toggle('active');
+    };
+
+    // 1. Open Button (Hamburger)
+    if (toggleBtn) {
+        toggleBtn.onclick = toggleSidebar;
+    }
+    
+    // 2. Close Button (X icon)
+    if (closeBtn) {
+        closeBtn.onclick = toggleSidebar;
+    }
+
 
 list.addEventListener("click", (e) => {
   if (e.target.closest(".btn-edit")) {

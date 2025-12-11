@@ -417,7 +417,7 @@ body {
 /* =================================================================== */
 /* 7. SIDEBAR */
 /* =================================================================== */
-.sidebar {
+.sidebar{
     position: fixed;
     top: 0;
     left: 0;
@@ -434,8 +434,21 @@ body {
 }
 
 .sidebar.active { transform: translateX(0); }
+.sidebar-header {
+    display: flex;
+    justify-content: space-between; /* Pushes the close button to the right */
+    align-items: center;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid var(--border-color);
+}
 
-.sidebar-header { padding: 20px 20px 10px; }
+/* Style the close button to look like the open button, but positioned correctly */
+#close-sidebar {
+    font-size: 24px; /* Slightly smaller than the main header icon */
+    color: var(--text-light); /* Maybe a lighter color */
+    padding: 0;
+    margin: 0;
+}
 .sidebar-header h2 {
     font-size: 20px;
     color: var(--primary-green);
