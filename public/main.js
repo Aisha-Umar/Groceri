@@ -3,29 +3,7 @@ const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
 let itemBeingEdited = null;
 
-
-// groceryList.addEventListener('dragstart', (e) => {
-//   if (e.target && e.target.tagName === 'LI') {
-//     e.target.classList.add('dragging');
-//   }
-// });
-
-// groceryList.addEventListener('dragend', (e) => {
-//   if (e.target && e.target.tagName === 'LI') {
-//     e.target.classList.remove('dragging');
-//   }
-// });
-
-// Edit an item
-// list.addEventListener("click", (e) => {
-  //if (e.target.classList.contains("btn-edit")) {
-//     if(e.target.closest('.btn-edit')){  
-//   itemBeingEdited = e.target.parentElement.querySelector("span").textContent;
-//     input.value = itemBeingEdited;
-//     input.focus();
-//   }
-// });
-
+/*==================TOGGLE-BTN=================*/
     const toggleBtn = document.getElementById('menu-toggle');       // Hamburger icon
     const sidebar = document.getElementById('sidebar');             
     const closeBtn = document.getElementById('close-sidebar');      // The new 'X' icon
@@ -44,6 +22,40 @@ let itemBeingEdited = null;
     if (closeBtn) {
         closeBtn.onclick = toggleSidebar;
     }
+
+/*======================SEARCH BAR==========================*/  
+const inputSearch = document.getElementById("inputSearch");
+//params: input
+//return: word matched, word not matched, display msg
+//apple -> apple found
+
+inputSearch.addEventListener('keyup', getAllItems)
+async function getAllItems() {
+  //get input
+  let input = inputSearch.value;
+  //get pantry items
+  let res = await fetch("../api/getAllItems", {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
+  });
+  let data = await res.json();
+  //filter pantry with each input value
+      Array.from(data).forEach(item =>{
+        if(item.includes(input)){
+          inputSearch.value=item
+        }
+        else if(item === input){
+          //display item found
+        }
+        else{
+          //display item not found
+        }
+      })
+}
+
+
+
+
 
 
 list.addEventListener("click", (e) => {

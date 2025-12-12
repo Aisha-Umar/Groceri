@@ -86,36 +86,23 @@ exports.saveOrder = async (req, res) => {
   }
 }
 
-// exports.getSignUp = async(req,res) => {
-//   try{
-//     await res.render('signup')
-//   } catch(err){
-//     res.status(500).json({ message: err.message})
-//   }
-// }
+exports.getAllItems = async (req, res) =>{
+  try{
+  const allItems = await Pantry.find({user:req.user.id})
+  res.json(allItems)
+}catch(err){
+  res.status(500).json({message: err.message})
+}
+}
 
-
-
-
-// exports.login = async(req,res) => {
-//   //compare name and password with the db
-//   const {email,password} = req.body
-//   try{
-//     const user = await User.findOne({email})
-//     if(!user){
-//       req.flash("error_msg","User not found.")
-//       return res.redirect('/login')
-//     }
-//     if(user.password !== password){
-//       req.flash("error_msg", "Password doesn't match.")
-//       return res.redirect('/login')
-//     }
-//     req.flash("success_msg", "Welcome!")
-//     return res.redirect('/dashboard')
-//   }
-//   catch(err){
-//     console.error(err)
-//     req.flash("error_msg", "Something went wrong, try again")
-//     return res.redirect('/login')
-//   }
-// }
+exports.moveToPantry = async (req, res) =>{
+  try{
+  const allItemsToAdd = allItemsToAdd.map(item =>({
+    ...item, userId: req.user.id
+  }))
+  await Pantry.insertMany(allItemsToAdd)
+} catch (err) {
+    console.error(err)
+    res.status(500).send("Server error")
+  }
+}
