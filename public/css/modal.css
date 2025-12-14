@@ -1,0 +1,180 @@
+/* =================================================================== */
+/* MODAL STYLES (Add to style.css) */
+/* =================================================================== */
+
+/* 1. The Overlay (Background Dimmer) */
+.modal-overlay {
+    position: absolute; /* Keeps it inside the mobile mockup wrapper */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+    backdrop-filter: blur(4px); /* Glassmorphism blur effect */
+    z-index: 200; /* Highest layer */
+    
+    /* Flexbox for perfect centering */
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    
+    /* Animation fade in */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Active State for JS toggle */
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* 2. The Modal Card */
+.modal-container {
+    background-color: #FFFFFF;
+    width: 85%; /* Responsive width */
+    max-width: 340px;
+    border-radius: 25px; /* Matches your rounded theme */
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop-in */
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+
+/* 3. Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--primary-green);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: var(--action-delete-red);
+}
+
+/* 4. Inputs & Form Styling */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+    margin-left: 5px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Icons inside inputs */
+.input-wrapper i {
+    position: absolute;
+    left: 15px;
+    color: var(--primary-green);
+    font-size: 16px;
+    pointer-events: none; /* Allows clicking through to input */
+}
+
+/* The Input Fields */
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    padding: 12px 15px 12px 40px; /* Left padding creates space for icon */
+    border: 2px solid var(--light-green); /* Subtle green border */
+    background-color: #F9FDF9; /* Very faint green tint bg */
+    border-radius: 15px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.2s;
+    appearance: none; /* Removes default select styling */
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+    border-color: var(--primary-green);
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(61, 171, 133, 0.1);
+}
+
+/* Special styling for the select dropdown arrow */
+.input-wrapper .select-arrow {
+    left: auto; /* Unset left */
+    right: 15px; /* Set right */
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+/* 5. Layout Helpers */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.half-width {
+    width: 50%;
+}
+
+/* 6. Footer Buttons */
+.modal-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.modal-footer button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.1s;
+}
+
+.modal-footer button:active {
+    transform: scale(0.96);
+}
+
+.btn-secondary {
+    background-color: #F0F0F0;
+    color: var(--text-light);
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    color: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(61, 171, 133, 0.3);
+}

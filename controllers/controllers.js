@@ -97,7 +97,7 @@ exports.getAllItems = async (req, res) =>{
 
 exports.moveToPantry = async (req, res) =>{
   try{
-  const allItemsToAdd = allItemsToAdd.map(item =>({
+  const allItemsToAdd = req.body.items.map(item =>({
     ...item, userId: req.user.id
   }))
   await Pantry.insertMany(allItemsToAdd)

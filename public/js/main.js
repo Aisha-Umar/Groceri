@@ -3,6 +3,10 @@ const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
 let itemBeingEdited = null;
 
+//================ ADD ITEM =========================//
+
+
+
 /*==================TOGGLE-BTN=================*/
     const toggleBtn = document.getElementById('menu-toggle');       // Hamburger icon
     const sidebar = document.getElementById('sidebar');             
@@ -54,7 +58,10 @@ async function getAllItems() {
 }
 
 
-
+//=====================MOVE TO PANTRY ======================//
+//loop over the list and choose the selected items and put them in an array
+//if checkbox is selected in a list, get textContent and add it to an array
+//select the DOM elements
 
 
 
