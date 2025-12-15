@@ -10,5 +10,6 @@ router.put('/editItem', controller.editItem)
 router.put('/saveOrder', controller.saveOrder)
 router.get('/getAllItems', controller.getAllItems)
 router.post('/moveToPantry', controller.moveToPantry)
+router.post('/saveItem', controller.saveItem)
 
 module.exports = router

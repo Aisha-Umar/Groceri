@@ -24,16 +24,11 @@ exports.getDashboard = async (req, res) => {
 };
 
 // Add a new item
-exports.addItem = async (req, res) => {
-  const { newItem } = req.body;
-  if (!newItem) {
-    return res.status(400).json({ message: "Item name is required" });
-  }
+exports.saveItem = async (req, res) => {
+  const { item,quantity,sort,note } = req.body;
   try {
-    await Grocery.create({ item: newItem });
-    const storedItems = await Grocery.find();
-    //res.json({ storedItems });
-    res.render('dashboard', {storedItems})
+    const addedItem = await Grocery.create({ item:item,quantity:quantity,store:store,note:note});
+    res.render('dashboard', {addedItem})
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
