@@ -3,7 +3,8 @@ const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
 let itemBeingEdited = null;
 
-//================ ADD ITEM =========================//
+
+    
 
 
 
