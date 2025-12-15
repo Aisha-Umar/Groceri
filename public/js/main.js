@@ -4,11 +4,7 @@ const list = document.querySelector(".groceryList");
 let itemBeingEdited = null;
 
 
-    
-
-
-
-/*==================TOGGLE-BTN=================*/
+  /*==================TOGGLE-BTN=================*/
     const toggleBtn = document.getElementById('menu-toggle');       // Hamburger icon
     const sidebar = document.getElementById('sidebar');             
     const closeBtn = document.getElementById('close-sidebar');      // The new 'X' icon

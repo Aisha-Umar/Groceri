@@ -48,13 +48,21 @@ modalOverlay.addEventListener('click', (e) => {
                 if(!res.ok){ 
                     throw new Error("Save item failed.")
                 }
-                const newItems = await res.json()
+                const newItem = await res.json()
                 closeModal()
                 // Clear inputs for the next entry
                 itemNameInput.value = '';
                 itemQtyInput.value = '1';
                 itemStoreSelect.value = 'Walmart'; 
                 itemNoteInput.value = '';
+                renderNewListItem(newItem)
+                function renderNewListItem(newItem){
+                    const itemList = document.querySelector('.item-list')
+                    const liItem = document.createElement('li')
+                    liItem.classList.add('.list-item')
+                    liItem.textContent = newItem
+                    itemList.append(liItem)
+                }
             }
              catch(err){
                console.error('Error:',err)
