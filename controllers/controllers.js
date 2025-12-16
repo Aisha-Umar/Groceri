@@ -1,5 +1,6 @@
 const Grocery = require("../models/item.js")
-const User = require("../models/user.js")
+// const User = require("../models/user.js")
+const Pantry = require("../models/pantry.js")
 
 //Get landing page
 exports.getLanding = async(req, res) => {
@@ -25,10 +26,12 @@ exports.getDashboard = async (req, res) => {
 
 // Add a new item
 exports.saveItem = async (req, res) => {
-  const { item,quantity,sort,note } = req.body;
+ console.log("TEST: Controller is being hit.");
+    res.status(200).json({ message: "Test success" });
+  const { item,quantity,store,note } = req.body;
   try {
     const addedItem = await Grocery.create({ item:item,quantity:quantity,store:store,note:note});
-    res.render('dashboard', {addedItem})
+    res.status(201).json(addedItem)
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -62,7 +65,6 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-console.log('Controller triggered!')
 exports.saveOrder = async (req, res) => {
   try{
     const {orderedList} = req.body

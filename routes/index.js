@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/controllers')
+console.log('Controller object keys:', Object.keys(controller));
 
 // Page route
 router.get('/', controller.getLanding)

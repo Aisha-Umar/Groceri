@@ -34,6 +34,7 @@ modalOverlay.addEventListener('click', (e) => {
 
 // Save Button logic
     saveItemBtn.addEventListener('click', async(e) => {
+         e.preventDefault()
          const item = document.getElementById('itemName').value
          const store = document.getElementById('itemStore').value
          const quantity = document.getElementById("itemQty").value
@@ -49,12 +50,14 @@ modalOverlay.addEventListener('click', (e) => {
                     throw new Error("Save item failed.")
                 }
                 const newItem = await res.json()
-                closeModal()
+                
                 // Clear inputs for the next entry
                 itemNameInput.value = '';
                 itemQtyInput.value = '1';
                 itemStoreSelect.value = 'Walmart'; 
                 itemNoteInput.value = '';
+                closeModal()
+
                 renderNewListItem(newItem)
                 function renderNewListItem(newItem){
                     const itemList = document.querySelector('.item-list')

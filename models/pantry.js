@@ -14,9 +14,8 @@ const pantrySchema = new mongoose.Schema({
     quantity: {
         type:Number,
         default:1
-    },
-    timestamps: true
-})
+    }
+  }, {timestamps: true})
 
 const Pantry = mongoose.model('Pantry',pantrySchema)
 module.exports = Pantry
