@@ -1,5 +1,5 @@
 const Grocery = require("../models/item.js")
-// const User = require("../models/user.js")
+const User = require("../models/user.js")
 const Pantry = require("../models/pantry.js")
 
 //Get landing page
@@ -26,11 +26,11 @@ exports.getDashboard = async (req, res) => {
 
 // Add a new item
 exports.saveItem = async (req, res) => {
- console.log("TEST: Controller is being hit.");
-    res.status(200).json({ message: "Test success" });
-  const { item,quantity,store,note } = req.body;
+const userId = req.user.id
+    
+const { item,quantity,store,note } = req.body;
   try {
-    const addedItem = await Grocery.create({ item:item,quantity:quantity,store:store,note:note});
+    const addedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,note:note});
     res.status(201).json(addedItem)
   } catch (err) {
     res.status(500).json({ message: err.message });

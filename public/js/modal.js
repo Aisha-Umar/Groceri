@@ -39,11 +39,12 @@ modalOverlay.addEventListener('click', (e) => {
          const store = document.getElementById('itemStore').value
          const quantity = document.getElementById("itemQty").value
          const note = document.getElementById("itemNote").value
-
+       
             try{
                 const res = await fetch('/api/saveItem', {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
+                    credentials:'same-origin',
                     body:JSON.stringify({item,quantity,store,note})
                 })
                 if(!res.ok){ 
@@ -62,8 +63,8 @@ modalOverlay.addEventListener('click', (e) => {
                 function renderNewListItem(newItem){
                     const itemList = document.querySelector('.item-list')
                     const liItem = document.createElement('li')
-                    liItem.classList.add('.list-item')
-                    liItem.textContent = newItem
+                    liItem.classList.add('list-item')
+                    liItem.textContent = newItem.item
                     itemList.append(liItem)
                 }
             }

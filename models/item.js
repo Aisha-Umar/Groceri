@@ -20,6 +20,9 @@ const grocerySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Store',
   },
+  note: {
+    type:String
+  }
 });
 const Grocery = mongoose.model('Grocery', grocerySchema)
 
