@@ -50,22 +50,24 @@ modalOverlay.addEventListener('click', (e) => {
                 if(!res.ok){ 
                     throw new Error("Save item failed.")
                 }
-                const newItem = await res.json()
+                const allItems = await res.json()
                 
                 // Clear inputs for the next entry
-                itemNameInput.value = '';
-                itemQtyInput.value = '1';
-                itemStoreSelect.value = 'Walmart'; 
-                itemNoteInput.value = '';
+                item.value = '';
+                quantity.value = '1';
+                store.value = 'Walmart'; 
+                note.value = '';
                 closeModal()
 
-                renderNewListItem(newItem)
-                function renderNewListItem(newItem){
-                    const itemList = document.querySelector('.item-list')
-                    const liItem = document.createElement('li')
-                    liItem.classList.add('list-item')
-                    liItem.textContent = newItem.item
-                    itemList.append(liItem)
+                renderNewListItem(allItems)
+                function renderNewListItem(groceryList){
+                  groceryList.forEach((item) => {
+                    const itemList = document.querySelector(".item-list");
+                    const liItem = document.createElement("li");
+                    liItem.classList.add("list-item");
+                    liItem.textContent = item.item;
+                    itemList.append(liItem);
+                  });
                 }
             }
              catch(err){

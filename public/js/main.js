@@ -54,6 +54,15 @@ async function getAllItems() {
       })
 }
 
+//==================== GET DASHBOARD WITH THE ITEMS LIST ============//
+
+
+
+
+
+
+
+
 
 //=====================MOVE TO PANTRY ======================//
 //loop over the list and choose the selected items and put them in an array

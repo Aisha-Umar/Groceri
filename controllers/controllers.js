@@ -30,8 +30,9 @@ const userId = req.user.id
     
 const { item,quantity,store,note } = req.body;
   try {
-    const addedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,note:note});
-    res.status(201).json(addedItem)
+    await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,note:note});
+    const allItems = await Grocery.find().sort({ order: 1 });
+    res.status(201).json(allItems)
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

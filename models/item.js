@@ -17,8 +17,10 @@ const grocerySchema = new mongoose.Schema({
   },
   quantity: Number,
   store: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Store',
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Store',
+    type: String,
+    required:true
   },
   note: {
     type:String

@@ -1,10 +1,10 @@
 const mongoose = require ('mongoose')
 
 const storeSchema = new mongoose.Schema({
-    storeName:{
+    store:{
         type:String,
         required:true,
-        trim:ture
+        trim:true
     }
 })
 
