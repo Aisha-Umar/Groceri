@@ -32,48 +32,80 @@ modalOverlay.addEventListener('click', (e) => {
     }
 });
 
-// Save Button logic
-    saveItemBtn.addEventListener('click', async(e) => {
-         e.preventDefault()
-         const item = document.getElementById('itemName').value
-         const store = document.getElementById('itemStore').value
-         const quantity = document.getElementById("itemQty").value
-         const note = document.getElementById("itemNote").value
-       
-            try{
-                const res = await fetch('/api/saveItem', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    credentials:'same-origin',
-                    body:JSON.stringify({item,quantity,store,note})
-                })
-                if(!res.ok){ 
-                    throw new Error("Save item failed.")
-                }
-                const allItems = await res.json()
-                
-                // Clear inputs for the next entry
-                item.value = '';
-                quantity.value = '1';
-                store.value = 'Walmart'; 
-                note.value = '';
-                closeModal()
+const form = document.getElementById('addItemForm');
 
-                renderNewListItem(allItems)
-                function renderNewListItem(groceryList){
-                  groceryList.forEach((item) => {
-                    const itemList = document.querySelector(".item-list");
-                    const liItem = document.createElement("li");
-                    liItem.classList.add("list-item");
-                    liItem.textContent = item.item;
-                    itemList.append(liItem);
-                  });
-                }
-            }
-             catch(err){
-               console.error('Error:',err)
-               alert("Failed to save item. Check console for details")
-            }
-        })
-    
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Grab values from inputs
+  const item = document.getElementById('itemName').value;
+  const quantity = document.getElementById('itemQty').value;
+  const store = document.getElementById('itemStore').value;
+  const note = document.getElementById('itemNote').value;
+
+  try {
+    // Send to server
+    const res = await fetch('/api/saveItem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials:'same-origin',
+      body: JSON.stringify({ item, quantity, store, note })
+    });
+
+    if (!res.ok) throw new Error('Save item failed');
+
+    const newItem = await res.json(); // get saved item from server
+
+    // Clear inputs for next entry
+    form.reset();
+
+    // Dynamically create list element
+    renderNewListItem(newItem);
+
+  } catch (err) {
+    console.error(err);
+    alert('Failed to save item. Check console.');
+  }
+});
+
+function renderNewListItem(newItem) {
+  // Find the right store list container
+  let itemList = document.querySelector('.item-list');
+
+  // If the store group doesn't exist yet, create it
+  if (!itemList) {
+    const storeGroup = document.createElement('div');
+    storeGroup.classList.add('store-group');
+    storeGroup.dataset.store = newItem.store;
+
+    const header = document.createElement('h3');
+    header.classList.add('store-header');
+    header.textContent = `🛒 ${newItem.store}`;
+
+    itemList = document.createElement('ul');
+    itemList.classList.add('item-list');
+
+    storeGroup.appendChild(header);
+    storeGroup.appendChild(itemList);
+    document.querySelector('.content').appendChild(storeGroup);
+  }
+
+  // Create the list item
+  const li = document.createElement('li');
+  li.classList.add('list-item');
+  li.dataset.store = newItem.store;
+
+  li.innerHTML = `
+    <input type="checkbox" class="item-checkbox" data-id="${newItem._id}">
+    <label for="item-${newItem._id}" class="item-details">
+      <span class="emoji"></span>${newItem.item}
+    </label>
+    <span class="item-info">${newItem.quantity}</span>
+    ${newItem.note ? `<span class="item-note">${newItem.note}</span>` : ''}
+    <i class="fas fa-pencil-alt edit-icon"></i>
+  `;
+
+  itemList.appendChild(li);
+}
+
             

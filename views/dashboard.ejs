@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,12 @@
     <!-- <link rel="stylesheet" href="dashboard.css"> -->
     <!-- <link rel="preload" href="path/to/fontawesome-webfont.woff2" as="font" type="font/woff2" crossorigin> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/dashboard1.css"> 
+    <link rel="stylesheet" href="css/dashboard1.css">
     <link rel="stylesheet" href="css/modal.css">
     <script src="js/main.js" defer></script>
     <script src="js/modal.js" defer></script>
 </head>
+
 <body>
     <div class="mobile-mockup">
         <nav id="sidebar" class="sidebar">
@@ -38,7 +40,7 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="logo">
-                        <i class="fas fa-home"></i> 
+                        <i class="fas fa-home"></i>
                         <h1>HOMESTOCK</h1>
                     </div>
                     <div class="avatar-placeholder"></div>
@@ -55,7 +57,7 @@
                     <p>Add it to your grocery list?</p>
                     <button class="add-item-button large-button">Add Item</button>
                 </div>
-<div class="controls-bar">
+                <div class="controls-bar">
                     <div class="select-all">
                         <input type="checkbox" id="select-all-checkbox">
                         <label for="select-all-checkbox">Select All</label>
@@ -72,72 +74,63 @@
                     </div>
                 </div>
                 <div class="store-group">
-        <h3 class="store-header">🛒 Walmart</h3>
-        <ul class="item-list">
-            <!-- <li class="list-item" data-store="walmart">
-                <input type="checkbox" id="item5">
-                <label for="item5" class="item-details">
-                    <span class="emoji">🍞</span> Whole Wheat Bread
-                </label> -->
-                <!-- <span class="item-info">1</span> -->
-                <!-- <i class="fas fa-pencil-alt edit-icon"></i>
-            </li>
-            <li class="list-item" data-store="walmart">
-                <input type="checkbox" id="item6">
-                <label for="item6" class="item-details">
-                    <span class="emoji">🐔</span> Chicken Breast
-                </label> -->
-                <!-- <span class="item-info category">Meat</span> -->
-                <!-- <i class="fas fa-pencil-alt edit-icon"></i>
-            </li>
-            <li class="list-item" data-store="walmart">
-                <input type="checkbox" id="item7">
-                <label for="item7" class="item-details">
-                    <span class="emoji">🧼</span> Dish Soap
-                </label> -->
-                <!-- <span class="item-info category">Household</span> -->
-                <!-- <i class="fas fa-pencil-alt edit-icon"></i>
-            </li> -->
-        </ul>
-    </div>
-    
-    <div class="store-group">
-        <h3 class="store-header">📦 Costco</h3>
-        <ul class="item-list">
-            <li class="list-item" data-store="costco">
-                <input type="checkbox" id="item1">
-                <label for="item1" class="item-details">
-                    <span class="emoji">🍎</span> Bananas
-                </label>
-                <!-- <span class="item-info">4</span> -->
-                <i class="fas fa-pencil-alt edit-icon"></i>
-            </li>
-            <li class="list-item" data-store="costco">
-                <input type="checkbox" id="item4">
-                <label for="item4" class="item-details">
-                    <span class="emoji">🧀</span> Cheese
-                </label>
-                <!-- <span class="item-info category">Dairy</span> -->
-                <i class="fas fa-pencil-alt edit-icon"></i>
-            </li>
-        </ul>
-    </div>
-    
-    <div class="store-group">
-        <h3 class="store-header">🏠 Unassigned</h3>
-        <ul class="item-list">
-            <li class="list-item" data-store="unassigned">
-                <input type="checkbox" id="item2">
-                <label for="item2" class="item-details">
-                    <span class="emoji">🥕</span> Carrots
-                </label>
-                <!-- <span class="item-info category">Produce</span> -->
-                <i class="fas fa-pencil-alt edit-icon"></i>
-            </li>
-        </ul>
-    </div>
+                <h3 class="store-header">🛒 Walmart</h3>
+                 <% for (let item of storedItems) { %>
+                  <ul class="item-list">
+                        <li class="list-item" data-store="<%= item.store %>">
+
+                                <input type="checkbox">
+
+                                <label class="item-details">
+                                    <span class="emoji"></span>
+                                    <%= item.item %>
+                                </label>
+
+                                <span class="item-info">
+                                    <%= item.quantity %>
+                                </span>
+                                <i class="fas fa-pencil-alt edit-icon"></i>
+                            </li>
+                            <% } %>
+                    </ul>
+
+                </div>
+
+                <!-- <div class="store-group">
+                    <h3 class="store-header">📦 Costco</h3>
+                    <ul class="item-list">
+                        <li class="list-item" data-store="costco">
+                            <input type="checkbox" id="item1">
+                            <label for="item1" class="item-details">
+                                <span class="emoji">🍎</span> Bananas
+                            </label>
+                            <span class="item-info">4</span> 
+                            <i class="fas fa-pencil-alt edit-icon"></i>
+                        </li>
+                        <li class="list-item" data-store="costco">
+                            <input type="checkbox" id="item4">
+                            <label for="item4" class="item-details">
+                                <span class="emoji">🧀</span> Cheese
+                            </label>
+                            <i class="fas fa-pencil-alt edit-icon"></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="store-group">
+                    <h3 class="store-header">🏠 Unassigned</h3>
+                    <ul class="item-list">
+                        <li class="list-item" data-store="unassigned">
+                            <input type="checkbox" id="item2">
+                            <label for="item2" class="item-details">
+                                <span class="emoji">🥕</span> Carrots
+                            </label>
+                            <i class="fas fa-pencil-alt edit-icon"></i>
+                        </li>
+                    </ul>
+                </div> -->
             </main>
-               <footer class="footer-nav">
+            <footer class="footer-nav">
                 <div class="nav-item add-item">
                     <i class="fas fa-plus-circle"></i>
                     <span>Add Item</span>
@@ -146,10 +139,11 @@
                     <i class="fas fa-box-open"></i>
                     <span>Move to Pantry</span>
                 </div>
-                <div class="nav-item">
-                    <i class="fas fa-trash-alt"></i>
-                    <span>Delete Selected</span>
-                </div>
+            <button id="deleteSelectedBtn" class="nav-item">
+                <i class="fas fa-trash-alt"></i>
+                 <span>Delete Selected</span> 
+            </button>
+
                 <div class="nav-item">
                     <i class="fas fa-bell"></i>
                     <span>Notifications</span>
@@ -161,68 +155,73 @@
             </footer>
         </div>
         <div id="addItemModal" class="modal-overlay">
-    <div class="modal-container">
-        
-        <div class="modal-header">
-            <h2>Add New Item</h2>
-            <button id="closeModalBtn" class="close-modal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+            <div class="modal-container">
 
-        <div class="modal-body">
-            
-            <div class="input-group">
-                <label for="itemName">Item Name</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-carrot"></i>
-                    <input type="text" id="itemName" placeholder="e.g., Avocados">
+                <div class="modal-header">
+                    <h2>Add New Item</h2>
+                    <button id="closeModalBtn" class="close-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="addItemForm" action="/saveItem" method="POST">
+
+                        <div class="input-group">
+                            <label for="itemName">Item Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-carrot"></i>
+                                <input type="text" id="itemName" name="item" placeholder="e.g., Avocados" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group half-width">
+                                <label for="itemQty">Quantity</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-hashtag"></i>
+                                    <input type="number" id="itemQty" name="quantity" placeholder="1" value="1" min="1">
+                                </div>
+                            </div>
+
+                            <div class="input-group half-width">
+                                <label for="itemStore">Store</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-store"></i>
+                                    <select id="itemStore" name="store">
+                                        <option value="Walmart">Walmart</option>
+                                        <option value="Costco">Costco</option>
+                                        <option value="Aldi">Aldi</option>
+                                        <option value="Unassigned">Other</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down select-arrow"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="itemNote">Note (Optional)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-sticky-note"></i>
+                                <input type="text" id="itemNote" name="note" placeholder="e.g., Organic only">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="cancelBtn" class="btn-secondary">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                Add Item
+                            </button>
+                        </div>
+
+                    </form>
+
+
                 </div>
             </div>
-
-            <div class="form-row">
-                <div class="input-group half-width">
-                    <label for="itemQty">Quantity</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-hashtag"></i>
-                        <input type="number" id="itemQty" placeholder="1" value="1">
-                    </div>
-                </div>
-                
-                <div class="input-group half-width">
-                    <label for="itemStore">Store</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-store"></i>
-                        <select id="itemStore">
-                            <option value="Walmart">Walmart</option>
-                            <option value="Costco">Costco</option>
-                            <option value="Aldi">Aldi</option>
-                            <option value="Unassigned">Other</option>
-                        </select>
-                        <i class="fas fa-chevron-down select-arrow"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label for="itemNote">Note (Optional)</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-sticky-note"></i>
-                    <input type="text" id="itemNote" placeholder="e.g., Organic only">
-                </div>
-            </div>
-
         </div>
-
-        <div class="modal-footer">
-            <button id="cancelBtn" class="btn-secondary">Cancel</button>
-            <button id="saveItemBtn" class="btn-primary">Add Item</button>
-        </div>
-
-    </div>
-</div>
-</div>
 </body>
+
 </html>
-
-

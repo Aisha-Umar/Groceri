@@ -14,11 +14,8 @@ exports.getLanding = async(req, res) => {
 // Get all items
 exports.getDashboard = async (req, res) => {
   try {
-    //const storedItems = await Grocery.find();
-    // const storedItems = await Grocery.find().sort({ order: 1 }); // ascending order
-    //res.json({ storedItems });
-    // res.render('dashboard', {storedItems})
-  await res.render('dashboard'); // don't include .ejs
+  const storedItems = await Grocery.find().sort({ order: 1 }); // ascending order
+  await res.render('dashboard', {storedItems})
 } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -30,9 +27,8 @@ const userId = req.user.id
     
 const { item,quantity,store,note } = req.body;
   try {
-    await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,note:note});
-    const allItems = await Grocery.find().sort({ order: 1 });
-    res.status(201).json(allItems)
+    let savedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,note:note});
+    res.status(201).json(savedItem)
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

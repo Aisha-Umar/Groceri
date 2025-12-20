@@ -1,5 +1,5 @@
 const input = document.querySelector(".inputItem");
-const form = document.querySelector("form");
+// const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
 let itemBeingEdited = null;
 
