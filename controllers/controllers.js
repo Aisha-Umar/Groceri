@@ -50,18 +50,16 @@ exports.editItem = async (req, res) => {
 
 // Delete an item
 exports.deleteItem = async (req, res) => {
-  try {
-    const { item } = req.body;
-    await Grocery.deleteOne({ item });
-    const storedItems = await Grocery.find();
-    console.log('Item deleted')
-    //res.json({ storedItems });
-    res.render('dashboard', {storedItems})
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  const userId = req.user.id
+  const { ids } = req.body;
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ message: 'No items selected' });
   }
-};
+  await Grocery.deleteMany({ _id: { $in: ids }, user: userId                                                                                                                  });
+  res.json({ success: true });
+}
 
+// Save order of items
 exports.saveOrder = async (req, res) => {
   try{
     const {orderedList} = req.body

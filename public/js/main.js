@@ -108,28 +108,41 @@ async function getAllItems() {
 //   input.value=''
 // });
 
-// Delete item
-// list.addEventListener("click", async (e) => {
- // if (e.target.classList.contains("btn-delete")) {
-    // if (e.target.closest(".btn-delete")) {
-    // const item = e.target.parentElement.querySelector("span").textContent;
-  //  if (e.target.closest(".btn-delete")) {
-    // const li = e.target.closest("li");
-    // const item = li.querySelector("span").textContent;
-    // if (!confirm("Delete this item?")) return;
-    // try {
-      // const res = await fetch("/api/deleteItem", {
-        // method: "DELETE",
-        // headers: { "Content-Type": "application/json" },
-        // body: JSON.stringify({ item }),
-      // });
-      // if (!res.ok) throw new Error("Delete failed");
-    // location.reload();
-    // } catch (err) {
-      // console.error("Error:", err);
-    // }
-//  }
-// });
+
+//======================= DELETE ITEM =============================//
+
+document.getElementById('deleteSelectedBtn').addEventListener('click', async () => {
+  const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
+
+  if (checkedBoxes.length === 0) {
+    alert('Select at least one item to delete.');
+    return;
+  }
+
+  // Collect ids
+  const ids = Array.from(checkedBoxes).map(cb => cb.dataset.id);
+  try {
+    const res = await fetch('/api/deleteItem', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids })
+    });
+    console.log(ids)S
+    if (!res.ok) throw new Error('Delete failed');
+
+    // Remove from DOM
+    checkedBoxes.forEach(cb => {
+      cb.closest('li').remove();
+    });
+
+  } catch (err) {
+    console.error(err);
+    alert('Failed to delete items.');
+  }
+});
+
+
+
 
 //make elements draggable
 // let draggedItem = null;
