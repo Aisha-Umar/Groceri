@@ -127,7 +127,7 @@ document.getElementById('deleteSelectedBtn').addEventListener('click', async () 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids })
     });
-    console.log(ids)S
+    console.log(ids)
     if (!res.ok) throw new Error('Delete failed');
 
     // Remove from DOM
@@ -213,6 +213,24 @@ if(!res.ok) throw new Error('Update failed')
   console.error('Error:',err)
 }
 }
+
+//================= FILTER BY STORES =================================//  
+const selectStore = document.getElementById('store-select');
+
+selectStore.addEventListener('change', (e) => {
+  const selectedStore = e.target.value.toLowerCase();
+  const items = document.querySelectorAll('.list-item');
+
+  items.forEach(item => {
+    const itemStore = item.dataset.store.toLowerCase();
+
+    if (selectedStore === 'all' || itemStore === selectedStore) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+});
 
 
 
