@@ -71,6 +71,10 @@ async function getAllItems() {
 
 
 
+
+
+
+
 // list.addEventListener("click", (e) => {
 //   if (e.target.closest(".btn-edit")) {
 //     const li = e.target.closest("li");
@@ -125,6 +129,7 @@ document.getElementById('deleteSelectedBtn').addEventListener('click', async () 
     const res = await fetch('/api/deleteItem', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
+      credentials:'same-origin',
       body: JSON.stringify({ ids })
     });
     console.log(ids)

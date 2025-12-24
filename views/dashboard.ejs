@@ -77,7 +77,7 @@
                 <h3 class="store-header">🛒</h3>
                  <% for (let item of storedItems) { %>
                   <ul class="item-list">
-                        <li class="list-item" data-store="<%= item.store %>">
+                        <li class="list-item" data-store="<%= item.store %>" data-id="<%= item._id %>" data-item="<%= item.item %>">
 
                                 <input type="checkbox" class="item-checkbox" data-id="<%= item._id %>">
 

@@ -109,3 +109,39 @@ function renderNewListItem(newItem) {
 }
 
             
+//===================== EDIT AN ITEM =======================//
+
+// const itemList = document.querySelector(".item-list");
+
+itemList.addEventListener("click", (e) =>{
+//get item being edited
+if (e.target.classList.contains("edit-icon")) {
+  const li = e.target.closest(".list-item");
+  const itemBeingEdited = li.dataset.item;
+  const itemId = li.dataset.id;
+  openModal()
+  //select input in modal
+  const itemName = document.getElementById("itemName");
+  itemName.value = itemBeingEdited;
+
+const saveBtn = document.querySelector(".btn-primary");
+saveBtn.addEventListener("click", async (e) => {
+  //send itemBeingEdited and itemBeingEditedId to the editItem controller
+  try {
+    const res = await fetch("/api/editItem", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ itemBeingEdited, itemId }),
+    });
+    if (!res.ok) throw new Error("Edit failed");
+    const updatedItem = await res.json();
+    li.querySelector('.item-details').innerText = updatedItem;
+  } catch (err) {
+    alert("Failed to update item.");
+  }
+});
+}
+  });
+  
+  

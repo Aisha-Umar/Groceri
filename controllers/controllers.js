@@ -37,16 +37,24 @@ const { item,quantity,store,note } = req.body;
 // Edit an item
 exports.editItem = async (req, res) => {
   try {
-    const { itemBeingEdited, newItem } = req.body;
-    console.log(req.body)
-    await Grocery.findOneAndUpdate({ item: itemBeingEdited }, { item: newItem });
-    const storedItems = await Grocery.find();
-    //res.json({ storedItems });
-    res.render('dashboard', {storedItems})
+    const { itemBeingEdited, itemId } = req.body;
+
+    const updatedItem = await Grocery.findOneAndUpdate(
+      { _id: itemId, user: req.user.id }, // ✅ ownership check
+      { item: itemBeingEdited },
+      { new: true }
+    );
+
+    if (!updatedItem) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    res.json(updatedItem);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'Failed to edit item' });
   }
 };
+
 
 // Delete an item
 exports.deleteItem = async (req, res) => {
