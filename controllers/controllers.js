@@ -37,11 +37,11 @@ const { item,quantity,store,note } = req.body;
 // Edit an item
 exports.editItem = async (req, res) => {
   try {
-    const { editedItem, itemId } = req.body;
+    const { editedItem, quantity, itemId } = req.body;
 
     const updatedItem = await Grocery.findOneAndUpdate(
       { _id: itemId, user: req.user.id }, // ✅ ownership check
-      { item:editedItem },
+      { item:editedItem, quantity:quantity },
       { new: true }
     );
 
