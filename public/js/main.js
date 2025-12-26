@@ -1,7 +1,7 @@
 const input = document.querySelector(".inputItem");
 // const form = document.querySelector("form");
 const list = document.querySelector(".groceryList");
-let itemBeingEdited = null;
+
 
 
   /*==================TOGGLE-BTN=================*/

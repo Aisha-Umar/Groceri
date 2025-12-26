@@ -5,7 +5,13 @@ const addItemBtn2 = document.querySelector('.nav-item.add-item'); // Your footer
 const modalOverlay = document.getElementById('addItemModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const cancelBtn = document.getElementById('cancelBtn');
-const saveItemBtn = document.getElementById('saveItemBtn');
+
+const itemList = document.querySelector(".item-list");
+let itemBeingEdited
+let editingItemId = null
+let editingLi = null
+let itemName
+let mode = 'add'
 
 // Function to open modal
 function openModal() {
@@ -18,9 +24,7 @@ function closeModal() {
 }
 
 // Event Listeners
-// **This is the connection point for your new button**
     if(addItemBtn1) addItemBtn1.addEventListener("click", openModal);
-
     if(addItemBtn2) addItemBtn2.addEventListener('click', openModal);
     if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     if(cancelBtn) cancelBtn.addEventListener('click', closeModal);
@@ -36,7 +40,7 @@ const form = document.getElementById('addItemForm');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-
+ 
   // Grab values from inputs
   const item = document.getElementById('itemName').value;
   const quantity = document.getElementById('itemQty').value;
@@ -111,37 +115,42 @@ function renderNewListItem(newItem) {
             
 //===================== EDIT AN ITEM =======================//
 
-// const itemList = document.querySelector(".item-list");
+
 
 itemList.addEventListener("click", (e) =>{
 //get item being edited
 if (e.target.classList.contains("edit-icon")) {
-  const li = e.target.closest(".list-item");
-  const itemBeingEdited = li.dataset.item;
-  const itemId = li.dataset.id;
+  li = e.target.closest(".list-item");
+  itemBeingEdited = li.dataset.item;
+  itemId = li.dataset.id;
   openModal()
   //select input in modal
-  const itemName = document.getElementById("itemName");
+  itemName = document.getElementById("itemName");
   itemName.value = itemBeingEdited;
+}
+})
 
-const saveBtn = document.querySelector(".btn-primary");
+
+const saveBtn = document.querySelector(".updateBtn");
 saveBtn.addEventListener("click", async (e) => {
-  //send itemBeingEdited and itemBeingEditedId to the editItem controller
+    const editedItem = itemName.value
+  //send editedItem and itemBeingEditedId to the editItem controller
   try {
     const res = await fetch("/api/editItem", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
-      body: JSON.stringify({ itemBeingEdited, itemId }),
+      body: JSON.stringify({ editedItem, itemId }),
     });
     if (!res.ok) throw new Error("Edit failed");
     const updatedItem = await res.json();
-    li.querySelector('.item-details').innerText = updatedItem;
+    li.querySelector('.item-details').innerText = updatedItem.item;
+    li.dataset.item =updatedItem.item
   } catch (err) {
     alert("Failed to update item.");
   }
-});
-}
-  });
+})
+
+  
   
   

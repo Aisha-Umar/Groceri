@@ -7,7 +7,7 @@ const { ensureApiAuth } = require('../middleware/authMiddleware')
 // Page route
 router.get('/', controller.getLanding)                                                                         
 router.delete('/deleteItem', ensureAuthenticated, controller.deleteItem)
-// router.put('/editItem', ensureAuthenticated, controller.editItem)
+router.put('/editItem', ensureAuthenticated, controller.editItem)
 // router.put('/saveOrder', ensureAuthenticated, controller.saveOrder)
 // router.get('/getAllItems', ensureAuthenticated, controller.getAllItems)
 router.post('/moveToPantry', ensureAuthenticated, controller.moveToPantry)
