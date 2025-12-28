@@ -108,6 +108,7 @@ form.addEventListener("submit", async (e) => {
       const updatedItem = await res.json();
       editingLi.querySelector(".item-details").innerText = updatedItem.item;
       editingLi.dataset.item = updatedItem.item;
+      editingLi.querySelector('.item-info').innerText = updatedItem.quantity
     }
 
     form.reset()

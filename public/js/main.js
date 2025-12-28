@@ -65,9 +65,11 @@ async function getAllItems() {
 
 
 //=====================MOVE TO PANTRY ======================//
-//loop over the list and choose the selected items and put them in an array
-//if checkbox is selected in a list, get textContent and add it to an array
-//select the DOM elements
+//select the checkboxes 
+const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+
+//go over the array of checkboxes, get item name and map into the array
+ 
 
 
 
