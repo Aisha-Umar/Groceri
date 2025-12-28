@@ -104,6 +104,10 @@ exports.moveToPantry = async (req, res) => {
     }
 
     const items = await Grocery.find({ _id: { $in: selectedItemIds } });
+    await Grocery.deleteMany(items.map(item =>( {
+      _id:item._id
+    }))
+  )
 
     if (!items.length) {
       return res.status(404).json({ message: "No items found" });
