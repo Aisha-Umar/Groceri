@@ -65,17 +65,22 @@ async function getAllItems() {
 
 
 //=====================MOVE TO PANTRY ======================//
-//select the checkboxes and the move to pantry button
-const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
 const moveToPantryBtn = document.querySelector('.move-to-pantry')
+moveToPantryBtn.addEventListener('click', async(e) =>{
+  //select the checkboxes and the move to pantry button
+const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+
 
 //go over the array of checkboxes, get item name and map into the array
 const selectedItemIds = selectedCb.map(e =>{
   return e.dataset.id
 })
 
-//send to the moveToPantry controller
-moveToPantryBtn.addEventListener('click', async(e) =>{
+if (selectedItemIds.length === 0) {
+    alert('No items selected.')
+    return
+  }
+
   try{
     const res = await fetch('/api/moveToPantry', {
       method:'POST',
@@ -83,8 +88,7 @@ moveToPantryBtn.addEventListener('click', async(e) =>{
       credentials:'same-origin',
       body: JSON.stringify({selectedItemIds})
     })
-    if(!res.ok) throw new Error ('Adding to pantry failed.')
-      const pantryItems = await res.json()
+    const pantryItems = await res.json()
   }catch(err){
     console.error(err)
     alert('Failed to add item to pantry.')

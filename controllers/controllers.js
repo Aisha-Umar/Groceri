@@ -98,11 +98,29 @@ exports.getAllItems = async (req, res) =>{
 exports.moveToPantry = async (req, res) => {
   try {
     const { selectedItemIds } = req.body;
+
+    if (!selectedItemIds || !selectedItemIds.length) {
+      return res.status(400).json({ message: "No items selected" });
+    }
+
     const items = await Grocery.find({ _id: { $in: selectedItemIds } });
-    const addedPantryItems = await Pantry.insertMany(items);
-    res.json(addedPantryItems);
+
+    if (!items.length) {
+      return res.status(404).json({ message: "No items found" });
+    }
+
+    const addedPantryItems = await Pantry.insertMany(
+      items.map(item => ({
+        item: item.item,
+        quantity: item.quantity,
+        user: item.user
+      }))
+    );
+
+    res.status(200).json({ movedItems: addedPantryItems });
+
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server error");
+    res.status(500).json({ message: "Server error" });
   }
-};
+}
