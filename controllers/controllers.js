@@ -86,10 +86,10 @@ exports.saveOrder = async (req, res) => {
   }
 }
 
-exports.getAllItems = async (req, res) =>{
+exports.getPantryItems = async (req, res) =>{
   try{
   const allItems = await Pantry.find({user:req.user.id})
-  res.json(allItems)
+  res.json({pantryItems:allItems})
 }catch(err){
   res.status(500).json({message: err.message})
 }
@@ -104,27 +104,25 @@ exports.moveToPantry = async (req, res) => {
     }
 
     const items = await Grocery.find({ _id: { $in: selectedItemIds } });
-    await Grocery.deleteMany(items.map(item =>( {
-      _id:item._id
-    }))
-  )
 
     if (!items.length) {
       return res.status(404).json({ message: "No items found" });
     }
 
     const addedPantryItems = await Pantry.insertMany(
-      items.map(item => ({
+      items.map((item) => ({
         item: item.item,
         quantity: item.quantity,
-        user: item.user
+        user: item.user,
       }))
     );
 
-    res.status(200).json({ movedItems: addedPantryItems });
+    const itemIds = items.map((item) => item._id);
+    await Grocery.deleteMany({ _id: { $in: itemIds } });
 
+    res.status(200).json({ movedItems: addedPantryItems });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-}
+};

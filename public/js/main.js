@@ -30,29 +30,27 @@ const inputSearch = document.getElementById("inputSearch");
 //return: word matched, word not matched, display msg
 //apple -> apple found
 
-inputSearch.addEventListener('keyup', getAllItems)
-async function getAllItems() {
+inputSearch.addEventListener('keyup', async(e) =>{
   //get input
-  let input = inputSearch.value;
+  let searchItem = inputSearch.value;
   //get pantry items
-  let res = await fetch("../api/getAllItems", {
+  let res = await fetch("../api/getPantryItems", {
     method: 'GET',
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   });
-  let data = await res.json();
+  const data = await res.json();
   //filter pantry with each input value
-      Array.from(data).forEach(item =>{
-        if(item.includes(input)){
-          inputSearch.value=item
-        }
-        else if(item === input){
-          //display item found
+      Array.from(data.pantryItems).forEach(item =>{
+        if(item.item === searchItem){
+          alert('item found!')
         }
         else{
-          //display item not found
+           alert('item not found')
         }
       })
-}
+})
+ 
+
 
 //==================== GET DASHBOARD WITH THE ITEMS LIST ============//
 
@@ -88,7 +86,7 @@ if (selectedItemIds.length === 0) {
       credentials:'same-origin',
       body: JSON.stringify({selectedItemIds})
     })
-    const pantryItems = await res.json()
+    const data = await res.json()
   }catch(err){
     console.error(err)
     alert('Failed to add item to pantry.')
