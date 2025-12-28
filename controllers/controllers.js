@@ -95,14 +95,14 @@ exports.getAllItems = async (req, res) =>{
 }
 }
 
-exports.moveToPantry = async (req, res) =>{
-  try{
-  const allItemsToAdd = req.body.items.map(item =>({
-    ...item, userId: req.user.id
-  }))
-  await Pantry.insertMany(allItemsToAdd)
-} catch (err) {
-    console.error(err)
-    res.status(500).send("Server error")
+exports.moveToPantry = async (req, res) => {
+  try {
+    const { selectedItemIds } = req.body;
+    const items = await Grocery.find({ _id: { $in: selectedItemIds } });
+    const addedPantryItems = await Pantry.insertMany(items);
+    res.json(addedPantryItems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
   }
-}
+};
