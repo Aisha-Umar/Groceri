@@ -25,41 +25,52 @@ const list = document.querySelector(".groceryList");
     }
 
 /*======================SEARCH BAR==========================*/  
-const inputSearch = document.getElementById("inputSearch");
-//params: input
-//return: word matched, word not matched, display msg
-//apple -> apple found
 
-inputSearch.addEventListener('keyup', async(e) =>{
-  //get input
-  let searchItem = inputSearch.value;
-  //get pantry items
-  let res = await fetch("../api/getPantryItems", {
-    method: 'GET',
-    headers: { "Content-Type": "application/json" }
-  });
-  const data = await res.json();
-  //filter pantry with each input value
-      Array.from(data.pantryItems).forEach(item =>{
-        if(item.item === searchItem){
-          alert('item found!')
-        }
-        else{
-           alert('item not found')
-        }
-      })
-})
+let allPantryItems = [];
+
+//======== Get pantry items ==================
+//get pantry items
+async function getAllPantryItems() {
+  try {
+    let res = await fetch("/api/getPantryItems", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) throw new Error("Could not get pantry items");
+    const data = await res.json();
+    allPantryItems = data.pantryItems;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+getAllPantryItems();
+
+const inputSearch = document.getElementById("inputSearch");
+inputSearch.addEventListener("input", debounce(handleSearch, 300));
+
+const handleSearch = (e) => {
+  const searchItem = e.target.value.trim().toLowerCase();
+  if (!allPantryItems.length) return;
+  if (!searchItem) return;
+  const found = allPantryItems.some((item) => item.item === searchItem);
+  if (found) alert("item available");
+};
+
+function debounce(fn, delay = 300) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
  
 
 
-//==================== GET DASHBOARD WITH THE ITEMS LIST ============//
 
-
-
-
-
-
-
+ 
 
 
 //=====================MOVE TO PANTRY ======================//
