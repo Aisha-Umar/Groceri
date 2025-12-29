@@ -47,15 +47,16 @@ async function getAllPantryItems() {
 getAllPantryItems();
 
 const inputSearch = document.getElementById("inputSearch");
-inputSearch.addEventListener("input", debounce(handleSearch, 300));
 
 const handleSearch = (e) => {
   const searchItem = e.target.value.trim().toLowerCase();
   if (!allPantryItems.length) return;
   if (!searchItem) return;
-  const found = allPantryItems.some((item) => item.item === searchItem);
+  const found = allPantryItems.some((item) => item.item.toLowerCase() === searchItem);
   if (found) alert("item available");
 };
+
+inputSearch.addEventListener("input", debounce(handleSearch, 300));
 
 function debounce(fn, delay = 300) {
   let timeoutId;
