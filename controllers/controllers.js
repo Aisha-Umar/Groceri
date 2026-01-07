@@ -1,6 +1,7 @@
 const Grocery = require("../models/item.js")
 const User = require("../models/user.js")
 const Pantry = require("../models/pantry.js")
+const fetch = require('node-fetch')
 
 //Get landing page
 exports.getLanding = async(req, res) => {
@@ -126,3 +127,20 @@ exports.moveToPantry = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+//============GET AI RECIPE SUGGESTIONS =====================
+
+//get the pantry items
+exports.getAiRecipeSuggestions = async (req,res) =>{
+const pantryItems = await Pantry.find({user:req.user.id})
+const Items = pantryItems.map(item => item.item)
+
+//call Ollama with a prompt
+const recipes = await fetch()
+
+
+//send back the recipes
+}
+
+
+

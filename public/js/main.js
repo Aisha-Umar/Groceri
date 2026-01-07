@@ -239,7 +239,7 @@ aiLink.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
     const res = await fetch("api/getAiRecipeSuggestions", {
-      method: "PUT",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw new Error("Recipes fetch failed");
