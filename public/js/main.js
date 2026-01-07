@@ -106,50 +106,6 @@ if (selectedItemIds.length === 0) {
 })
 
 
-
-
-
-
-
-
-// list.addEventListener("click", (e) => {
-//   if (e.target.closest(".btn-edit")) {
-//     const li = e.target.closest("li");
-//     itemBeingEdited = li.querySelector("span").textContent;
-//     console.log(itemBeingEdited)
-//     input.value = itemBeingEdited;
-//     input.focus();
-//   }
-// })
-
-// Form submit (add or edit)
-// form.addEventListener("submit", async (e) => {
-//   e.preventDefault();
-//   const newItem = input.value.trim();
-//   if (!newItem) return alert("Please enter an item name");
-
-//   const url = itemBeingEdited ? "/api/editItem" : "/api/addItem";
-//   const method = itemBeingEdited ? "PUT" : "POST";
-//   const body = itemBeingEdited
-//     ? JSON.stringify({ itemBeingEdited, newItem })
-//     : JSON.stringify({ newItem });
-//     console.log(itemBeingEdited,newItem)
-
-//   try {
-//     const res = await fetch(url, {
-//       method,
-//       headers: { "Content-Type": "application/json" },
-//       body,
-//     });
-//     if (!res.ok) throw new Error("Request failed");
-//    location.reload(); // EJS refresh handles new list
-//   } catch (err) {
-//     console.error("Error:", err);
-//   }
-//   input.value=''
-// });
-
-
 //======================= DELETE ITEM =============================//
 
 document.getElementById('deleteSelectedBtn').addEventListener('click', async () => {
@@ -275,6 +231,23 @@ selectStore.addEventListener('change', (e) => {
 });
 
 
+//======================= GET AI RECIPE SUGGESTIONS ==================//
+
+const aiLink = document.querySelector("aiRecipesLink");
+
+aiLink.addEventListener("click", async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch("api/getAiRecipeSuggestions", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) throw new Error("Recipes fetch failed");
+    const recipes = res.json();
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 
 
