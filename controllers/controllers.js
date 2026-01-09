@@ -131,15 +131,41 @@ exports.moveToPantry = async (req, res) => {
 //============GET AI RECIPE SUGGESTIONS =====================
 
 //get the pantry items
-exports.getAiRecipeSuggestions = async (req,res) =>{
+exports.getAiRecipes = async (req,res) =>{
+  try{
 const pantryItems = await Pantry.find({user:req.user.id})
 const Items = pantryItems.map(item => item.item)
 
+//write the prompt
+const prompt = `
+I have the following pantry items: ${Items.join(", ")}.
+Please suggest 3 recipes that I can make using only these ingredients.
+Return the recipes in JSON format with these fields for each recipe:
+- name
+- ingredients (list)
+- steps (list of instructions)
+Keep the recipes simple and realistic.
+`
+
 //call Ollama with a prompt
-const recipes = await fetch()
+const res = await fetch("http://127.0.0.1:11434/v1/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "llama2", 
+        prompt: prompt,
+        max_tokens: 500
+      })
+})
+if(!ok) throw new Error("Did not recieve Ai recipes")
+const data = await res.json();
 
-
-//send back the recipes
+    // Send the AI response to frontend
+    res.json({ recipes: data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to get AI recipes" });
+  }
 }
 
 

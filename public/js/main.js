@@ -238,12 +238,13 @@ const aiLink = document.querySelector("aiRecipesLink");
 aiLink.addEventListener("click", async (e) => {
   e.preventDefault();
   try {
-    const res = await fetch("api/getAiRecipeSuggestions", {
+    const res = await fetch("api/getAiRecipes", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw new Error("Recipes fetch failed");
-    const recipes = res.json();
+    const data= res.json();
+    console.log(data.recipes)
   } catch (err) {
     console.log(err);
   }
