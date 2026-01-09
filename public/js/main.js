@@ -233,22 +233,30 @@ selectStore.addEventListener('change', (e) => {
 
 //======================= GET AI RECIPE SUGGESTIONS ==================//
 
-const aiLink = document.querySelector("aiRecipesLink");
+document.addEventListener("DOMContentLoaded", () => {
+  const aiLink = document.getElementById("aiRecipesLink");
 
-aiLink.addEventListener("click", async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch("api/getAiRecipes", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!res.ok) throw new Error("Recipes fetch failed");
-    const data= res.json();
-    console.log(data.recipes)
-  } catch (err) {
-    console.log(err);
-  }
+  if (!aiLink) return; // important for shared main.js
+
+  aiLink.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/getAiRecipes", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Recipes fetch failed");
+
+      const data = await res.json();
+      console.log(data.recipes);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 });
+
 
 
 

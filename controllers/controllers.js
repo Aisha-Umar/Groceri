@@ -1,7 +1,6 @@
 const Grocery = require("../models/item.js")
 const User = require("../models/user.js")
 const Pantry = require("../models/pantry.js")
-const fetch = require('node-fetch')
 
 //Get landing page
 exports.getLanding = async(req, res) => {
