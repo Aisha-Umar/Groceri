@@ -151,7 +151,7 @@ const res = await fetch("http://127.0.0.1:11434/v1/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "llama2", 
+        model: "phi3", 
         prompt: prompt,
         max_tokens: 500
       })
