@@ -16,4 +16,5 @@ router.post('/saveItem', ensureApiAuth, controller.saveItem)
 router.get('/getAiRecipes', ensureAuthenticated, controller.getAiRecipes)
 
 
+
 module.exports = router

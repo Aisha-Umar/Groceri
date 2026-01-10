@@ -129,118 +129,90 @@ exports.moveToPantry = async (req, res) => {
 
 //============GET AI RECIPE SUGGESTIONS =====================
 
-//get the pantry items
 exports.getAiRecipes = async (req, res) => {
+
   try {
     const pantryItems = await Pantry.find({ user: req.user.id });
-    const Items = pantryItems.map((item) => item.item);
-
-    // If no pantry items, return empty recipes array
-    if (!Items.length) {
-      return res.status(200).json({ recipes: [] });
+    const items = pantryItems.map(item => item.item);
+    
+    if (!items.length) {
+      return res.json({ recipes: [] });
     }
 
-    //write the prompt
-    const prompt = `
-I have the following pantry items: ${Items.join(", ")}.
-Please suggest 3 recipes that I can make using only these ingredients.
-Return the recipes in JSON format with these fields for each recipe:
-- name
-- ingredients (list)
-- steps (list of instructions)
-Keep the recipes simple and realistic.
+//     const prompt = `
+// I have the following pantry items: ${items.join(", ")}.
+// Suggest 3 simple recipes using ONLY these items.
+// Return JSON only, in this format:
+
+// [
+//   {
+//     "name": "",
+//     "ingredients": [],
+//     "steps": []
+//   }
+// ]
+// `;
+
+
+// Change your prompt to include a strict instruction
+const prompt = `
+I have: ${items.join(", ")}.
+Suggest 2 recipes using these items.
+IMPORTANT: Return ONLY a raw JSON array. No conversational text, no markdown backticks.
+Each recipe step MUST be under 10 words.
+Format: [{"name": "string", "ingredients": [], "steps": []}]
 `;
 
-    // Ensure fetch is available (Node 18+ has global fetch, otherwise dynamic import node-fetch)
-    const fetchFn = globalThis.fetch ?? (await import('node-fetch')).then(m => m.default);
+    const fetchFn =
+      globalThis.fetch ?? (await import("node-fetch")).then(m => m.default);
 
-    // Try a few common HTTP endpoints and payload shapes
-    const endpoints = [
-      { url: 'http://127.0.0.1:11434/v1/generate', body: { model: 'phi3', prompt: prompt, max_tokens: 500 } },
-      { url: 'http://127.0.0.1:11434/v1/outputs', body: { model: 'phi3', input: prompt } },
-    ];
+    const response = await fetchFn("http://127.0.0.1:11434/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify({
+      //   model: "phi3",
+      //   prompt,
+      //   stream: false
+      // }),
+      // Add the 'format' parameter to the request body
+body: JSON.stringify({
+  model: "phi3",
+  prompt,
+  stream: false,
+  format: "json", // 🟢 This tells Ollama to strictly output JSON
+  options: {
+      num_predict: 250, // Limits token count (shorter response = faster time)
+      temperature: 0.2   // Lower temperature makes it more focused/faster
+    }
+}),
+    });
 
-    let text = null;
-
-    for (const ep of endpoints) {
-      try {
-        const r = await fetchFn(ep.url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(ep.body),
-        });
-
-        if (!r.ok) {
-          // try the next endpoint if 404 or other non-OK
-          console.warn(`Endpoint ${ep.url} returned status ${r.status}`);
-          continue;
-        }
-
-        const json = await r.json();
-
-        // Extract text from known response shapes
-        if (json.choices && json.choices.length) {
-          const choice = json.choices[0];
-          if (typeof choice.content === 'string') text = choice.content;
-          else if (Array.isArray(choice.content)) text = choice.content.map((c) => c.text || '').join('');
-          else text = JSON.stringify(choice.content);
-        } else if (typeof json.text === 'string') {
-          text = json.text;
-        } else if (json.output || json.outputs) {
-          // Some APIs return 'output' or 'outputs'
-          const out = json.output ?? json.outputs;
-          if (typeof out === 'string') text = out;
-          else if (Array.isArray(out)) text = out.map(o => o?.content || o?.text || JSON.stringify(o)).join('\n');
-          else text = JSON.stringify(out);
-        } else {
-          text = JSON.stringify(json);
-        }
-
-        // stop after we get a valid response
-        if (text) break;
-      } catch (fetchErr) {
-        console.warn(`Fetch to ${ep.url} failed:`, fetchErr.message || fetchErr);
-        continue;
-      }
+    if (!response.ok) {
+      throw new Error(`Ollama returned ${response.status}`);
     }
 
-    // Fallback to CLI if HTTP endpoints didn't return usable text
+    const json = await response.json();
+
+    // ✅ Ollama puts text here
+    const text = json.response?.trim();
+
     if (!text) {
-      try {
-        const { exec } = require('child_process');
-        const { promisify } = require('util');
-        const execAsync = promisify(exec);
-        // Use JSON.stringify to safely quote the prompt argument
-        const cmd = `ollama run phi3 ${JSON.stringify(prompt)}`;
-        console.log('Falling back to CLI:', cmd.slice(0, 200));
-        const { stdout, stderr } = await execAsync(cmd, { timeout: 15000 });
-        if (stderr) console.warn('ollama stderr:', stderr);
-        text = String(stdout || '').trim();
-      } catch (cliErr) {
-        console.error('Both HTTP and CLI attempts to call Ollama failed:', cliErr);
-        throw new Error('Ollama not reachable via HTTP and CLI fallback failed');
-      }
+      return res.json({ recipes: null, raw: json });
     }
 
-    // Strip JSON code fences if present
-    text = text.replace(/```(?:json)?\n?/g, '').replace(/```$/g, '').trim();
-
-    // Try parse as JSON, otherwise return raw text (for debugging)
-    let recipes;
     try {
-      recipes = JSON.parse(text);
-    } catch (parseErr) {
-      console.warn('Failed to parse AI output as JSON:', parseErr);
-      return res.status(200).json({ recipes: null, raw: text });
+      const recipes = JSON.parse(text);
+      return res.json({ recipes });
+    } catch (err) {
+      // AI didn’t return valid JSON
+      return res.json({ recipes: null, raw: text });
     }
 
-    // Send parsed recipes
-    return res.json({ recipes });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to get AI recipes" });
+    console.error("getAiRecipes error:", err);
+    res.status(500).json({
+      error: "Failed to get recipes",
+      details: err.message,
+    });
   }
-}
-
-
-
+};

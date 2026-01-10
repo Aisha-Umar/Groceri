@@ -235,8 +235,7 @@ selectStore.addEventListener('change', (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const aiLink = document.getElementById("aiRecipesLink");
-
-  if (!aiLink) return; // important for shared main.js
+  if (!aiLink) return; // important if main.js is shared across pages
 
   aiLink.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -245,18 +244,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("/api/getAiRecipes", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: 'same-origin',
       });
 
-      if (!res.ok) throw new Error("Recipes fetch failed");
+      if (!res.ok) {
+        console.error(`Recipes fetch failed: ${res.status} ${res.statusText}`);
+        alert(`Recipes fetch failed: ${res.status} ${res.statusText}`);
+        return;
+      }
 
+      // Parse JSON
       const data = await res.json();
       console.log(data.recipes);
+
+      // Optional: do something with recipes in the UI
+      // displayRecipes(data.recipes);
+
     } catch (err) {
-      console.log(err);
+      console.error('Request to /api/getAiRecipes failed', err);
+      alert('Recipes fetch failed: check console for details.');
     }
   });
 });
-
-
-
-

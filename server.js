@@ -51,39 +51,27 @@ app.use('/api', indexRoutes)
 const uri = process.env.MONGO_URI
 const PORT = process.env.PORT || 3000
 
-// Connect to MongoDB with retry/backoff and only start server after successful connection
-async function connectWithRetry(retries = 5, delay = 2000) {
-  if (!uri) throw new Error('MONGO_URI not set')
-
-  for (let i = 0; i < retries; i++) {
-    try {
-      console.log(`Attempting MongoDB connection (attempt ${i + 1}/${retries})`)
-      await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 })
-      console.log('✅ Connected to MongoDB (GroceriDB) with Mongoose!')
-      return
-    } catch (err) {
-      console.error(`MongoDB connection attempt ${i + 1} failed:`, err.message || err)
-      if (i < retries - 1) {
-        const wait = delay * Math.pow(2, i)
-        console.log(`Retrying in ${wait}ms...`)
-        await new Promise((r) => setTimeout(r, wait))
-      } else {
-        throw err
-      }
-    }
-  }
-}
-
+// 1. Simplified Connection Function
 async function start() {
   try {
-    await connectWithRetry()
-    app.listen(PORT, () => {
-      console.log(`server running on http://localhost:${PORT}`)
-    })
+    console.log('Connecting to MongoDB...');
+    
+    // Connect simply
+    await mongoose.connect(uri);
+    console.log('✅ Connected to MongoDB (GroceriDB)');
+
+    // 2. Start Server
+    const server = app.listen(PORT, () => {
+      console.log(`🚀 Server: http://localhost:${PORT}`);
+    });
+
+    // 3. Set the AI Timeout (2 minutes)
+    server.timeout = 120000;
+
   } catch (err) {
-    console.error('Failed to connect to MongoDB after multiple attempts:', err)
-    process.exit(1)
+    console.error('❌ Database connection failed:', err.message);
+    process.exit(1); // Stop the app if DB isn't running
   }
 }
 
-start()
+start();
