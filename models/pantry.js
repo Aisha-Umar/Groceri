@@ -14,6 +14,9 @@ const pantrySchema = new mongoose.Schema({
     quantity: {
         type:Number,
         default:1
+    },
+    weeksLasting:{
+        type:Number
     }
   }, {timestamps: true})
 
