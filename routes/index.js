@@ -14,7 +14,7 @@ router.post('/moveToPantry', ensureAuthenticated, controller.moveToPantry)
 router.get('/dashboard', ensureAuthenticated, controller.getDashboard)
 router.post('/saveItem', ensureApiAuth, controller.saveItem)
 router.get('/getAiRecipes', ensureAuthenticated, controller.getAiRecipes)
-
+router.get('/getItemsRunningLow', ensureAuthenticated, controller.getItemsRunningLow)
 
 
 module.exports = router

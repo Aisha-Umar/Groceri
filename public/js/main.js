@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("/api/getAiRecipes", {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        
         credentials: 'same-origin',
       });
 
@@ -271,8 +271,22 @@ document.addEventListener("DOMContentLoaded", () => {
 //add input field in add item modal for number of weeks item lasts
 //add weeksItemLasts to the pantry model
 //select notifications link
+const lastsWeeks = document.querySelector('weeksLasting')
 //create async function to fetch notifications for items running low
 //getItemsRunningLow
+lastsWeeks.addEventListener('click', async(e) =>{
+  e.preventDefault()
+  try{
+  const res = await fetch('/api/getItemsRunningLow',{
+    method:GET,
+    headers: { "Content-Type": "application/json" }
+  })
+    if(!res.ok) throw new Error('Did not get low running items.')
+     const data = res.json()
+}catch(err){
+  console.error('Request to /api/getItemsRunningLow failed.', err)
+}
+})
 //add router function
 //add controller
 //get pantry items
