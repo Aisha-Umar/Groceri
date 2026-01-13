@@ -218,3 +218,28 @@ body: JSON.stringify({
     });
   }
 };
+
+//=====================GET LOW RUNNING ITEMS ===================//
+exports.getItemsRunningLow = async (req, res) => {
+  //get pantry items
+  try {
+    const pantryItems = await Pantry.find({ user: req.user.id });
+    //loop over the pantry items to filter items running low
+    const itemsRunningLow = pantryItems.filter((item) => {
+      const currentDate = new Date();
+      const createdAtDate = item.createdAt;
+      const diff = currentDate - createdAtDate;
+      const diffDays = diff / (1000 * 60 * 60 * 24);
+      const diffWeeks = diffDays / 7;
+      const weeksLeft = item.weeksLasting - diffWeeks;
+      return weeksLeft <= 2;
+    });
+    await res.json(itemsRunningLow);
+  } catch (err) {
+    console.error("getLowRunningItems error:", err);
+    res.status(500).json({
+      error: "Failed to get items.",
+      details: err.message,
+    });
+  }
+};
