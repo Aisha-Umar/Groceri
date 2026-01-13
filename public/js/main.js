@@ -283,6 +283,7 @@ lastsWeeks.addEventListener('click', async(e) =>{
   })
     if(!res.ok) throw new Error('Did not get low running items.')
      const data = res.json()
+    console.log(data.itemsRunningLow)
 }catch(err){
   console.error('Request to /api/getItemsRunningLow failed.', err)
 }

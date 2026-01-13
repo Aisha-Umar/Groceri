@@ -22,8 +22,8 @@ const grocerySchema = new mongoose.Schema({
     type: String,
     required:true
   },
-  note: {
-    type:String
+  weeksLasting: {
+    type:Number
   }
 });
 const Grocery = mongoose.model('Grocery', grocerySchema)
