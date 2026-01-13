@@ -232,9 +232,10 @@ exports.getItemsRunningLow = async (req, res) => {
       const diffDays = diff / (1000 * 60 * 60 * 24);
       const diffWeeks = diffDays / 7;
       const weeksLeft = item.weeksLasting - diffWeeks;
-      return weeksLeft <= 2;
+      const roundedWeeksLeft = Math.ceil(weeksLeft)
+      return roundedWeeksLeft <= 2;
     });
-    await res.json(itemsRunningLow);
+     res.json(itemsRunningLow);
   } catch (err) {
     console.error("getLowRunningItems error:", err);
     res.status(500).json({
