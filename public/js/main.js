@@ -266,3 +266,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+//=======================NOTIFY ITEM RUNNING LOW=======================//
+//add input field in add item modal for number of weeks item lasts
+//add weeksItemLasts to the pantry model
+//select notifications link
+//create async function to fetch notifications for items running low
+//getItemsRunningLow
+//add router function
+//add controller
+//get pantry items
+//loop over the pantry items to filter items running low
+//first get createdAt date and number of weeks from pantry
+//get current date
+//initialize lowThreshold = 2 
+//get weeks by subtracting current date from createdAt date and comapre with 
+//the lowThreshold
+//if weeks are less than or equal to 2 send back items
+//display items in notification in a string ('item' is running low) 
+ 

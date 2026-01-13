@@ -201,6 +201,8 @@ body: JSON.stringify({
     }
 
     try {
+      text = text.replace(/```(?:json)?|```/g, '').trim();
+
       const recipes = JSON.parse(text);
       return res.json({ recipes });
     } catch (err) {
