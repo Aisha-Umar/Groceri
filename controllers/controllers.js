@@ -25,9 +25,9 @@ exports.getDashboard = async (req, res) => {
 exports.saveItem = async (req, res) => {
 const userId = req.user.id
     
-const { item,quantity,store,note } = req.body;
+const { item,quantity,store,weeksLasts } = req.body;
   try {
-    let savedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,note:note});
+    let savedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,weeksLasting:weeksLasts});
     res.status(201).json(savedItem)
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -113,6 +113,7 @@ exports.moveToPantry = async (req, res) => {
       items.map((item) => ({
         item: item.item,
         quantity: item.quantity,
+        weeksLasting:item.weeksLasting,
         user: item.user,
       }))
     );

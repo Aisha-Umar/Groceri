@@ -36,6 +36,7 @@ modalOverlay.addEventListener("click", (e) => {
 
 //===================== EDIT AN ITEM =======================//
 const itemList = document.querySelector(".item-list");
+if(itemList){ 
 itemList.addEventListener("click", (e) => {
   //get item being edited
   if (!e.target.classList.contains("edit-icon")) return
@@ -52,7 +53,7 @@ itemList.addEventListener("click", (e) => {
 
       openModal()
 });
-
+}
 //==================== FORM SUBMISSION FOR EDITING AND ADDING ITEM ==================//
 
 const form = document.getElementById("addItemForm");
@@ -64,7 +65,7 @@ form.addEventListener("submit", async (e) => {
   const item = document.getElementById("itemName").value;
   const quantity = document.getElementById("itemQty").value;
   const store = document.getElementById("itemStore").value;
-  const note = document.getElementById("itemNote").value;
+  const lastsWeeks = document.getElementById("weeksLasting").value;
 
   try {
     //------------------- ADD ITEM ---------------------
@@ -74,7 +75,7 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
-      body: JSON.stringify({ item, quantity, store, note }),
+      body: JSON.stringify({ item, quantity, store, lastsWeeks }),
     });
 
     if (!res.ok) throw new Error("Save item failed");
@@ -155,7 +156,7 @@ function renderNewListItem(newItem) {
       <span class="emoji"></span>${newItem.item}
     </label>
     <span class="item-info">${newItem.quantity}</span>
-    ${newItem.note ? `<span class="item-note">${newItem.note}</span>` : ""}
+    ${newItem.note ? `<span class="item-note">${newItem.lastsWeeks}</span>` : ""}
     <i class="fas fa-pencil-alt edit-icon"></i>
   `;
 

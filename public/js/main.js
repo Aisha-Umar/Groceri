@@ -98,7 +98,7 @@ if (selectedItemIds.length === 0) {
       credentials:'same-origin',
       body: JSON.stringify({selectedItemIds})
     })
-    const data = await res.json()
+    window.location.reload()
   }catch(err){
     console.error(err)
     alert('Failed to add item to pantry.')
