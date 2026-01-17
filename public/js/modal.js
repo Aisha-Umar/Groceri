@@ -125,6 +125,7 @@ form.addEventListener("submit", async (e) => {
 
 function renderNewListItem(newItem) {
   // Find the right store list container
+  
   let itemList = document.querySelector(".item-list");
 
   // If the store group doesn't exist yet, create it
@@ -156,7 +157,7 @@ function renderNewListItem(newItem) {
       <span class="emoji"></span>${newItem.item}
     </label>
     <span class="item-info">${newItem.quantity}</span>
-    ${newItem.note ? `<span class="item-note">${newItem.lastsWeeks}</span>` : ""}
+    ${newItem.weeksLasting ? `<span class="item-note">${newItem.lastsWeeks}</span>` : ""}
     <i class="fas fa-pencil-alt edit-icon"></i>
   `;
 
