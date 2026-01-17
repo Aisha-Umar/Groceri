@@ -104,7 +104,8 @@ if(moveToPantryBtn) {
     console.error(err)
     alert('Failed to add item to pantry.')
   }
-})
+  })
+}
 
 
 //======================= DELETE ITEM =============================//
