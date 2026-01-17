@@ -24,8 +24,18 @@ exports.getDashboard = async (req, res) => {
 // Get pantry page
 exports.getPantry = async (req, res) => {
   try {
-  const pantryItems = await Pantry.find({ user: req.user.id }).sort({ createdAt: -1 }); // descending order
+  const pantryItems = await Pantry.find({ user: req.user.id, status: 'active' }).sort({ createdAt: -1 }); // descending order
   await res.render('pantry', {pantryItems})
+} catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Get finished items page
+exports.getFinished = async (req, res) => {
+  try {
+  const finishedItems = await Pantry.find({ user: req.user.id, status: 'finished' }).sort({ finishedAt: -1 }); // descending order
+  await res.render('finished', {finishedItems})
 } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -125,6 +135,8 @@ exports.moveToPantry = async (req, res) => {
         quantity: item.quantity,
         weeksLasting:item.weeksLasting,
         user: item.user,
+        store: item.store,
+        status: 'active'
       }))
     );
 
@@ -132,6 +144,67 @@ exports.moveToPantry = async (req, res) => {
     await Grocery.deleteMany({ _id: { $in: itemIds } });
 
     res.status(200).json({ movedItems: addedPantryItems });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Move items from pantry to finished
+exports.moveToFinished = async (req, res) => {
+  try {
+    const { selectedItemIds } = req.body;
+    const userId = req.user.id;
+
+    if (!selectedItemIds || !selectedItemIds.length) {
+      return res.status(400).json({ message: "No items selected" });
+    }
+
+    const updatedItems = await Pantry.updateMany(
+      { _id: { $in: selectedItemIds }, user: userId, status: 'active' },
+      { status: 'finished', finishedAt: new Date() }
+    );
+
+    if (updatedItems.modifiedCount === 0) {
+      return res.status(404).json({ message: "No items updated" });
+    }
+
+    res.status(200).json({ movedItems: updatedItems });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Move items from finished back to grocery list
+exports.moveToGrocery = async (req, res) => {
+  try {
+    const { selectedItemIds } = req.body;
+    const userId = req.user.id;
+
+    if (!selectedItemIds || !selectedItemIds.length) {
+      return res.status(400).json({ message: "No items selected" });
+    }
+
+    const items = await Pantry.find({ _id: { $in: selectedItemIds }, user: userId, status: 'finished' });
+
+    if (!items.length) {
+      return res.status(404).json({ message: "No items found" });
+    }
+
+    const addedGroceryItems = await Grocery.insertMany(
+      items.map((item) => ({
+        item: item.item,
+        quantity: item.quantity,
+        weeksLasting: item.weeksLasting,
+        user: item.user,
+        store: item.store
+      }))
+    );
+
+    await Pantry.deleteMany({ _id: { $in: selectedItemIds }, user: userId });
+
+    res.status(200).json({ movedItems: addedGroceryItems });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

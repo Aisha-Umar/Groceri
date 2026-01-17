@@ -15,8 +15,21 @@ const pantrySchema = new mongoose.Schema({
         type:Number,
         default:1
     },
+    store: {
+        type: String,
+        default: 'Unassigned'
+    },
     weeksLasting:{
         type:Number
+    },
+    status: {
+        type: String,
+        enum: ['active', 'finished'],
+        default: 'active'
+    },
+    finishedAt: {
+        type: Date,
+        default: null
     }
   }, {timestamps: true})
 

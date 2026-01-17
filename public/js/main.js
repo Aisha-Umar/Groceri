@@ -76,28 +76,29 @@ function debounce(fn, delay = 300) {
 
 //=====================MOVE TO PANTRY ======================//
 const moveToPantryBtn = document.querySelector('.move-to-pantry')
-moveToPantryBtn.addEventListener('click', async(e) =>{
-  //select the checkboxes and the move to pantry button
-const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+if(moveToPantryBtn) {
+  moveToPantryBtn.addEventListener('click', async(e) =>{
+    //select the checkboxes and the move to pantry button
+  const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
 
 
-//go over the array of checkboxes, get item name and map into the array
-const selectedItemIds = selectedCb.map(e =>{
-  return e.dataset.id
-})
+  //go over the array of checkboxes, get item name and map into the array
+  const selectedItemIds = selectedCb.map(e =>{
+    return e.dataset.id
+  })
 
-if (selectedItemIds.length === 0) {
-    alert('No items selected.')
-    return
-  }
+  if (selectedItemIds.length === 0) {
+      alert('No items selected.')
+      return
+    }
 
-  try{
-    const res = await fetch('/api/moveToPantry', {
-      method:'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials:'same-origin',
-      body: JSON.stringify({selectedItemIds})
-    })
+    try{
+      const res = await fetch('/api/moveToPantry', {
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials:'same-origin',
+        body: JSON.stringify({selectedItemIds})
+      })
     window.location.reload()
   }catch(err){
     console.error(err)
@@ -274,20 +275,91 @@ document.addEventListener("DOMContentLoaded", () => {
 const notifications = document.querySelector('.notify')
 //create async function to fetch notifications for items running low
 //getItemsRunningLow
-notifications.addEventListener('click', async(e) =>{
-  try{
-  const res = await fetch('/api/getItemsRunningLow',{
-    method:'GET',
-    headers: { "Content-Type": "application/json" }
-  })
-    if(!res.ok) throw new Error('Did not get low running items.')
-     const data = await res.json()
-    console.log(data.itemsRunningLow)
-}catch(err){
-  console.error('Request to /api/getItemsRunningLow failed.', err)
-}
+if(notifications) {
+  notifications.addEventListener('click', async(e) =>{
+    try{
+    const res = await fetch('/api/getItemsRunningLow',{
+      method:'GET',
+      headers: { "Content-Type": "application/json" }
+    })
+      if(!res.ok) throw new Error('Did not get low running items.')
+       const data = await res.json()
+      console.log(data.itemsRunningLow)
+  }catch(err){
+    console.error('Request to /api/getItemsRunningLow failed.', err)
+  }
 })
+}
 //add router function
 //add controller
 
+//=====================MOVE TO FINISHED ======================//
+const moveToFinishedBtn = document.querySelector('.move-to-finished')
+if(moveToFinishedBtn) {
+  moveToFinishedBtn.addEventListener('click', async(e) =>{
+    const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+    
+    const selectedItemIds = selectedCb.map(e => {
+      return e.dataset.id
+    })
+
+    if (selectedItemIds.length === 0) {
+      alert('No items selected.')
+      return
+    }
+
+    try{
+      const res = await fetch('/api/moveToFinished', {
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials:'same-origin',
+        body: JSON.stringify({selectedItemIds})
+      })
+      if (!res.ok) throw new Error('Move to finished failed.')
+      
+      selectedCb.forEach(cb => {
+        cb.closest('li').remove()
+      })
+      window.location.reload()
+    }catch(err){
+      console.error(err)
+      alert('Failed to move items to finished.')
+    }
+  })
+}
+
+//=====================MOVE TO GROCERY LIST ======================//
+const moveToGroceryBtn = document.querySelector('.move-to-grocery')
+if(moveToGroceryBtn) {
+  moveToGroceryBtn.addEventListener('click', async(e) =>{
+    const selectedCb = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+    
+    const selectedItemIds = selectedCb.map(e => {
+      return e.dataset.id
+    })
+
+    if (selectedItemIds.length === 0) {
+      alert('No items selected.')
+      return
+    }
+
+    try{
+      const res = await fetch('/api/moveToGrocery', {
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials:'same-origin',
+        body: JSON.stringify({selectedItemIds})
+      })
+      if (!res.ok) throw new Error('Move to grocery list failed.')
+      
+      selectedCb.forEach(cb => {
+        cb.closest('li').remove()
+      })
+      window.location.reload()
+    }catch(err){
+      console.error(err)
+      alert('Failed to move items to grocery list.')
+    }
+  })
+}
  

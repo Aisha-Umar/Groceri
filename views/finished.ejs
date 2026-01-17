@@ -76,7 +76,7 @@
                 <div class="store-group">
                 <h3 class="store-header"></h3>
                  <ul class="item-list">
-                 <% for (let item of storedItems) { %>
+                 <% for (let item of finishedItems) { %>
                     <li class="list-item" data-store="<%= item.store %>" data-id="<%= item._id %>" data-item="<%= item.item %>">
 
                                 <input type="checkbox" class="item-checkbox" data-id="<%= item._id %>" data-item="<%= item.item %>">
@@ -89,7 +89,6 @@
                                 <span class="item-info">
                                     <%= item.quantity %>
                                 </span>
-                                <i class="fas fa-pencil-alt edit-icon"></i>
                             </li>
                             <% } %>
                     </ul>
@@ -136,9 +135,9 @@
                     <i class="fas fa-plus-circle"></i>
                     <span>Add Item</span>
                 </div>
-                <div class="nav-item move-to-pantry">
-                    <i class="fas fa-box-open"></i>
-                    <span>Move to Pantry</span>
+                <div class="nav-item move-to-grocery">
+                    <i class="fas fa-list-alt"></i>
+                    <span>Move to Grocery List</span>
                 </div>
             <button id="deleteSelectedBtn" class="nav-item">
                 <i class="fas fa-trash-alt"></i>
