@@ -21,6 +21,16 @@ exports.getDashboard = async (req, res) => {
   }
 };
 
+// Get pantry page
+exports.getPantry = async (req, res) => {
+  try {
+  const pantryItems = await Pantry.find({ user: req.user.id }).sort({ createdAt: -1 }); // descending order
+  await res.render('pantry', {pantryItems})
+} catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Add a new item
 exports.saveItem = async (req, res) => {
 const userId = req.user.id
