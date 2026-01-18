@@ -251,7 +251,7 @@ body: JSON.stringify({
   stream: false,
   format: "json", // 🟢 This tells Ollama to strictly output JSON
   options: {
-      num_predict: 250, // Limits token count (shorter response = faster time)
+      num_predict: 1000, // Increased from 250 to allow full recipe responses
       temperature: 0.2   // Lower temperature makes it more focused/faster
     }
 }),
@@ -266,18 +266,45 @@ body: JSON.stringify({
     // ✅ Ollama puts text here
     let text = json.response?.trim();
 
+    console.log('Full Ollama response:', json);
+    console.log('Extracted text:', text);
+
     if (!text) {
+      console.log('No text found, returning null');
       return res.json({ recipes: null, raw: json });
     }
 
     try {
       text = text.replace(/```(?:json)?|```/g, '').trim();
+      console.log('Cleaned text:', text);
 
-      const recipes = JSON.parse(text);
-      return res.json({ recipes });
+      let recipes = JSON.parse(text);
+      console.log('Parsed recipes:', recipes);
+      return res.json({ recipes: recipes.recipes || recipes });
     } catch (err) {
-      // AI didn’t return valid JSON
-      return res.json({ recipes: null, raw: text });
+      // Try to fix incomplete JSON by closing it
+      console.log('First parse failed, attempting to fix incomplete JSON');
+      try {
+        // Close any incomplete arrays/objects
+        let fixedText = text;
+        const openBraces = (fixedText.match(/{/g) || []).length;
+        const closeBraces = (fixedText.match(/}/g) || []).length;
+        const openBrackets = (fixedText.match(/\[/g) || []).length;
+        const closeBrackets = (fixedText.match(/]/g) || []).length;
+        
+        // Add missing closing braces/brackets
+        for (let i = closeBraces; i < openBraces; i++) fixedText += '}';
+        for (let i = closeBrackets; i < openBrackets; i++) fixedText += ']';
+        
+        console.log('Fixed text:', fixedText);
+        let recipes = JSON.parse(fixedText);
+        console.log('Parsed recipes after fix:', recipes);
+        return res.json({ recipes: recipes.recipes || recipes });
+      } catch (fixErr) {
+        console.log('JSON fix error:', fixErr.message);
+        console.log('Failed text:', text);
+        return res.json({ recipes: null, raw: text, error: 'Failed to parse recipes' });
+      }
     }
 
   } catch (err) {

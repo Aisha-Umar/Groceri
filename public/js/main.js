@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Show loading state
     recipesContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Loading recipes from AI... This may take 30 seconds.</p>';
-    recipesModal.style.display = 'flex';
+    recipesModal.classList.add('active');
 
     try {
       const res = await fetch("/api/getAiRecipes", {
@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const recipesModal = document.getElementById('recipesModal');
   if (closeRecipesBtn && recipesModal) {
     closeRecipesBtn.addEventListener('click', () => {
-      recipesModal.style.display = 'none';
+      recipesModal.classList.remove('active');
     });
   }
 });
@@ -290,7 +290,7 @@ function displayRecipes(recipes) {
   const recipesContainer = document.getElementById('recipesContainer');
   
   if (!recipes || recipes.length === 0) {
-    recipesContainer.innerHTML = '<p>No recipes found. Try adding more items to your pantry!</p>';
+    recipesContainer.innerHTML = '<p>No recipes found. Make sure your pantry has items and Ollama is running.</p>';
   } else {
     let recipesHTML = '';
     recipes.forEach((recipe, index) => {

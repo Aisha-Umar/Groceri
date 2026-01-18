@@ -39,6 +39,11 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     transform: scale(0.9);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop-in */
+    margin: 20px; /* Add vertical and horizontal margin */
+    max-height: 80vh; /* Prevent modal from exceeding viewport height */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .modal-overlay.active .modal-container {
@@ -71,6 +76,13 @@
 
 .close-modal:hover {
     color: var(--action-delete-red);
+}
+
+/* Modal Body - scrollable content area */
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px; /* Space for scrollbar */
 }
 
 /* 4. Inputs & Form Styling */
