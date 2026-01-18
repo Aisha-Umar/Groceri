@@ -223,20 +223,6 @@ exports.getAiRecipes = async (req, res) => {
       return res.json({ recipes: [] });
     }
 
-//     const prompt = `
-// I have the following pantry items: ${items.join(", ")}.
-// Suggest 3 simple recipes using ONLY these items.
-// Return JSON only, in this format:
-
-// [
-//   {
-//     "name": "",
-//     "ingredients": [],
-//     "steps": []
-//   }
-// ]
-// `;
-
 
 // Change your prompt to include a strict instruction
 const prompt = `
@@ -278,7 +264,7 @@ body: JSON.stringify({
     const json = await response.json();
 
     // ✅ Ollama puts text here
-    const text = json.response?.trim();
+    let text = json.response?.trim();
 
     if (!text) {
       return res.json({ recipes: null, raw: json });

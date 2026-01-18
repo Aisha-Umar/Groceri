@@ -242,29 +242,36 @@ document.addEventListener("DOMContentLoaded", () => {
   aiLink.addEventListener("click", async (e) => {
     e.preventDefault();
 
+    const recipesModal = document.getElementById('recipesModal');
+    const recipesContainer = document.getElementById('recipesContainer');
+    
+    // Show loading state
+    recipesContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Loading recipes from AI... This may take 30 seconds.</p>';
+    recipesModal.style.display = 'flex';
+
     try {
       const res = await fetch("/api/getAiRecipes", {
         method: "GET",
-        
         credentials: 'same-origin',
       });
 
       if (!res.ok) {
         console.error(`Recipes fetch failed: ${res.status} ${res.statusText}`);
-        alert(`Recipes fetch failed: ${res.status} ${res.statusText}`);
+        recipesContainer.innerHTML = '<p style="color: red;">Failed to fetch recipes. Please try again.</p>';
         return;
       }
 
       // Parse JSON
       const data = await res.json();
-      console.log(data.recipes);
+      console.log('Response data:', data);
+      console.log('Recipes:', data.recipes);
 
       // Display recipes in modal
       displayRecipes(data.recipes);
 
     } catch (err) {
       console.error('Request to /api/getAiRecipes failed', err);
-      alert('Recipes fetch failed: check console for details.');
+      recipesContainer.innerHTML = '<p style="color: red;">Recipes fetch failed: check console for details.</p>';
     }
   });
 
@@ -280,7 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Function to display recipes in the modal
 function displayRecipes(recipes) {
-  const recipesModal = document.getElementById('recipesModal');
   const recipesContainer = document.getElementById('recipesContainer');
   
   if (!recipes || recipes.length === 0) {
@@ -308,8 +314,6 @@ function displayRecipes(recipes) {
     });
     recipesContainer.innerHTML = recipesHTML;
   }
-  
-  recipesModal.style.display = 'flex';
 }
 
 //=======================NOTIFY ITEM RUNNING LOW=======================//
