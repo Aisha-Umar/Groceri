@@ -259,15 +259,58 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       console.log(data.recipes);
 
-      // Optional: do something with recipes in the UI
-      // displayRecipes(data.recipes);
+      // Display recipes in modal
+      displayRecipes(data.recipes);
 
     } catch (err) {
       console.error('Request to /api/getAiRecipes failed', err);
       alert('Recipes fetch failed: check console for details.');
     }
   });
+
+  // Close recipes modal
+  const closeRecipesBtn = document.getElementById('closeRecipesModalBtn');
+  const recipesModal = document.getElementById('recipesModal');
+  if (closeRecipesBtn && recipesModal) {
+    closeRecipesBtn.addEventListener('click', () => {
+      recipesModal.style.display = 'none';
+    });
+  }
 });
+
+// Function to display recipes in the modal
+function displayRecipes(recipes) {
+  const recipesModal = document.getElementById('recipesModal');
+  const recipesContainer = document.getElementById('recipesContainer');
+  
+  if (!recipes || recipes.length === 0) {
+    recipesContainer.innerHTML = '<p>No recipes found. Try adding more items to your pantry!</p>';
+  } else {
+    let recipesHTML = '';
+    recipes.forEach((recipe, index) => {
+      recipesHTML += `
+        <div class="recipe-card" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+          <h3 style="margin-top: 0; color: #333;">${recipe.name || 'Recipe ' + (index + 1)}</h3>
+          <div style="margin: 10px 0;">
+            <strong>Ingredients:</strong>
+            <ul style="margin: 5px 0;">
+              ${(recipe.ingredients || []).map(ing => `<li>${ing}</li>`).join('')}
+            </ul>
+          </div>
+          <div style="margin: 10px 0;">
+            <strong>Steps:</strong>
+            <ol style="margin: 5px 0;">
+              ${(recipe.steps || []).map(step => `<li>${step}</li>`).join('')}
+            </ol>
+          </div>
+        </div>
+      `;
+    });
+    recipesContainer.innerHTML = recipesHTML;
+  }
+  
+  recipesModal.style.display = 'flex';
+}
 
 //=======================NOTIFY ITEM RUNNING LOW=======================//
 //add input field in add item modal for number of weeks item lasts
