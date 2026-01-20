@@ -43,7 +43,16 @@
                         <i class="fas fa-home"></i>
                         <h1>HOMESTOCK</h1>
                     </div>
-                    <div class="avatar-placeholder"></div>
+                    <div class="header-actions">
+                        <div class="nav-item notify">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
@@ -58,19 +67,35 @@
                     <button class="add-item-button large-button">Add Item</button>
                 </div>
                 <div class="controls-bar">
-                    <div class="select-all">
-                        <input type="checkbox" id="select-all-checkbox">
-                        <label for="select-all-checkbox">Select All</label>
-                    </div>
+                    <div class="controls-bar-left">
+                        <div class="select-all">
+                            <input type="checkbox" id="select-all-checkbox">
+                            <label for="select-all-checkbox">Select All</label>
+                        </div>
 
-                    <div class="store-filter">
-                        <label for="store-select">Store:</label>
-                        <select id="store-select">
-                            <option value="all" selected>All Stores</option>
-                            <option value="walmart">Walmart</option>
-                            <option value="costco">Costco</option>
-                            <option value="shoprite">ShopRite</option>
-                        </select>
+                        <div class="store-filter">
+                            <label for="store-select">Store:</label>
+                            <select id="store-select">
+                                <option value="all" selected>All Stores</option>
+                                <option value="walmart">Walmart</option>
+                                <option value="costco">Costco</option>
+                                <option value="shoprite">ShopRite</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="controls-bar-right">
+                        <div class="nav-item add-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Add Item</span>
+                        </div>
+                        <div class="nav-item move-to-finished">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Move to Finished</span>
+                        </div>
+                        <button id="deleteSelectedBtn" class="nav-item">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Delete Selected</span>
+                        </button>
                     </div>
                 </div>
                 <div class="store-group">
@@ -139,10 +164,10 @@
                     <i class="fas fa-check-circle"></i>
                     <span>Move to Finished</span>
                 </div>
-            <button id="deleteSelectedBtn" class="nav-item">
-                <i class="fas fa-trash-alt"></i>
-                 <span>Delete Selected</span> 
-            </button>
+                <button id="deleteSelectedBtn" class="nav-item">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Delete Selected</span> 
+                </button>
 
                 <div class="nav-item notify">
                     <i class="fas fa-bell"></i>
