@@ -214,47 +214,40 @@ exports.moveToGrocery = async (req, res) => {
 //============GET AI RECIPE SUGGESTIONS =====================
 
 exports.getAiRecipes = async (req, res) => {
-
   try {
     const pantryItems = await Pantry.find({ user: req.user.id });
     const items = pantryItems.map(item => item.item);
-    
+
     if (!items.length) {
       return res.json({ recipes: [] });
     }
 
-
-// Change your prompt to include a strict instruction
-const prompt = `
+    const prompt = `
 I have: ${items.join(", ")}.
 Suggest 2 recipes using these items.
-IMPORTANT: Return ONLY a raw JSON array. No conversational text, no markdown backticks.
+IMPORTANT: Return ONLY a raw JSON array.
+No conversational text. No markdown.
 Each recipe step MUST be under 10 words.
-Format: [{"name": "string", "ingredients": [], "steps": []}]
+Format: [{"name":"string","ingredients":[],"steps":[]}]
 `;
 
     const fetchFn =
-      globalThis.fetch ?? (await import("node-fetch")).then(m => m.default);
+      globalThis.fetch ??
+      (await import("node-fetch")).then(m => m.default);
 
     const response = await fetchFn("http://127.0.0.1:11434/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // body: JSON.stringify({
-      //   model: "phi3",
-      //   prompt,
-      //   stream: false
-      // }),
-      // Add the 'format' parameter to the request body
-body: JSON.stringify({
-  model: "phi3",
-  prompt,
-  stream: false,
-  format: "json", // 🟢 This tells Ollama to strictly output JSON
-  options: {
-      num_predict: 1000, // Increased from 250 to allow full recipe responses
-      temperature: 0.2   // Lower temperature makes it more focused/faster
-    }
-}),
+      body: JSON.stringify({
+        model: "phi3",
+        prompt,
+        stream: false,
+        format: "json",
+        options: {
+          num_predict: 1000,
+          temperature: 0.2,
+        },
+      }),
     });
 
     if (!response.ok) {
@@ -262,49 +255,22 @@ body: JSON.stringify({
     }
 
     const json = await response.json();
+    const text = json.response?.trim();
 
-    // ✅ Ollama puts text here
-    let text = json.response?.trim();
-
-    console.log('Full Ollama response:', json);
-    console.log('Extracted text:', text);
+    console.log("Full Ollama response:", json);
+    console.log("Extracted text:", text);
 
     if (!text) {
-      console.log('No text found, returning null');
-      return res.json({ recipes: null, raw: json });
+      return res.json({ recipes: null });
     }
 
     try {
-      text = text.replace(/```(?:json)?|```/g, '').trim();
-      console.log('Cleaned text:', text);
-
-      let recipes = JSON.parse(text);
-      console.log('Parsed recipes:', recipes);
-      return res.json({ recipes: recipes.recipes || recipes });
-    } catch (err) {
-      // Try to fix incomplete JSON by closing it
-      console.log('First parse failed, attempting to fix incomplete JSON');
-      try {
-        // Close any incomplete arrays/objects
-        let fixedText = text;
-        const openBraces = (fixedText.match(/{/g) || []).length;
-        const closeBraces = (fixedText.match(/}/g) || []).length;
-        const openBrackets = (fixedText.match(/\[/g) || []).length;
-        const closeBrackets = (fixedText.match(/]/g) || []).length;
-        
-        // Add missing closing braces/brackets
-        for (let i = closeBraces; i < openBraces; i++) fixedText += '}';
-        for (let i = closeBrackets; i < openBrackets; i++) fixedText += ']';
-        
-        console.log('Fixed text:', fixedText);
-        let recipes = JSON.parse(fixedText);
-        console.log('Parsed recipes after fix:', recipes);
-        return res.json({ recipes: recipes.recipes || recipes });
-      } catch (fixErr) {
-        console.log('JSON fix error:', fixErr.message);
-        console.log('Failed text:', text);
-        return res.json({ recipes: null, raw: text, error: 'Failed to parse recipes' });
-      }
+      const cleaned = text.replace(/```json|```/g, "").trim();
+      const recipes = JSON.parse(cleaned);
+      return res.json({ recipes });
+    } catch (parseErr) {
+      console.error("JSON parse failed:", parseErr.message);
+      return res.json({ recipes: null, raw: text });
     }
 
   } catch (err) {
@@ -315,6 +281,8 @@ body: JSON.stringify({
     });
   }
 };
+
+  
 
 //=====================GET LOW RUNNING ITEMS ===================//
 exports.getItemsRunningLow = async (req, res) => {

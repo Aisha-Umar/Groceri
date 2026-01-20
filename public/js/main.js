@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log('Recipes:', data.recipes);
 
       // Display recipes in modal
-      displayRecipes(data.recipes);
+      displayRecipes(data.recipes.recipes);
 
     } catch (err) {
       console.error('Request to /api/getAiRecipes failed', err);
