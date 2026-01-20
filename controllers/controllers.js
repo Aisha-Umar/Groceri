@@ -57,6 +57,7 @@ const { item,quantity,store,weeksLasts } = req.body;
 // Edit an item
 exports.editItem = async (req, res) => {
   try {
+
     const { editedItem, quantity, itemId } = req.body;
 
     const updatedItem = await Grocery.findOneAndUpdate(
@@ -257,8 +258,8 @@ Format: [{"name":"string","ingredients":[],"steps":[]}]
     const json = await response.json();
     const text = json.response?.trim();
 
-    console.log("Full Ollama response:", json);
-    console.log("Extracted text:", text);
+    // console.log("Full Ollama response:", json);
+    // console.log("Extracted text:", text);
 
     if (!text) {
       return res.json({ recipes: null });

@@ -94,6 +94,12 @@ form.addEventListener("submit", async (e) => {
     if (mode === "edit") {
       const item = document.getElementById("itemName").value;
       const quantity = document.getElementById("itemQty").value;
+      console.log("EDIT MODE:", {
+        mode,
+        editingItemId,
+        item,
+        quantity,
+      });
 
       const res = await fetch("/api/editItem", {
         method: "PUT",
@@ -109,7 +115,7 @@ form.addEventListener("submit", async (e) => {
       const updatedItem = await res.json();
       editingLi.querySelector(".item-details").innerText = updatedItem.item;
       editingLi.dataset.item = updatedItem.item;
-      editingLi.querySelector('.item-info').innerText = updatedItem.quantity
+      editingLi.querySelector(".item-info").innerText = updatedItem.quantity;
     }
 
     form.reset()
