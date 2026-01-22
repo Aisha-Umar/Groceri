@@ -62,9 +62,6 @@
 
             <main class="content">
                 <div class="no-items-message">
-                    <!-- <p>No matching items.</p>
-                    <p>Add it to your grocery list?</p> -->
-                    <button class="add-item-button large-button">Add Item</button>
                 </div>
                 <div class="controls-bar">
                     <div class="controls-bar-left">
@@ -77,9 +74,11 @@
                             <label for="store-select">Store:</label>
                             <select id="store-select">
                                 <option value="all" selected>All Stores</option>
+                                <option value="subzi mandi">Subzi Mandi</option>
                                 <option value="walmart">Walmart</option>
-                                <option value="costco">Costco</option>
+                                <option value="aldi">Aldi</option>
                                 <option value="shoprite">ShopRite</option>
+                                <option value="other">Other</option>
                             </select>
                         </div>
                     </div>
@@ -181,10 +180,11 @@
                                 <div class="input-wrapper">
                                     <i class="fas fa-store"></i>
                                     <select id="itemStore" name="store">
+                                        <option value="Subzi Mandi">Subzi Mandi</option>
                                         <option value="Walmart">Walmart</option>
-                                        <option value="Costco">Costco</option>
                                         <option value="Aldi">Aldi</option>
-                                        <option value="Unassigned">Other</option>
+                                        <option value="ShopRite">ShopRite</option>
+                                        <option value="Other">Other</option>
                                     </select>
                                     <i class="fas fa-chevron-down select-arrow"></i>
                                 </div>

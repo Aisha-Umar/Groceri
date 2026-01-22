@@ -1,7 +1,7 @@
 // --- MODAL LOGIC ---
 // 1. Target the NEW button using its class
 const addItemBtn1 = document.querySelector(".add-item-button");
-const addItemBtn2 = document.querySelector(".nav-item.add-item"); // Your footer plus button
+const addItemBtns = document.querySelectorAll(".nav-item.add-item"); // All add-item buttons (footer + controls-bar)
 const modalOverlay = document.getElementById("addItemModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const cancelBtn = document.getElementById("cancelBtn");
@@ -23,7 +23,7 @@ function closeModal() {
 
 // Event Listeners
 if (addItemBtn1) addItemBtn1.addEventListener("click", openModal);
-if (addItemBtn2) addItemBtn2.addEventListener("click", openModal);
+addItemBtns.forEach(btn => btn.addEventListener("click", openModal));
 if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
 if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
 
