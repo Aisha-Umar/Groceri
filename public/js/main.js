@@ -107,7 +107,32 @@ if(moveToPantryBtn) {
   })
 }
 
+//===================== SELECT ALL =============================//
 
+const selectAllCheckbox = document.getElementById('select-all-checkbox');
+if (selectAllCheckbox) {
+  selectAllCheckbox.addEventListener('change', (e) => {
+    const isChecked = e.target.checked;
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+    
+    itemCheckboxes.forEach(checkbox => {
+      checkbox.checked = isChecked;
+    });
+  });
+}
+
+// Update select-all checkbox when individual items are checked/unchecked
+document.addEventListener('change', (e) => {
+  if (e.target.classList.contains('item-checkbox')) {
+    const selectAllCheckbox = document.getElementById('select-all-checkbox');
+    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+    const checkedCount = document.querySelectorAll('.item-checkbox:checked').length;
+    
+    if (selectAllCheckbox) {
+      selectAllCheckbox.checked = checkedCount === itemCheckboxes.length;
+    }
+  }
+});
 //======================= DELETE ITEM =============================//
 
 document.getElementById('deleteSelectedBtn').addEventListener('click', async () => {
