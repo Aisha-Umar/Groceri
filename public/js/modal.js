@@ -65,7 +65,7 @@ form.addEventListener("submit", async (e) => {
   const item = document.getElementById("itemName").value;
   const quantity = document.getElementById("itemQty").value;
   const store = document.getElementById("itemStore").value;
-  const lastsWeeks = document.getElementById("weeksLasting").value;
+  const weeksLasting = document.getElementById("weeksLasting")?.value;
 
   try {
     //------------------- ADD ITEM ---------------------
@@ -75,7 +75,7 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
-      body: JSON.stringify({ item, quantity, store, lastsWeeks }),
+      body: JSON.stringify({ item, quantity, store, weeksLasting }),
     });
 
     if (!res.ok) throw new Error("Save item failed");
@@ -156,14 +156,17 @@ function renderNewListItem(newItem) {
   const li = document.createElement("li");
   li.classList.add("list-item");
   li.dataset.store = newItem.store;
+  li.dataset.id = newItem._id;
+  li.dataset.item = newItem.item;
+  li.setAttribute("draggable", "true");
 
   li.innerHTML = `
-    <input type="checkbox" class="item-checkbox" data-id="${newItem._id}">
+    <input type="checkbox" class="item-checkbox" data-id="${newItem._id}" data-item="${newItem.item}">
     <label for="item-${newItem._id}" class="item-details">
       <span class="emoji"></span>${newItem.item}
     </label>
     <span class="item-info">${newItem.quantity}</span>
-    ${newItem.weeksLasting ? `<span class="item-note">${newItem.lastsWeeks}</span>` : ""}
+    ${newItem.weeksLasting ? `<span class="item-note">${newItem.weeksLasting}</span>` : ""}
     <i class="fas fa-pencil-alt edit-icon"></i>
   `;
 

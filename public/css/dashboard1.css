@@ -437,6 +437,20 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+.list-item[draggable="true"] {
+    cursor: grab;
+}
+
+.list-item[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+.list-item.dragging {
+    opacity: 0.5;
+    background-color: var(--light-green);
+    border-radius: 8px;
+}
+
 .list-item:last-child {
     border-bottom: none;
 }

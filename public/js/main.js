@@ -1,6 +1,5 @@
 const input = document.querySelector(".inputItem");
-// const form = document.querySelector("form");
-const list = document.querySelector(".groceryList");
+const list = document.querySelector(".groceryList"); // legacy; drag uses .item-list
 
 
 
@@ -188,80 +187,95 @@ document.getElementById('deleteSelectedBtn').addEventListener('click', async () 
 
 
 
-//make elements draggable
-// let draggedItem = null;
+//===================== DRAG-TO-REORDER (Grocery List / Dashboard) =====================//
+const itemList = document.querySelector(".item-list");
+const isDashboard = document.querySelector(".move-to-pantry") !== null;
 
-// list.addEventListener("dragstart", (e) => {
-//   draggedItem = e.target;
-//   e.target.classList.add("dragging");
-// });
+if (itemList && isDashboard) {
+  let draggedItem = null;
 
-// list.addEventListener("dragover", (e) => {
-//   e.preventDefault(); // allows dropping
-//   const afterElement = getDragAfterElement(list, e.clientY);
-//   const dragging = document.querySelector(".dragging");
-//   if (afterElement == null) {
-//     list.appendChild(dragging);
-//   } else {
-//     list.insertBefore(dragging, afterElement);
-//   }
-// });
+  const listItems = itemList.querySelectorAll(".list-item");
+  listItems.forEach((li) => {
+    li.setAttribute("draggable", "true");
+  });
 
-// list.addEventListener("drop", () => {
-//   draggedItem.classList.remove("dragging");
-//   draggedItem = null;
-// });
+  itemList.addEventListener("dragstart", (e) => {
+    if (e.target.closest("input[type=checkbox]") || e.target.closest(".edit-icon")) return;
+    const li = e.target.closest("li.list-item");
+    if (!li) return;
+    draggedItem = li;
+    li.classList.add("dragging");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", li.dataset.id);
+    e.dataTransfer.setDragImage(li, 0, 0);
+  });
 
-// list.addEventListener("dragend", (e) => {
-//   if (e.target.tagName === "LI") {
-//     const orderedList = Array.from(list.querySelectorAll("li")).map((li, index) => ({
-//       id: li.dataset.id,
-//       order:Number(index),
-//     }));
-//     console.log(orderedList)
-//     orderList(orderedList);
-//   }
-// });
+  itemList.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    const dragging = itemList.querySelector(".dragging");
+    if (!dragging) return;
+    const afterElement = getDragAfterElement(itemList, e.clientY);
+    if (afterElement == null) {
+      itemList.appendChild(dragging);
+    } else {
+      itemList.insertBefore(dragging, afterElement);
+    }
+  });
+
+  itemList.addEventListener("drop", (e) => {
+    e.preventDefault();
+  });
+
+  itemList.addEventListener("dragend", (e) => {
+    const li = e.target.closest("li.list-item");
+    if (!li) return;
+    li.classList.remove("dragging");
+    draggedItem = null;
+    const orderedList = Array.from(itemList.querySelectorAll("li.list-item")).map((el, index) => ({
+      id: el.dataset.id,
+      order: index,
+    }));
+    orderList(orderedList);
+  });
+}
 
 function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll("li:not(.dragging)")];
+  const draggableElements = [...container.querySelectorAll("li.list-item:not(.dragging)")];
+  if (!draggableElements.length) return null;
 
-  return draggableElements.reduce(
+  const { element } = draggableElements.reduce(
     (closest, child) => {
       const box = child.getBoundingClientRect();
       const offset = y - box.top - box.height / 2;
       if (offset < 0 && offset > closest.offset) {
-        return { offset: offset, element: child };
-      } else {
-        return closest;
+        return { offset, element: child };
       }
+      return closest;
     },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
+    { offset: Number.NEGATIVE_INFINITY, element: null }
+  );
+  return element;
 }
 
-//update ordered dragged list
-
-async function orderList(orderedList){
-try{
-  console.log('Sending order:', orderedList)
-  const res = await fetch('/api/saveOrder',{
-  method:'PUT',
-  headers:{"Content-Type":"application/json"},
-  body: JSON.stringify({orderedList}),
-})
-if(!res.ok) throw new Error('Update failed')
- console.log("Order saved!")
- //location.reload()
-}catch(err){
-  console.error('Error:',err)
-}
+async function orderList(orderedList) {
+  try {
+    const res = await fetch("/api/saveOrder", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ orderedList }),
+    });
+    if (!res.ok) throw new Error("Update failed");
+  } catch (err) {
+    console.error("Error saving order:", err);
+  }
 }
 
 //================= FILTER BY STORES =================================//  
 const selectStore = document.getElementById('store-select');
-
-selectStore.addEventListener('change', (e) => {
+if (selectStore) {
+  selectStore.addEventListener('change', (e) => {
   const selectedStore = e.target.value.toLowerCase();
   const items = document.querySelectorAll('.list-item');
 
@@ -274,7 +288,8 @@ selectStore.addEventListener('change', (e) => {
       item.style.display = 'none';
     }
   });
-});
+  });
+}
 
 
 //======================= GET AI RECIPE SUGGESTIONS ==================//
