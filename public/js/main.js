@@ -47,13 +47,32 @@ async function getAllPantryItems() {
 getAllPantryItems();
 
 const inputSearch = document.getElementById("inputSearch");
+const noItemsMessage = document.querySelector(".no-items-message");
+const addItemButton = document.querySelector(".add-item-button");
 
 const handleSearch = (e) => {
   const searchItem = e.target.value.trim().toLowerCase();
+  
+  if (!searchItem) {
+    // Clear search - show default state
+    noItemsMessage.innerHTML = '<button class="add-item-button large-button">Add Item</button>';
+    noItemsMessage.style.display = '';
+    return;
+  }
+  
   if (!allPantryItems.length) return;
-  if (!searchItem) return;
+  
   const found = allPantryItems.some((item) => item.item.toLowerCase() === searchItem);
-  if (found) alert("item available");
+  
+  if (found) {
+    // Item is available
+    noItemsMessage.innerHTML = '<p style="color: #4caf50; font-weight: 500;"><i class="fas fa-check-circle"></i> Item available in your pantry</p>';
+    noItemsMessage.style.display = '';
+  } else {
+    // Item not found
+    noItemsMessage.innerHTML = '<p>No matching items.</p><p>Add it to your grocery list?</p><button class="add-item-button large-button">Add Item</button>';
+    noItemsMessage.style.display = '';
+  }
 };
 
 inputSearch.addEventListener("input", debounce(handleSearch, 300));
