@@ -54,9 +54,9 @@ const handleSearch = (e) => {
   const searchItem = e.target.value.trim().toLowerCase();
   
   if (!searchItem) {
-    // Clear search - show default state
-    noItemsMessage.innerHTML = '<button class="add-item-button large-button">Add Item</button>';
-    noItemsMessage.style.display = '';
+    // Clear search - hide message
+    noItemsMessage.innerHTML = '';
+    noItemsMessage.style.display = 'none';
     return;
   }
   
