@@ -361,29 +361,102 @@ function displayRecipes(recipes) {
 }
 
 //=======================NOTIFY ITEM RUNNING LOW=======================//
-//add input field in add item modal for number of weeks item lasts
-//add weeksItemLasts to the pantry model
 //select notifications link
 const notifications = document.querySelector('.notify')
-//create async function to fetch notifications for items running low
-//getItemsRunningLow
+const notificationPanel = document.getElementById('notificationPanel')
+const notificationOverlay = document.getElementById('notificationOverlay')
+const notificationContent = document.getElementById('notificationContent')
+const closeNotificationPanel = document.getElementById('close-notification-panel')
+
+// Function to open notification panel
+function openNotificationPanel() {
+  notificationPanel.classList.add('active')
+  notificationOverlay.classList.add('active')
+  document.body.style.overflow = 'hidden' // Prevent background scrolling
+}
+
+// Function to close notification panel
+function closeNotificationPanelFunc() {
+  notificationPanel.classList.remove('active')
+  notificationOverlay.classList.remove('active')
+  document.body.style.overflow = '' // Restore scrolling
+}
+
+// Function to display items in the panel
+function displayNotificationItems(itemsRunningLow) {
+  if (!itemsRunningLow || itemsRunningLow.length === 0) {
+    notificationContent.className = 'notification-panel-content empty'
+    notificationContent.innerHTML = `
+      <i class="fas fa-check-circle"></i>
+      <p>No items are running low! 🎉</p>
+    `
+    return
+  }
+
+  notificationContent.className = 'notification-panel-content'
+  notificationContent.innerHTML = itemsRunningLow.map(item => {
+    const weeksLeft = Math.ceil((Number(item.weeksLasting) - ((new Date() - new Date(item.createdAt)) / (1000 * 60 * 60 * 24 * 7))))
+    return `
+      <div class="notification-item">
+        <div class="notification-item-name">${item.item}</div>
+        <div class="notification-item-details">
+          <span><i class="fas fa-hashtag"></i> Quantity: ${item.quantity}</span>
+          <span><i class="fas fa-calendar-week"></i> ${weeksLeft} week${weeksLeft !== 1 ? 's' : ''} left</span>
+        </div>
+      </div>
+    `
+  }).join('')
+}
+
+// Event listeners
 if(notifications) {
   notifications.addEventListener('click', async(e) =>{
+    e.preventDefault()
+    openNotificationPanel()
+    
+    // Show loading state
+    notificationContent.className = 'notification-panel-content empty'
+    notificationContent.innerHTML = `
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Loading notifications...</p>
+    `
+    
     try{
-    const res = await fetch('/api/getItemsRunningLow',{
-      method:'GET',
-      headers: { "Content-Type": "application/json" }
-    })
+      const res = await fetch('/api/getItemsRunningLow',{
+        method:'GET',
+        headers: { "Content-Type": "application/json" }
+      })
       if(!res.ok) throw new Error('Did not get low running items.')
-       const data = await res.json()
-      console.log(data)
-  }catch(err){
-    console.error('Request to /api/getItemsRunningLow failed.', err)
+      const itemsRunningLow = await res.json()
+      displayNotificationItems(itemsRunningLow)
+      
+    }catch(err){
+      console.error('Request to /api/getItemsRunningLow failed.', err)
+      notificationContent.className = 'notification-panel-content empty'
+      notificationContent.innerHTML = `
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>Failed to load notifications.<br>Please try again.</p>
+      `
+    }
+  })
+}
+
+// Close panel when clicking close button
+if(closeNotificationPanel) {
+  closeNotificationPanel.addEventListener('click', closeNotificationPanelFunc)
+}
+
+// Close panel when clicking overlay
+if(notificationOverlay) {
+  notificationOverlay.addEventListener('click', closeNotificationPanelFunc)
+}
+
+// Close panel with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && notificationPanel.classList.contains('active')) {
+    closeNotificationPanelFunc()
   }
 })
-}
-//add router function
-//add controller
 
 //=====================MOVE TO FINISHED ======================//
 const moveToFinishedBtn = document.querySelector('.move-to-finished')
