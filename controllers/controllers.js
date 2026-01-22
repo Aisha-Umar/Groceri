@@ -45,9 +45,9 @@ exports.getFinished = async (req, res) => {
 exports.saveItem = async (req, res) => {
 const userId = req.user.id
     
-const { item,quantity,store,weeksLasts } = req.body;
+const { item,quantity,store,weeksLasting } = req.body;
   try {
-    let savedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,weeksLasting:weeksLasts});
+    let savedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,weeksLasting:weeksLasting});
     res.status(201).json(savedItem)
   } catch (err) {
     res.status(500).json({ message: err.message });
