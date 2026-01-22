@@ -48,7 +48,7 @@
                             <i class="fas fa-bell"></i>
                             <span>Notifications</span>
                         </div>
-                        <div class="nav-item">
+                        <div class="nav-item logout">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </div>
@@ -173,7 +173,7 @@
                     <i class="fas fa-bell"></i>
                     <span>Notifications</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item logout">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </div>
@@ -257,6 +257,26 @@
                 </div>
                 <div class="modal-body">
                     <div id="recipesContainer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Panel -->
+        <div class="notification-overlay" id="notificationOverlay"></div>
+        <div class="notification-panel" id="notificationPanel">
+            <div class="notification-panel-header">
+                <h2>
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                </h2>
+                <button id="close-notification-panel" class="close-toggle">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="notification-panel-content" id="notificationContent">
+                <div class="empty">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading notifications...</p>
                 </div>
             </div>
         </div>

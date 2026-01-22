@@ -290,18 +290,35 @@ exports.getItemsRunningLow = async (req, res) => {
   //get pantry items
   try {
     const pantryItems = await Pantry.find({ user: req.user.id });
+    console.log(`Total pantry items: ${pantryItems.length}`);
+    
     //loop over the pantry items to filter items running low
     const itemsRunningLow = pantryItems.filter((item) => {
+      // Check if weeksLasting exists and is a valid number
+      if (!item.weeksLasting || isNaN(item.weeksLasting)) {
+        console.log(`Item ${item.item} skipped - weeksLasting: ${item.weeksLasting}`);
+        return false; // Skip items without weeksLasting
+      }
+      
       const currentDate = new Date();
       const createdAtDate = item.createdAt;
       const diff = currentDate - createdAtDate;
       const diffDays = diff / (1000 * 60 * 60 * 24);
       const diffWeeks = diffDays / 7;
-      const weeksLeft = item.weeksLasting - diffWeeks;
-      const roundedWeeksLeft = Math.ceil(weeksLeft)
+      
+      // Convert weeksLasting to number in case it's stored as string
+      const weeksLasting = Number(item.weeksLasting);
+      const weeksLeft = weeksLasting - diffWeeks;
+      const roundedWeeksLeft = Math.ceil(weeksLeft);
+      
+      console.log(`Item: ${item.item}, weeksLasting: ${weeksLasting}, weeksElapsed: ${diffWeeks.toFixed(2)}, weeksLeft: ${weeksLeft.toFixed(2)}, rounded: ${roundedWeeksLeft}`);
+      
+      // Return true if 2 weeks or less remaining
       return roundedWeeksLeft <= 2;
     });
-     res.json(itemsRunningLow);
+    
+    console.log(`Items running low: ${itemsRunningLow.length}`);
+    res.json(itemsRunningLow);
   } catch (err) {
     console.error("getLowRunningItems error:", err);
     res.status(500).json({

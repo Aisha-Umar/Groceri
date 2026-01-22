@@ -91,13 +91,53 @@ body {
 
 .header-actions {
     display: none;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
 }
 
 .header-actions .nav-item {
     flex: none;
-    padding: 0;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.header-actions .nav-item i {
+    font-size: 16px;
+}
+
+.header-actions .nav-item.notify {
+    color: var(--action-notify-blue);
+    border-color: rgba(52, 152, 219, 0.3);
+}
+
+.header-actions .nav-item.notify:hover {
+    background-color: rgba(52, 152, 219, 0.08);
+    border-color: var(--action-notify-blue);
+}
+
+.header-actions .nav-item.logout,
+.header-actions .nav-item:has(i.fa-sign-out-alt) {
+    color: var(--action-logout-orange);
+    border-color: rgba(243, 156, 18, 0.3);
+}
+
+.header-actions .nav-item.logout:hover,
+.header-actions .nav-item:has(i.fa-sign-out-alt):hover {
+    background-color: rgba(243, 156, 18, 0.08);
+    border-color: var(--action-logout-orange);
 }
 
 .search-bar {
@@ -160,9 +200,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    flex-wrap: wrap;
+    padding: 12px 0;
     margin-top: 5px;
     border-bottom: 1px solid var(--border-color);
+    gap: 12px;
 }
 
 .controls-bar-left {
@@ -173,8 +215,97 @@ body {
 
 .controls-bar-right {
     display: none;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Controls-bar action buttons (desktop) */
+.controls-bar-right .nav-item,
+.controls-bar-right button.nav-item {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.controls-bar-right .nav-item i,
+.controls-bar-right button.nav-item i {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.controls-bar-right .nav-item:hover,
+.controls-bar-right button.nav-item:hover {
+    background-color: var(--light-green);
+    border-color: var(--primary-green);
+}
+
+.controls-bar-right .nav-item.add-item,
+.controls-bar-right button.nav-item.add-item {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--button-green) 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.controls-bar-right .nav-item.add-item i,
+.controls-bar-right button.nav-item.add-item i {
+    color: white;
+    background: none;
+    width: auto;
+    height: auto;
+    line-height: 1;
+    box-shadow: none;
+}
+
+.controls-bar-right .nav-item.add-item span,
+.controls-bar-right button.nav-item.add-item span {
+    color: white;
+}
+
+.controls-bar-right .nav-item.add-item:hover,
+.controls-bar-right button.nav-item.add-item:hover {
+    background: linear-gradient(135deg, #359e78 0%, #65b88f 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(61, 171, 133, 0.3);
+}
+
+.controls-bar-right .nav-item.move-to-pantry i,
+.controls-bar-right .nav-item.move-to-finished i,
+.controls-bar-right .nav-item.move-to-grocery i {
+    color: var(--primary-green);
+}
+
+.controls-bar-right button.nav-item#deleteSelectedBtn,
+.controls-bar-right button.nav-item:has(i.fa-trash-alt) {
+    color: var(--action-delete-red);
+    border-color: rgba(231, 76, 60, 0.4);
+}
+
+.controls-bar-right button.nav-item#deleteSelectedBtn i,
+.controls-bar-right button.nav-item:has(i.fa-trash-alt) i {
+    color: var(--action-delete-red);
+}
+
+.controls-bar-right button.nav-item#deleteSelectedBtn span,
+.controls-bar-right button.nav-item:has(i.fa-trash-alt) span {
+    color: var(--action-delete-red);
+}
+
+.controls-bar-right button.nav-item:has(i.fa-trash-alt):hover {
+    background-color: rgba(231, 76, 60, 0.08);
+    border-color: var(--action-delete-red);
 }
 
 .store-group:last-of-type {
@@ -397,65 +528,302 @@ body {
 .footer-nav {
     position: fixed;
     bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     max-width: 100%;
-    background-color: var(--mockup-bg);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
+    align-items: stretch;
+    gap: 6px;
+    padding: 12px 8px 16px;
     border-top: 1px solid var(--border-color);
-    box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.06);
 }
 
-.nav-item {
-    flex-basis: 18%;
+.footer-nav .nav-item,
+.footer-nav button.nav-item {
+    flex: 1;
     min-width: 0;
+    max-width: 72px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 600;
     color: var(--text-light);
     cursor: pointer;
-    padding: 5px 2px;
+    padding: 10px 4px;
+    border: none;
+    background: transparent;
+    border-radius: 12px;
+    transition: all 0.2s ease;
 }
 
-.nav-item i {
+.footer-nav .nav-item:hover,
+.footer-nav button.nav-item:hover {
+    background-color: rgba(61, 171, 133, 0.08);
+}
+
+.footer-nav .nav-item:active,
+.footer-nav button.nav-item:active {
+    transform: scale(0.96);
+}
+
+.footer-nav .nav-item i,
+.footer-nav button.nav-item i {
     font-size: 20px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    display: block;
 }
 
-.nav-item.add-item i {
+/* Add Item – primary CTA */
+.footer-nav .nav-item.add-item,
+.footer-nav button.nav-item.add-item {
     color: var(--primary-green);
-    font-size: 28px;
-    background-color: var(--mockup-bg);
+}
+
+.footer-nav .nav-item.add-item i,
+.footer-nav button.nav-item.add-item i {
+    font-size: 26px;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--button-green) 100%);
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
     border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(61, 171, 133, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.nav-item.add-item span {
-    font-weight: bold;
+.footer-nav .nav-item.add-item span,
+.footer-nav button.nav-item.add-item span {
     color: var(--text-dark);
+    font-weight: 700;
 }
 
-.nav-item.move-to-pantry i {
+.footer-nav .nav-item.add-item:hover i,
+.footer-nav button.nav-item.add-item:hover i {
+    box-shadow: 0 6px 16px rgba(61, 171, 133, 0.45);
+    transform: scale(1.05);
+}
+
+/* Move to Pantry / Finished / Grocery */
+.footer-nav .nav-item.move-to-pantry i,
+.footer-nav .nav-item.move-to-finished i,
+.footer-nav .nav-item.move-to-grocery i {
     color: var(--primary-green);
-    font-size: 20px;
 }
 
-.nav-item.move-to-pantry span {
+.footer-nav .nav-item.move-to-pantry span,
+.footer-nav .nav-item.move-to-finished span,
+.footer-nav .nav-item.move-to-grocery span {
     color: var(--text-dark);
 }
 
-.nav-item i.fa-trash-alt { color: var(--action-delete-red); }
-.nav-item:has(i.fa-trash-alt) span { color: var(--action-delete-red); }
+/* Delete */
+.footer-nav button.nav-item#deleteSelectedBtn,
+.footer-nav button.nav-item:has(i.fa-trash-alt) {
+    color: var(--action-delete-red);
+}
 
-.nav-item i.fa-bell { color: var(--action-notify-blue); }
-.nav-item:has(i.fa-bell) span { color: var(--text-dark); }
+.footer-nav button.nav-item#deleteSelectedBtn i,
+.footer-nav button.nav-item:has(i.fa-trash-alt) i {
+    color: var(--action-delete-red);
+}
 
-.nav-item i.fa-sign-out-alt { color: var(--action-logout-orange); }
-.nav-item:has(i.fa-sign-out-alt) span { color: var(--text-dark); }
+.footer-nav button.nav-item#deleteSelectedBtn span,
+.footer-nav button.nav-item:has(i.fa-trash-alt) span {
+    color: var(--action-delete-red);
+}
+
+.footer-nav button.nav-item:has(i.fa-trash-alt):hover {
+    background-color: rgba(231, 76, 60, 0.08);
+}
+
+/* Notifications */
+.footer-nav .nav-item.notify i {
+    color: var(--action-notify-blue);
+}
+
+.footer-nav .nav-item.notify span {
+    color: var(--text-dark);
+}
+
+.footer-nav .nav-item.notify:hover {
+    background-color: rgba(52, 152, 219, 0.08);
+}
+
+/* Logout */
+.footer-nav .nav-item.logout i {
+    color: var(--action-logout-orange);
+}
+
+.footer-nav .nav-item.logout span {
+    color: var(--text-dark);
+}
+
+.footer-nav .nav-item.logout:hover {
+    background-color: rgba(243, 156, 18, 0.08);
+}
+
+/* Fallback for logout without .logout class */
+.footer-nav .nav-item:has(i.fa-sign-out-alt) i {
+    color: var(--action-logout-orange);
+}
+
+.footer-nav .nav-item:has(i.fa-sign-out-alt):hover {
+    background-color: rgba(243, 156, 18, 0.08);
+}
+
+/* =================================================================== */
+/* NOTIFICATION PANEL */
+/* =================================================================== */
+.notification-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    max-width: 85%;
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.notification-panel.active {
+    transform: translateX(0);
+}
+
+.notification-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--light-green);
+}
+
+.notification-panel-header h2 {
+    font-size: 20px;
+    color: var(--primary-green);
+    margin: 0;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-panel-header h2 i {
+    color: var(--action-notify-blue);
+}
+
+#close-notification-panel {
+    font-size: 24px;
+    color: var(--text-light);
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#close-notification-panel:hover {
+    color: var(--text-dark);
+}
+
+.notification-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.notification-panel-content.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.notification-panel-content.empty i {
+    font-size: 48px;
+    color: var(--action-notify-blue);
+    opacity: 0.5;
+    margin-bottom: 15px;
+}
+
+.notification-panel-content.empty p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.notification-item {
+    padding: 15px;
+    margin-bottom: 12px;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    border-left: 4px solid var(--action-notify-blue);
+    transition: box-shadow 0.2s;
+}
+
+.notification-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.notification-item-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.notification-item-details {
+    font-size: 14px;
+    color: var(--text-light);
+    display: flex;
+    gap: 15px;
+    margin-top: 8px;
+}
+
+.notification-item-details span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notification-item-details i {
+    font-size: 12px;
+}
+
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.notification-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
 
 /* =================================================================== */
 /* 7. SIDEBAR */
