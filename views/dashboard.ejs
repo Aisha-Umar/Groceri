@@ -99,6 +99,12 @@
                 </div>
                 <div class="store-group">
                 <h3 class="store-header"></h3>
+                <div class="list-header">
+                    <div class="header-select"></div>
+                    <div class="header-item">Item</div>
+                    <div class="header-quantity">Quantity</div>
+                    <div class="header-actions"></div>
+                </div>
                  <ul class="item-list">
                  <% for (let item of storedItems) { %>
                     <li class="list-item" data-store="<%= item.store %>" data-id="<%= item._id %>" data-item="<%= item.item %>">
@@ -171,7 +177,20 @@
                                 <label for="itemQty">Quantity</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-hashtag"></i>
-                                    <input type="number" id="itemQty" name="quantity" placeholder="1" value="1" min="1">
+                                    <select id="itemQty" name="quantity">
+                                        <option value="">Select Quantity</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down select-arrow"></i>
                                 </div>
                             </div>
 

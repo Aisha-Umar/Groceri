@@ -270,6 +270,35 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
+.list-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: var(--border-color);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-light);
+    border-radius: 20px 20px 0 0;
+    gap: 10px;
+}
+
+.header-select {
+    flex: 0 0 30px;
+}
+
+.header-item {
+    flex: 1;
+}
+
+.header-quantity {
+    flex: 0 0 70px;
+    text-align: center;
+}
+
+.header-actions {
+    flex: 0 0 30px;
+}
+
 .list-item {
     display: flex;
     align-items: center;
