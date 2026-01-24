@@ -172,9 +172,9 @@ function renderNewListItem(newItem) {
     <input type="checkbox" class="item-checkbox" data-id="${newItem._id}">
     <label class="item-details">${newItem.item}</label>
     <span class="item-info">${newItem.quantity}</span>
-    ${newItem.weeksLasting ? `<span class="item-note">${newItem.weeksLasting}</span>` : ""}
-    <i class="fas fa-pencil-alt edit-icon"></i>
-  `;
+    <i class="fas fa-pencil-alt edit-icon"></i>`;
 
   listEl.appendChild(li);
 }
+
+// ${newItem.weeksLasting ? `<span class="item-note">${newItem.weeksLasting}</span>` : ""}
