@@ -1,6 +1,6 @@
 // --- MODAL LOGIC ---
 // 1. Target the NEW button using its class
-const addItemBtn1 = document.querySelector(".add-item-button");
+//const addItemBtn1 = document.querySelector(".add-item-button");
 const addItemBtns = document.querySelectorAll(".nav-item.add-item"); // All add-item buttons (footer + controls-bar)
 const modalOverlay = document.getElementById("addItemModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
@@ -11,36 +11,46 @@ let editingItemId = null;
 let editingLi = null;
 let mode = "add";
 
+const form = document.getElementById("addItemForm");
+
 // Function to open modal
 function openModal() {
-  modalOverlay.classList.add("active");
+  if (modalOverlay) modalOverlay.classList.add("active");
 }
 
 // Function to close modal
 function closeModal() {
-  modalOverlay.classList.remove("active");
+  if (modalOverlay) modalOverlay.classList.remove("active");
+}
+
+// Open modal for adding a new item: reset mode, clear form, then open
+function openModalForAdd() {
+  mode = "add";
+  if (form) form.reset();
+  openModal();
 }
 
 // Event Listeners
-if (addItemBtn1) addItemBtn1.addEventListener("click", openModal);
-addItemBtns.forEach(btn => btn.addEventListener("click", openModal));
+//if (addItemBtn1) addItemBtn1.addEventListener("click", openModalForAdd);
+if(addItemBtns) addItemBtns.forEach(btn => btn.addEventListener("click", openModalForAdd));
 if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
 if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
 
 // Close if clicking outside the modal card (on the blurred background)
-modalOverlay.addEventListener("click", (e) => {
-  if (e.target === modalOverlay) {
-    closeModal();
-  }
-});
+if (modalOverlay) {
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+}
 
 //===================== EDIT AN ITEM =======================//
-const itemList = document.querySelector(".item-list");
-if(itemList){ 
-itemList.addEventListener("click", (e) => {
+let listEl = document.querySelector(".item-list");
+if(listEl){ 
+listEl.addEventListener("click", (e) => {
   //get item being edited
-  if (!e.target.classList.contains("edit-icon")) return
-    li = e.target.closest(".list-item");
+  if (!e.target.classList.contains("edit-icon")) return;
+    const li = e.target.closest(".list-item");
+    if (!li) return;
 
     editingItemId = li.dataset.id;
     editingLi = li;
@@ -56,8 +66,7 @@ itemList.addEventListener("click", (e) => {
 }
 //==================== FORM SUBMISSION FOR EDITING AND ADDING ITEM ==================//
 
-const form = document.getElementById("addItemForm");
-
+if (form) {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -126,17 +135,15 @@ form.addEventListener("submit", async (e) => {
     alert("Opertaion failed");
   }
 });
-
-
+}
 
 function renderNewListItem(newItem) {
-  // Find the right store list container
-  
-  let itemList = document.querySelector(".item-list");
+  // Find the store group first
+  let storeGroup = document.querySelector(`.store-group[data-store="${newItem.store}"]`);
+  //let itemList;
 
-  // If the store group doesn't exist yet, create it
-  if (!itemList) {
-    const storeGroup = document.createElement("div");
+  if (!storeGroup) {
+    storeGroup = document.createElement("div");
     storeGroup.classList.add("store-group");
     storeGroup.dataset.store = newItem.store;
 
@@ -144,15 +151,16 @@ function renderNewListItem(newItem) {
     header.classList.add("store-header");
     header.textContent = `🛒 ${newItem.store}`;
 
-    itemList = document.createElement("ul");
-    itemList.classList.add("item-list");
+    listEl = document.createElement("ul");
+    listEl.classList.add("item-list");
 
     storeGroup.appendChild(header);
-    storeGroup.appendChild(itemList);
+    storeGroup.appendChild(listEl);
     document.querySelector(".content").appendChild(storeGroup);
+  } else {
+    listEl = storeGroup.querySelector(".item-list");
   }
 
-  // Create the list item
   const li = document.createElement("li");
   li.classList.add("list-item");
   li.dataset.store = newItem.store;
@@ -161,14 +169,12 @@ function renderNewListItem(newItem) {
   li.setAttribute("draggable", "true");
 
   li.innerHTML = `
-    <input type="checkbox" class="item-checkbox" data-id="${newItem._id}" data-item="${newItem.item}">
-    <label for="item-${newItem._id}" class="item-details">
-      <span class="emoji"></span>${newItem.item}
-    </label>
+    <input type="checkbox" class="item-checkbox" data-id="${newItem._id}">
+    <label class="item-details">${newItem.item}</label>
     <span class="item-info">${newItem.quantity}</span>
     ${newItem.weeksLasting ? `<span class="item-note">${newItem.weeksLasting}</span>` : ""}
     <i class="fas fa-pencil-alt edit-icon"></i>
   `;
 
-  itemList.appendChild(li);
+  listEl.appendChild(li);
 }

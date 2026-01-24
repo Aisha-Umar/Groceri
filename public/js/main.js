@@ -187,22 +187,21 @@ document.getElementById('deleteSelectedBtn').addEventListener('click', async () 
 
 
 
-//===================== DRAG-TO-REORDER (Grocery List / Dashboard) =====================//
-const itemList = document.querySelector(".item-list");
-const isDashboard = document.querySelector(".move-to-pantry") !== null;
+// ===================== DRAG-TO-REORDER ===================== //
+document.addEventListener("DOMContentLoaded", () => {
+  const itemListContainers = document.querySelectorAll(".item-list");
+  if (!itemListContainers.length) return;
 
-if (itemList && isDashboard) {
   let draggedItem = null;
 
-  const listItems = itemList.querySelectorAll(".list-item");
-  listItems.forEach((li) => {
-    li.setAttribute("draggable", "true");
-  });
-
-  itemList.addEventListener("dragstart", (e) => {
-    if (e.target.closest("input[type=checkbox]") || e.target.closest(".edit-icon")) return;
+  // Event delegation for dragstart
+  document.addEventListener("dragstart", (e) => {
     const li = e.target.closest("li.list-item");
     if (!li) return;
+
+    // Skip dragging if clicking checkbox or edit icon
+    if (e.target.closest("input[type=checkbox]") || e.target.closest(".edit-icon")) return;
+
     draggedItem = li;
     li.classList.add("dragging");
     e.dataTransfer.effectAllowed = "move";
@@ -210,67 +209,66 @@ if (itemList && isDashboard) {
     e.dataTransfer.setDragImage(li, 0, 0);
   });
 
-  itemList.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-    const dragging = itemList.querySelector(".dragging");
-    if (!dragging) return;
-    const afterElement = getDragAfterElement(itemList, e.clientY);
-    if (afterElement == null) {
-      itemList.appendChild(dragging);
-    } else {
-      itemList.insertBefore(dragging, afterElement);
-    }
-  });
-
-  itemList.addEventListener("drop", (e) => {
-    e.preventDefault();
-  });
-
-  itemList.addEventListener("dragend", (e) => {
+  // Event delegation for dragend
+  document.addEventListener("dragend", (e) => {
     const li = e.target.closest("li.list-item");
     if (!li) return;
+
     li.classList.remove("dragging");
     draggedItem = null;
-    const orderedList = Array.from(itemList.querySelectorAll("li.list-item")).map((el, index) => ({
+
+    // Save order for this container
+    const container = li.closest(".item-list");
+    const orderedList = Array.from(container.querySelectorAll("li.list-item")).map((el, index) => ({
       id: el.dataset.id,
       order: index,
     }));
-    orderList(orderedList);
+    saveOrder(orderedList);
   });
-}
 
-function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll("li.list-item:not(.dragging)")];
-  if (!draggableElements.length) return null;
+  // Event delegation for dragover
+  document.addEventListener("dragover", (e) => {
+    const container = e.target.closest(".item-list");
+    if (!container) return;
 
-  const { element } = draggableElements.reduce(
-    (closest, child) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+
+    const dragging = container.querySelector(".dragging");
+    if (!dragging) return;
+
+    const afterElement = getDragAfterElement(container, e.clientY);
+    if (!afterElement) container.appendChild(dragging);
+    else container.insertBefore(dragging, afterElement);
+  });
+
+  // Helper: find the element after which to insert the dragged item
+  function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll("li.list-item:not(.dragging)")];
+    return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect();
       const offset = y - box.top - box.height / 2;
-      if (offset < 0 && offset > closest.offset) {
-        return { offset, element: child };
-      }
+      if (offset < 0 && offset > closest.offset) return { offset, element: child };
       return closest;
-    },
-    { offset: Number.NEGATIVE_INFINITY, element: null }
-  );
-  return element;
-}
-
-async function orderList(orderedList) {
-  try {
-    const res = await fetch("/api/saveOrder", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      credentials: "same-origin",
-      body: JSON.stringify({ orderedList }),
-    });
-    if (!res.ok) throw new Error("Update failed");
-  } catch (err) {
-    console.error("Error saving order:", err);
+    }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
   }
-}
+
+  // Save order to server
+  async function saveOrder(orderedList) {
+    try {
+      const res = await fetch("/api/saveOrder", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ orderedList }),
+      });
+      if (!res.ok) throw new Error("Update failed");
+    } catch (err) {
+      console.error("Error saving order:", err);
+    }
+  }
+});
+
 
 //================= FILTER BY STORES =================================//  
 const selectStore = document.getElementById('store-select');
