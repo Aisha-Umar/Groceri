@@ -87,11 +87,6 @@ function debounce(fn, delay = 300) {
 }
  
 
-
-
- 
-
-
 //=====================MOVE TO PANTRY ======================//
 const moveToPantryBtn = document.querySelector('.move-to-pantry')
 if(moveToPantryBtn) {

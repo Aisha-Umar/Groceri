@@ -75,7 +75,7 @@ form.addEventListener("submit", async (e) => {
   const quantity = document.getElementById("itemQty").value;
   const store = document.getElementById("itemStore").value;
   const weeksLasting = document.getElementById("weeksLasting")?.value;
-
+  console.log(item)
   try {
     //------------------- ADD ITEM ---------------------
     if(mode === 'add'){

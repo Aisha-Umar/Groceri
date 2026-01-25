@@ -935,3 +935,68 @@ body {
     .header-actions { display: flex !important; }
     .store-group:last-of-type { padding-bottom: 20px; }
 }
+
+/* =================================================================== */
+/* 9. EXTRA LARGE DESKTOP (INVERTED COLORS) */
+/* =================================================================== */
+@media (min-width: 1141px) {
+    /* 1. Change global background to White */
+    body {
+        background-color: var(--mockup-bg);
+    }
+
+    /* 2. Change the screen container and content areas to the Light Green */
+    .screen-container, 
+    .header, 
+    .content {
+        background-color: var(--light-green);
+        /* Adding a shadow helps the green "container" pop off the white background */
+        box-shadow: 0 0 40px rgba(0,0,0,0.05);
+    }
+
+    /* 3. Change the actual Grocery List background to the Light Green */
+    .item-list {
+        background-color: var(--light-green);
+        box-shadow: none; /* Removing shadow as it's now embedded in the green area */
+    }
+
+    /* 4. Update the Search Bar to match the new white global theme or keep it green */
+    .search-bar {
+        background-color: var(--mockup-bg); /* Making search bar white makes it stand out on the green header */
+    }
+
+    /* 5. List items flip: To keep them readable, we keep them white 
+          so they look like "cards" on the green background list area */
+    .list-item {
+        background-color: var(--mockup-bg);
+        margin-bottom: 8px; /* Added spacing to show off the green background between items */
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    /* Adjust the List Header to blend in */
+    .list-header {
+        background-color: transparent;
+        border-bottom: 2px solid var(--primary-green);
+    }
+
+    .sidebar {
+        /* 1. Semi-transparent background */
+        background: rgba(255, 255, 255, 0.7); 
+        
+        /* 2. The magic: Frosted glass blur */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); /* For Safari support */
+        
+        /* 3. Subtle "edge" highlight */
+        border-right: 1px solid rgba(255, 255, 255, 0.3);
+        
+        /* 4. Softer shadow for a floating feel */
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Make sure sidebar links don't have heavy backgrounds so the blur shows through */
+    .sidebar-links li a:hover {
+        background-color: rgba(61, 171, 133, 0.1); /* Subtle green tint on hover */
+    }
+}

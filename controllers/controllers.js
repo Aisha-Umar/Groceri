@@ -1,6 +1,7 @@
 const Grocery = require("../models/item.js")
 const User = require("../models/user.js")
 const Pantry = require("../models/pantry.js")
+const { request } = require("express")
 
 //Get landing page
 exports.getLanding = async(req, res) => {
@@ -44,10 +45,13 @@ exports.getFinished = async (req, res) => {
 // Add a new item
 exports.saveItem = async (req, res) => {
 const userId = req.user.id
-    
+   console.log(userId)
 const { item,quantity,store,weeksLasting } = req.body;
+console.log(item,quantity,store,weeksLasting)
+
   try {
     let savedItem = await Grocery.create({ user:userId, item:item,quantity:quantity,store:store,weeksLasting:weeksLasting});
+    console.log(savedItem)
     res.status(201).json(savedItem)
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -92,14 +96,14 @@ exports.deleteItem = async (req, res) => {
 exports.saveOrder = async (req, res) => {
   try{
     const {orderedList} = req.body
-    console.log("Received orderedList:", orderedList)
+    // console.log("Received orderedList:", orderedList)
     for(const{id, order} of orderedList){
-      console.log("Looping:", id, order)
+      // console.log("Looping:", id, order)
      const result = await Grocery.updateOne({_id:id},{order})
-      console.log(`Updating ${id} → order ${order}:`, result)
+      // console.log(`Updating ${id} → order ${order}:`, result)
     }
       const storedItems = await Grocery.find().sort({order:1})
-      console.log(`This is the order after sorting by order ${storedItems}`)
+      // console.log(`This is the order after sorting by order ${storedItems}`)
      // res.status(200).json({ message: "Order updated"})
       res.render('dashboard', {storedItems})
   } catch(err){

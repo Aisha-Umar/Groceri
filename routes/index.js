@@ -16,7 +16,7 @@ router.post('/moveToGrocery', ensureAuthenticated, controller.moveToGrocery)
 router.get('/dashboard', ensureAuthenticated, controller.getDashboard)
 router.get('/pantry', ensureAuthenticated, controller.getPantry)
 router.get('/finished', ensureAuthenticated, controller.getFinished)
-router.post('/saveItem', ensureApiAuth, controller.saveItem)
+router.post('/saveItem', ensureAuthenticated, controller.saveItem)
 router.get('/getAiRecipes', ensureAuthenticated, controller.getAiRecipes)
 router.get('/getItemsRunningLow', ensureAuthenticated, controller.getItemsRunningLow)
 
