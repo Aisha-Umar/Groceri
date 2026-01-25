@@ -76,6 +76,7 @@ form.addEventListener("submit", async (e) => {
   const store = document.getElementById("itemStore").value;
   const weeksLasting = document.getElementById("weeksLasting")?.value;
   console.log(item)
+
   try {
     //------------------- ADD ITEM ---------------------
     if(mode === 'add'){
@@ -93,6 +94,7 @@ form.addEventListener("submit", async (e) => {
 
     // Clear inputs for next entry
     form.reset();
+    document.getElementById("itemName").focus();
 
     // Dynamically create list element
     renderNewListItem(newItem);
@@ -100,7 +102,7 @@ form.addEventListener("submit", async (e) => {
 
     //--------------------- EDIT ITEM ----------------------------
 
-    if (mode === "edit") {
+    else if (mode === "edit") {
       const item = document.getElementById("itemName").value;
       const quantity = document.getElementById("itemQty").value;
       console.log("EDIT MODE:", {
@@ -125,10 +127,11 @@ form.addEventListener("submit", async (e) => {
       editingLi.querySelector(".item-details").innerText = updatedItem.item;
       editingLi.dataset.item = updatedItem.item;
       editingLi.querySelector(".item-info").innerText = updatedItem.quantity;
-    }
+    
 
     form.reset()
     closeModal()
+    }
 
   } catch (err) {
     console.error(err);
