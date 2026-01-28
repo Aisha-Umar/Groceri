@@ -929,6 +929,7 @@ body {
     .footer-nav { max-width: 100%; display: flex; }
     .controls-bar-right { display: none !important; }
     .header-actions { display: none !important; }
+    
 }
 
 /* Desktop >=769px */
