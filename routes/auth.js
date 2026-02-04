@@ -10,5 +10,15 @@ router.get('/login', forwardAuthenticated, loginController.getLogin)
 router.post('/signup', signupController.signup)
 router.post('/login', loginController.login)
 
+router.post("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) return next(err);
+
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      res.json({ success: true });
+    });
+  });
+});
 
 module.exports = router

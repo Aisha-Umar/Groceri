@@ -536,3 +536,12 @@ if(moveToGroceryBtn) {
   })
 }
  
+//=============================== LOGOUT ================================//
+document.querySelector('.logout')?.addEventListener("click", async () => {
+  await fetch("/logout", {
+    method: "POST",
+    credentials: "same-origin",
+  });
+
+  window.location.href = "/login";
+});
